@@ -29,7 +29,7 @@ class UserProfileManager(BaseUserManager):
         user.save(using = self._db)
 
         return user
-        
+
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Database model for users in the system"""
@@ -49,7 +49,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         """Retrieve short name of user"""
-        return self.NAME
+        return self.name
 
     def __str___(self):
         """Return string representation of our user"""
