@@ -69,3 +69,24 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.status_text
+
+
+class QuestionFeedItem(models.Model):
+    """Question"""
+    user_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
+    topic = models.CharField(max_length=255)
+    subtopic = models.CharField(max_length=255)
+    dependencies = models.CharField(max_length=255, blank=True)
+    question = models.CharField(max_length=1024)
+    correctAnswers = models.CharField(max_length=255)
+    appendix = models.CharField(max_length=255, blank=True)
+    hint = models.CharField(max_length=1024, blank=True)
+    imageSrc = models.CharField(max_length=1024, blank=True)
+
+    def __str__(self):
+        """Return the model as a string"""
+        return self.question
