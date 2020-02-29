@@ -80,12 +80,12 @@ class QuestionFeedItem(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     topic = models.CharField(max_length=255)
     subtopic = models.CharField(max_length=255)
-    dependencies = models.CharField(max_length=255)
+    dependencies = models.CharField(max_length=255, blank=True)
     question = models.CharField(max_length=1024)
     correctAnswers = models.CharField(max_length=255)
-    appendix = models.CharField(max_length=255)
-    hint = models.CharField(max_length=1024)
-    imageSrc = models.CharField(max_length=1024)
+    appendix = models.CharField(max_length=255, blank=True)
+    hint = models.CharField(max_length=1024, blank=True)
+    imageSrc = models.CharField(max_length=1024, blank=True)
 
     def __str__(self):
         """Return the model as a string"""
