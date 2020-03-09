@@ -10,6 +10,8 @@ router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
 router.register('profile', views.UserProfileViewSet)
 router.register('feed', views.UserProfileFeedViewSet)
 router.register('question', views.UserProfileQuestionViewSet)
+router.register('subtopic', views.SubtopicViewSet)
+router.register('topic', views.TopicViewSet)
 
 urlpatterns = [
     path('hello-view/', views.HelloApiView.as_view()),

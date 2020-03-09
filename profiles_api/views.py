@@ -152,3 +152,25 @@ class UserProfileQuestionViewSet(viewsets.ModelViewSet):
             return allquestions
 
 
+class TopicViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating topics"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.TopicSerializer
+    queryset = models.Topic.objects.all()
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)
+
+
+class SubtopicViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating subtopics"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.SubTopicSerializer
+    queryset = models.Subtopic.objects.all()
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)

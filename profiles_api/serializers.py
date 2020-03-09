@@ -52,3 +52,19 @@ class QuestionFeedItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}, 'appendix':{'required': False}}
 
 
+class TopicSerializer(serializers.ModelSerializer):
+    """Serializes topics"""
+
+    class Meta:
+        model = models.Topic
+        fields = ('id', 'user_profile', 'name')
+        extra_kwargs = {'user_profile': {'read_only': True}}
+
+
+class SubTopicSerializer(serializers.ModelSerializer):
+    """Serializes subtopics"""
+
+    class Meta:
+        model = models.Subtopic
+        fields = ('id', 'user_profile', 'name', 'html', 'topic')
+        extra_kwargs = {'user_profile': {'read_only': True}}
