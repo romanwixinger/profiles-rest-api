@@ -190,3 +190,33 @@ class SubtopicViewSet(viewsets.ModelViewSet):
             return subtopics[0:abs(int(number))]
         else:
             return subtopics
+
+
+class CustomSubtopicView(APIView):
+
+    def get(self, request):
+        return Response(status=418)
+
+    def post(self, request):
+        topic_name = request.data['topic']
+        if topic_name is None or topic_name == '':
+            return Response(data='Topic not defined', status=400)
+
+        user_profile_id = request.user.id
+
+        if user_profile_id is None or user_profile_id == '':
+            return Response(data='User not defined', status=400)
+        else:
+            topic = models.Topic.objects.get_or_create(
+                name=topic_name,
+                user_profile_id=request.user.id
+            )[0]
+
+            subtopic = models.Subtopic.objects.get_or_create(
+                topic=topic,
+                name=request.data['name'],
+                html=request.data['html'],
+                user_profile_id=request.user.id
+            )[0]
+
+            return Response(data=subtopic, status=200)
