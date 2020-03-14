@@ -8,7 +8,7 @@ from django.conf import settings
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
 
-    def create_user(self, email, name, password=None):
+    def create_user(self, email: str, name: str, password=None):
         """Create a new user profile"""
         if not email:
             raise ValueError('User must have an email address')
@@ -113,7 +113,8 @@ class Subtopic(models.Model):
     )
     name = models.CharField(max_length=255)
     html = models.CharField(max_length=1024, blank=True)
-    topic = models.ManyToManyField(Topic)
+    """topic = models.ManyToManyField(Topic)"""
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
 
     def __str__(self):
         """Return the model as a string"""

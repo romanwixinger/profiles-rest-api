@@ -175,7 +175,6 @@ class SubtopicViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user"""
         serializer.save(user_profile=self.request.user)
 
-
     def get_queryset(self):
         """Retrieve only subtopic with certain topic"""
         subtopics = models.Subtopic.objects.all()
