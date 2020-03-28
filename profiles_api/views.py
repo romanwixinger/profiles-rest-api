@@ -177,19 +177,24 @@ class SubtopicViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """Retrieve only subtopic with certain topic"""
-        subtopics = models.Subtopic.objects.all()
         topic = self.request.query_params.get('topic', None)
+        start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)
 
         """Return subtopics"""
         if topic is not None:
             filter_dict = {'topic__name': topic}
-            subtopics = subtopics.filter(**filter_dict)
-
-        if number is not None and subtopics.count() > int(number):
-            return subtopics[0:abs(int(number))]
+            subtopics = models.Subtopic.objects.filter(**filter_dict)
         else:
-            return subtopics
+            subtopics = models.Subtopic.objects.all()
+
+        if start is not None:
+            subtopics = subtopics[min(abs(int(start)), subtopics.count()):]
+
+        if number is not None:
+            subtopics = subtopics[:max(0, min(int(number), subtopics.count()))]
+
+        return subtopics
 
 
 class CustomSubtopicView(APIView):
