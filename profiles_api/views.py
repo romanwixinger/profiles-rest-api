@@ -8,9 +8,12 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
 from rest_framework.permissions import IsAuthenticated
 
+from rest_framework.authtoken.models import Token #Get user_profile from corresponding token
+
 from profiles_api import serializers
 from profiles_api import models
 from profiles_api import permissions
+
 
 
 class HelloApiView(APIView):
@@ -163,8 +166,6 @@ class UserProfileQuestionViewSet(viewsets.ModelViewSet):
         return questions
 
 
-
-
 class TopicViewSet(viewsets.ModelViewSet):
     """Handles creating, reading and updating topics"""
     authentication_classes = (TokenAuthentication,)
@@ -211,6 +212,8 @@ class SubtopicViewSet(viewsets.ModelViewSet):
 
 
 class CustomSubtopicView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
     def get(self, request):
         return Response(status=418)
@@ -220,21 +223,23 @@ class CustomSubtopicView(APIView):
         if topic_name is None or topic_name == '':
             return Response(data='Topic not defined', status=400)
 
-        user_profile_id = request.user.id
+        user = self.request.user
 
-        if user_profile_id is None or user_profile_id == '':
+        if user is None or user.id == '':
             return Response(data='User not defined', status=400)
         else:
             topic = models.Topic.objects.get_or_create(
                 name=topic_name,
-                user_profile_id=request.user.id
+                user_profile_id=user.id
             )[0]
 
             subtopic = models.Subtopic.objects.get_or_create(
                 topic=topic,
                 name=request.data['name'],
                 html=request.data['html'],
-                user_profile_id=request.user.id
+                user_profile_id=user.id
             )[0]
 
-            return Response(data=subtopic, status=200)
+            serializer = serializers.SubTopicSerializer(subtopic)
+
+            return Response(data=serializer.data, status=200)
