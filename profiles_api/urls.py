@@ -12,6 +12,11 @@ router.register('feed', views.UserProfileFeedViewSet)
 router.register('question', views.QuestionViewSet)
 router.register('subtopic', views.SubtopicViewSet)
 router.register('topic', views.TopicViewSet)
+router.register('answer', views.AnswerViewSet)
+router.register('test', views.TestViewSet)
+router.register('completedTest', views.CompletedTestViewSet)
+router.register('theoryPage', views.TheoryPageViewSet)
+
 
 urlpatterns = [
     path('hello-view/', views.HelloApiView.as_view()),
