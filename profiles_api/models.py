@@ -109,7 +109,7 @@ class Question(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
     subtopic = models.ForeignKey(Subtopic, related_name='question_subtopic', on_delete=models.CASCADE)
-    dependencies = models.ManyToManyField(Subtopic, related_name='question_dependencies')
+    dependencies = models.ManyToManyField(Subtopic, related_name='question_dependencies', blank=True)
     question = models.CharField(max_length=1024)
     correctAnswers = models.CharField(max_length=1024)
     validation = models.CharField(max_length=255, blank=True)
