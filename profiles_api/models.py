@@ -71,7 +71,7 @@ class ProfileFeedItem(models.Model):
         return self.status_text
 
 
-class QuestionFeedItem(models.Model):
+class Question(models.Model):
     """Question"""
     user_profile = models.ForeignKey(
         settings.AUTH_USER_MODEL,

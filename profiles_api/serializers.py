@@ -41,11 +41,11 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
-class QuestionFeedItemSerializer(serializers.ModelSerializer):
-    """Serializes question feed items"""
+class QuestionSerializer(serializers.ModelSerializer):
+    """Serializes questions"""
 
     class Meta:
-        model = models.QuestionFeedItem
+        model = models.Question
         fields = ('id', 'created_on', 'topic', 'subtopic', 'dependencies',
                   'question', 'correctAnswers', 'appendix', 'hint', 'imageSrc',
                   'user_profile')

@@ -130,11 +130,11 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
         serializer.save(user_profile=self.request.user)
 
 
-class UserProfileQuestionViewSet(viewsets.ModelViewSet):
+class QuestionViewSet(viewsets.ModelViewSet):
     """Handles creating, reading and updating question items"""
     authentication_classes = (TokenAuthentication,)
-    serializer_class = serializers.QuestionFeedItemSerializer
-    queryset = models.QuestionFeedItem.objects.all()
+    serializer_class = serializers.QuestionSerializer
+    queryset = models.Question.objects.all()
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
     def perform_create(self, serializer):
@@ -156,7 +156,7 @@ class UserProfileQuestionViewSet(viewsets.ModelViewSet):
             filter_dict['topic'] = topic
         if subtopic is not None:
             filter_dict['subtopic'] = subtopic
-        questions = models.QuestionFeedItem.objects.filter(**filter_dict)
+        questions = models.Question.objects.filter(**filter_dict)
 
         if start is not None:
             questions = questions[min(abs(int(start)), questions.count()):]
