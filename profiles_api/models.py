@@ -71,27 +71,6 @@ class ProfileFeedItem(models.Model):
         return self.status_text
 
 
-class Question(models.Model):
-    """Question"""
-    user_profile = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    created_on = models.DateTimeField(auto_now_add=True)
-    topic = models.CharField(max_length=255)
-    subtopic = models.CharField(max_length=255)
-    dependencies = models.CharField(max_length=255, blank=True)
-    question = models.CharField(max_length=1024)
-    correctAnswers = models.CharField(max_length=255)
-    appendix = models.CharField(max_length=255, blank=True)
-    hint = models.CharField(max_length=1024, blank=True)
-    imageSrc = models.CharField(max_length=1024, blank=True)
-
-    def __str__(self):
-        """Return the model as a string"""
-        return self.question
-
-
 class Topic(models.Model):
     """Topic"""
     user_profile = models.ForeignKey(
@@ -119,3 +98,26 @@ class Subtopic(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.name
+
+
+class Question(models.Model):
+    """Question"""
+    user_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    created_on = models.DateTimeField(auto_now_add=True)
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    subtopic = models.ForeignKey(Subtopic, on_delete=models.CASCADE)
+    dependencies = models.ManyToManyField('Subtopic')
+    question = models.CharField(max_length=1024)
+    correctAnswers = models.CharField(max_length=255)
+    validation = models.CharField(max_length=255, blank=True)
+    appendix = models.CharField(max_length=255, blank=True)
+    hint = models.CharField(max_length=1024, blank=True)
+    imageSrc = models.CharField(max_length=1024, blank=True)
+
+
+    def __str__(self):
+        """Return the model as a string"""
+        return self.question
