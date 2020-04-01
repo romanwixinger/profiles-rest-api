@@ -211,6 +211,54 @@ class SubtopicViewSet(viewsets.ModelViewSet):
         return subtopics
 
 
+class AnswerViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating answers"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.AnswerSerializer
+    queryset = models.Answer.objects.all()
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)
+
+
+class TestViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating tests"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.TestSerializer
+    queryset = models.Test.objects.all()
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)
+
+
+class CompletedTestViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating completed tests"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.CompletedTestSerializer
+    queryset = models.CompletedTest.objects.all()
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)
+
+
+class TheoryPageViewSet(viewsets.ModelViewSet):
+    """Handles creating, reading and updating theory pages"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.TheoryPageSerializer
+    queryset = models.TheoryPage.objects.all()
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def perform_create(self, serializer):
+        """Sets the user profile to the logged in user"""
+        serializer.save(user_profile=self.request.user)
+
+
 class CustomSubtopicView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
