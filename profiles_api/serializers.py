@@ -85,7 +85,7 @@ class TestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Test
-        fields = {'id', 'user_profile', 'questions', 'title', 'html', 'created_on'}
+        fields = ('id', 'user_profile', 'questions', 'title', 'html', 'created_on')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
@@ -94,8 +94,8 @@ class CompletedTestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CompletedTest
-        fields = {'id', 'user_profile', 'answers', 'state', 'created_on',
-                  'updated_on', 'duration', 'comment', 'recommendedSubtopics'}
+        fields = ('id', 'user_profile', 'answers', 'state', 'created_on',
+                  'updated_on', 'duration', 'comment', 'recommendedSubtopics')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
@@ -104,6 +104,6 @@ class TheoryPageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.TheoryPage
-        fields = {'id', 'user_profile', 'created_on', 'updated_on', 'topic', 'subtopic', 'title', 'html', 'test'}
+        fields = ('id', 'user_profile', 'created_on', 'updated_on', 'topic', 'subtopic', 'title', 'html', 'test')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
