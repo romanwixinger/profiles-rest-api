@@ -368,6 +368,10 @@ class QuestionView(APIView):
         except:
             dependencies = None
         try:
+            dependencies_id = request.data['dependencies_id']
+        except:
+            dependencies_id = None
+        try:
             validation = request.data['validation']
         except:
             validation = None
@@ -385,7 +389,25 @@ class QuestionView(APIView):
             imageSrc = None
 
         if dependencies is not None and dependencies != "":
-            pass
+            dependencies_string = dependencies.split(',')
+            for dependency_string in dependencies_string:
+                filter_dict = {'name': dependency_string}
+                try:
+                    dependency = models.Subtopic.objects.filter(**filter_dict)[0]
+                    question.dependencies.add(dependency)
+                except:
+                    pass
+
+        if dependencies_id is not None and dependencies_id != "":
+            dependencies_string = dependencies_id.split(',')
+            for dependency_string in dependencies_string:
+                filter_dict = {'id': dependency_string}
+                try:
+                    dependency = models.Subtopic.objects.filter(**filter_dict)[0]
+                    question.dependencies.add(dependency)
+                except:
+                    pass
+
         if validation is not None and validation != '':
             question.validation = validation
         if appendix is not None and appendix != '':

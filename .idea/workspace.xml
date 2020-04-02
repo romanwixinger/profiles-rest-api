@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2abbe20c-7c40-4e47-b4ec-8f1b24ed4225" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profiles_api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,8 +50,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="351" column="35" lean-forward="true" selection-start-line="351" selection-start-column="35" selection-end-line="351" selection-end-column="35" />
+            <state relative-caret-position="401">
+              <caret line="408" column="24" lean-forward="true" selection-start-line="408" selection-start-column="24" selection-end-line="408" selection-end-column="24" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -283,16 +282,15 @@
       <workItem from="1585733615557" duration="118000" />
       <workItem from="1585758691648" duration="14173000" />
       <workItem from="1585775786290" duration="1065000" />
-      <workItem from="1585849126190" duration="9936000" />
+      <workItem from="1585849126190" duration="11580000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93450000" />
+    <option name="totallyTimeSpent" value="95094000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.2783505" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -308,9 +306,9 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49896908" visible="true" weight="0.32977462" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.49828178" visible="true" weight="0.32977462" />
       <window_info anchor="bottom" id="Docker" order="8" weight="0.32858837" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="9" sideWeight="0.5010309" side_tool="true" visible="true" weight="0.32977462" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5017182" side_tool="true" visible="true" weight="0.32977462" />
       <window_info anchor="bottom" id="Database Changes" order="10" weight="0.32977462" />
       <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49965635" weight="0.32977462" />
       <window_info anchor="bottom" id="Floobits" order="12" />
@@ -628,8 +626,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="351" column="35" lean-forward="true" selection-start-line="351" selection-start-column="35" selection-end-line="351" selection-end-column="35" />
+        <state relative-caret-position="401">
+          <caret line="408" column="24" lean-forward="true" selection-start-line="408" selection-start-column="24" selection-end-line="408" selection-end-column="24" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
