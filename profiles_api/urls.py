@@ -22,5 +22,6 @@ urlpatterns = [
     path('hello-view/', views.HelloApiView.as_view()),
     path('login/', views.UserLoginApiView.as_view()),
     path('custom-subtopic/', views.CustomSubtopicView.as_view()),
+    path('custom-question/', views.QuestionView.as_view()),
     path('', include(router.urls))
 ]

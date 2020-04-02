@@ -268,6 +268,136 @@ class QuestionView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
+    def get(self, request):
+        """Retrieve only certain questions"""
+        topic = self.request.query_params.get('topic', None)
+        topic_id = self.request.query_params.get('topic_id', None)
+        subtopic = self.request.query_params.get('subtopic', None)
+        subtopic_id = self.request.query_params.get('subtopic_id', None)
+        start = self.request.query_params.get('start', None)
+        number = self.request.query_params.get('number', None)
+
+        filter_dict = {}
+        if topic is not None:
+            filter_dict['topic__name'] = topic
+        if topic_id is not None:
+            filter_dict['topic__id'] = topic_id
+        if subtopic is not None:
+            filter_dict['subtopic__name'] = subtopic
+        if subtopic_id is not None:
+            filter_dict['subtopic__id'] = subtopic_id
+        questions = models.Question.objects.filter(**filter_dict)
+
+        if start is not None:
+            questions = questions[min(abs(int(start)), questions.count()):]
+        if number is not None:
+            questions = questions[:max(0, min(int(number), questions.count()))]
+
+        serializer = serializers.QuestionSerializer(questions, many=True)
+        return Response(data=serializer.data, status=200)
+
+    def post(self, request):
+        user = self.request.user
+        try:
+            question_question = request.data['question']
+        except:
+            return Response(data='Question is not defined', status=400)
+        try:
+            correctAnswers = request.data['correctAnswers']
+        except:
+            return Response(data='Answer is not defined', status=400)
+        try:
+            topic_name = request.data['topic']
+        except:
+            topic_name = None
+        try:
+            topic_id = request.data['topic_id']
+        except:
+            topic_id = None
+        try:
+            subtopic_name = request.data['subtopic']
+        except:
+            subtopic_name = None
+        try:
+            subtopic_id = request.data['subtopic_id']
+        except:
+            subtopic_id = None
+
+        # Check user, question, answer, topic and subtopic
+        if user is None or user.id == '':
+            return Response(data='User not defined', status=400)
+        if question_question is None or question_question == '':
+            return Response(data='Question not defined', status=400)
+        if correctAnswers is None or correctAnswers == '':
+            return Response(data='Answer not defined', status=400)
+        if topic_name is None or topic_name == '':
+            if topic_id is None or topic_id == '':
+                return Response(data='Topic not defined', status=400)
+            else:
+                filter_dict = {'id': topic_id}
+                topic = models.Topic.objects.filter(**filter_dict)[0]
+        else:
+            topic = models.Topic.objects.get_or_create(
+                name=topic_name,
+                user_profile_id=user.id
+            )[0]
+        if subtopic_name is None or subtopic_name == '':
+            if subtopic_id is None or subtopic_id == '':
+                return Response(data='Subtopic not defined', status=400)
+            else:
+                filter_dict = {'id': subtopic_id}
+                subtopic = models.Subtopic.objects.filter(**filter_dict)[0]
+        else:
+            subtopic = models.Subtopic.objects.get_or_create(
+                name=subtopic_name,
+                topic=topic,
+                user_profile_id=user.id
+            )[0]
+
+        # Create questions
+        question = models.Question.objects.get_or_create(
+            user_profile_id=user.id,
+            topic=topic,
+            subtopic=subtopic,
+            question=question_question,
+            correctAnswers=correctAnswers
+        )[0]
+
+        try:
+            dependencies = request.data['dependencies']
+        except:
+            dependencies = None
+        try:
+            validation = request.data['validation']
+        except:
+            validation = None
+        try:
+            appendix = request.data['appendix']
+        except:
+            appendix = None
+        try:
+            hint = request.data['hint']
+        except:
+            hint = None
+        try:
+            imageSrc = request.data['imageSrc']
+        except:
+            imageSrc = None
+
+        if dependencies is not None and dependencies != "":
+            pass
+        if validation is not None and validation != '':
+            question.validation = validation
+        if appendix is not None and appendix != '':
+            question.appendix = appendix
+        if hint is not None and hint != '':
+            question.hint = hint
+        if imageSrc is not None and imageSrc != '':
+            question.imageSrc = imageSrc
+
+        serializer = serializers.QuestionSerializer(question)
+        return Response(data=serializer.data, status=201)
+
 
 class CustomSubtopicView(APIView):
     """Custom view for Subtopic"""
@@ -275,13 +405,12 @@ class CustomSubtopicView(APIView):
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
     def get(self, request):
-        """Retrieve only subtopic with certain topic"""
+        """Retrieve only certain subtopics"""
         topic = self.request.query_params.get('topic', None)
         topic_id = self.request.query_params.get('topic_id', None)
         start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)
 
-        """Return subtopics"""
         if topic is not None:
             filter_dict = {'topic__name': topic}
             subtopics = models.Subtopic.objects.filter(**filter_dict)
@@ -299,7 +428,7 @@ class CustomSubtopicView(APIView):
 
         serializer = serializers.SubTopicSerializer(subtopics, many=True)
 
-        return Response(data=serializer.data, status=418)
+        return Response(data=serializer.data, status=200)
 
     def post(self, request):
         topic_name = request.data['topic']
@@ -325,4 +454,4 @@ class CustomSubtopicView(APIView):
 
             serializer = serializers.SubTopicSerializer(subtopic)
 
-            return Response(data=serializer.data, status=200)
+            return Response(data=serializer.data, status=201)
