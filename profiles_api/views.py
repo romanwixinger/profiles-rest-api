@@ -468,9 +468,11 @@ class TopicView(APIView):
         if number is not None:
             topics = topics[:max(0, min(int(number), topics.count()))]
 
-        serializer = serializers.TopicSerializer(topics, many=True)
-
-        return Response(data=serializer.data, status=200)
+        if topics.count() > 0:
+            serializer = serializers.TopicSerializer(topics, many=True)
+            return Response(data=serializer.data, status=200)
+        else:
+            return Response(status=204)
 
     def post(self, request):
         topic_name = request.data['topic']
