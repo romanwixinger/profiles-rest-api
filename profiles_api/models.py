@@ -130,13 +130,13 @@ class Answer(models.Model):
     )
     created_on = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    duration = models.DecimalField(max_digits=8, decimal_places=2) #in seconds
-    answers = models.CharField(max_length=1024)
+    duration = models.DecimalField(max_digits=8, decimal_places=2, blank=True) #in seconds
+    answers = models.CharField(max_length=1024, blank=True)
 
     #Fields set after correction
     correct = models.BooleanField(blank=True)
     skipped = models.BooleanField(blank=True)
-    comment = models.CharField(max_length=1024)
+    comment = models.CharField(max_length=1024, blank=True)
 
     def __str__(self):
         """Return the model as a string"""
