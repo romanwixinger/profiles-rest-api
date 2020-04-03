@@ -306,22 +306,11 @@ class QuestionView(APIView):
             correctAnswers = request.data['correctAnswers']
         except:
             return Response(data='Answer is not defined', status=400)
-        try:
-            topic_name = request.data['topic']
-        except:
-            topic_name = None
-        try:
-            topic_id = request.data['topic_id']
-        except:
-            topic_id = None
-        try:
-            subtopic_name = request.data['subtopic']
-        except:
-            subtopic_name = None
-        try:
-            subtopic_id = request.data['subtopic_id']
-        except:
-            subtopic_id = None
+
+        topic_name = request.data['topic'] if 'topic' in request.data else None
+        topic_id = request.data['topic_id'] if 'topic_id' in request.data else None
+        subtopic_name = request.data['subtopic'] if 'subtopic' in request.data else None
+        subtopic_id = request.data['subtopic_id'] if 'subtopic_id' in request.data else None
 
         # Check user, question, answer, topic and subtopic
         if user is None or user.id == '':
@@ -363,30 +352,12 @@ class QuestionView(APIView):
             correctAnswers=correctAnswers
         )[0]
 
-        try:
-            dependencies = request.data['dependencies']
-        except:
-            dependencies = None
-        try:
-            dependencies_id = request.data['dependencies_id']
-        except:
-            dependencies_id = None
-        try:
-            validation = request.data['validation']
-        except:
-            validation = None
-        try:
-            appendix = request.data['appendix']
-        except:
-            appendix = None
-        try:
-            hint = request.data['hint']
-        except:
-            hint = None
-        try:
-            imageSrc = request.data['imageSrc']
-        except:
-            imageSrc = None
+        dependencies = request.data['dependencies'] if 'dependencies' in request.data else None
+        dependencies_id = request.data['dependencies_id'] if 'dependencies_id' in request.data else None
+        validation = request.data['validation'] if 'validation' in request.data else None
+        appendix = request.data['appendix'] if 'appendix' in request.data else None
+        hint = request.data['hint'] if 'hint' in request.data else None
+        imageSrc = request.data['imageSrc'] if 'imageSrc' in request.data else None
 
         if dependencies is not None and dependencies != "":
             dependencies_string = dependencies.split(',')
