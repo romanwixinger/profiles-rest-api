@@ -419,9 +419,11 @@ class CustomSubtopicView(APIView):
         if number is not None:
             subtopics = subtopics[:max(0, min(int(number), subtopics.count()))]
 
-        serializer = serializers.SubTopicSerializer(subtopics, many=True)
-
-        return Response(data=serializer.data, status=200)
+        if subtopics.count() > 0:
+            serializer = serializers.SubTopicSerializer(subtopics, many=True)
+            return Response(data=serializer.data, status=200)
+        else:
+            return Response(status=204)
 
     def post(self, request):
         topic_name = request.data['topic']
