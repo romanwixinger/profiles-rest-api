@@ -24,5 +24,6 @@ urlpatterns = [
     path('custom-subtopic/', views.CustomSubtopicView.as_view()),
     path('custom-question/', views.QuestionView.as_view()),
     path('custom-topic/', views.TopicView.as_view()),
+    path('custom-answer/', views.AnswerView.as_view()),
     path('', include(router.urls))
 ]
