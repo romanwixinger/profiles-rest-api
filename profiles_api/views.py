@@ -297,6 +297,7 @@ class QuestionView(APIView):
         return Response(data=serializer.data, status=200)
 
     def post(self, request):
+        """Create a new question. Additionally a new topic and subtopic is created if necessary"""
         user = self.request.user
         try:
             question_question = request.data['question']
@@ -426,6 +427,7 @@ class CustomSubtopicView(APIView):
             return Response(status=204)
 
     def post(self, request):
+        """Create a new subtopic. Additionally a new topic is created if necessary"""
         topic_name = request.data['topic']
         if topic_name is None or topic_name == '':
             return Response(data='Topic not defined', status=400)
@@ -477,6 +479,7 @@ class TopicView(APIView):
             return Response(status=204)
 
     def post(self, request):
+        """Create a new topic"""
         topic_name = request.data['topic']
         if topic_name is None or topic_name == '':
             return Response(data='Topic not defined', status=400)
@@ -501,6 +504,7 @@ class AnswerView(APIView):
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
     def get(self, request):
+        """Get certain answers of the user"""
         start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)
         question_id = self.request.query_params.get('question_id', None)
@@ -530,3 +534,44 @@ class AnswerView(APIView):
             return Response(data=serializer.data, status=200)
         else:
             return Response(status=204)
+
+    def post(self, request):
+        """Create a new answer"""
+        user = self.request.user
+        skipped = False
+        duration = self.request.data['duration'] if 'duration' in self.request.data else 0
+
+        if user is None or user == '':
+            return Response(data='User not defined', status=400)
+        if 'question' in self.request.data and self.request.data['question'] != '':
+            filter_dict = {'id': self.request.data['question']}
+            question = models.Question.objects.filter(**filter_dict)[0]
+            if question is None:
+                return Response(data='Question does not exist', status=400)
+        else:
+            return Response(data='Question not defined', status=400)
+        if 'answers' in self.request.data and self.request.data['answers'] != '':
+            answers = self.request.data['answers']
+        else:
+            if 'skipped' in self.request.data and not bool(self.request.data['skipped']):
+                return Response(data='Answers not defined', status=400)
+            else:
+                answers = ""
+                skipped = True
+
+        answer=models.Answer.objects.get_or_create(
+            user_profile_id=user.id,
+            question=question,
+            answers=answers,
+            duration=duration,
+            skipped=skipped,
+            correct=False
+        )[0]
+
+        if 'comment' in self.request.data and self.request.data['comment'] != '':
+            answer.comment = self.request.data['comment']
+
+        serializer = serializers.AnswerSerializer(answer)
+        return Response(data=serializer.data, status=201)
+
+
