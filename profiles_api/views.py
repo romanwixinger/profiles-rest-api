@@ -571,6 +571,8 @@ class AnswerView(APIView):
         if 'comment' in self.request.data and self.request.data['comment'] != '':
             answer.comment = self.request.data['comment']
 
+        answer.performCorrection()
+
         serializer = serializers.AnswerSerializer(answer)
         return Response(data=serializer.data, status=201)
 
