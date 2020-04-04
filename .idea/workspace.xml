@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2abbe20c-7c40-4e47-b4ec-8f1b24ed4225" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profiles_api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,11 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="135" column="32" lean-forward="true" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
+            <state relative-caret-position="3026">
+              <caret line="178" selection-start-line="178" selection-end-line="178" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -57,7 +57,7 @@
         <entry file="file://$PROJECT_DIR$/profiles_api/admin.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+              <caret line="13" selection-start-line="13" selection-end-line="13" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -68,8 +68,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="568" column="12" lean-forward="true" selection-start-line="568" selection-start-column="12" selection-end-line="568" selection-end-column="12" />
+            <state relative-caret-position="9843">
+              <caret line="579" selection-start-line="579" selection-end-line="579" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -82,11 +82,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/profiles_api/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
+            <state relative-caret-position="663">
+              <caret line="108" selection-start-line="108" selection-end-line="108" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
@@ -107,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/profiles_api/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="323">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="e#0#37#0" expanded="true" />
               </folding>
@@ -129,6 +129,7 @@
       <find>dict</find>
       <find>filter</find>
       <find>int(</find>
+      <find>TheoryPageView</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -143,10 +144,10 @@
         <option value="$PROJECT_DIR$/profiles_api/migrations/0004_auto_20200309_1911.py" />
         <option value="$PROJECT_DIR$/profiles_api/admin.py" />
         <option value="$PROJECT_DIR$/profiles_api/migrations/0001_initial.py" />
-        <option value="$PROJECT_DIR$/profiles_api/serializers.py" />
         <option value="$PROJECT_DIR$/profiles_api/urls.py" />
-        <option value="$PROJECT_DIR$/profiles_api/views.py" />
         <option value="$PROJECT_DIR$/profiles_api/models.py" />
+        <option value="$PROJECT_DIR$/profiles_api/views.py" />
+        <option value="$PROJECT_DIR$/profiles_api/serializers.py" />
       </list>
     </option>
   </component>
@@ -163,7 +164,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -179,17 +179,13 @@
             </path>
             <path>
               <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="profiles-rest-api" type="462c0819:PsiDirectoryNode" />
-              <item name="profiles_project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -346,17 +342,19 @@
       <workItem from="1585906488332" duration="235000" />
       <workItem from="1585933569238" duration="3210000" />
       <workItem from="1585941845933" duration="1995000" />
-      <workItem from="1585950143965" duration="6226000" />
+      <workItem from="1585950143965" duration="6573000" />
+      <workItem from="1585990499079" duration="13226000" />
+      <workItem from="1586014848357" duration="44000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="108231000" />
+    <option name="totallyTimeSpent" value="121848000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29415807" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21993127" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -370,16 +368,16 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.48659793" visible="true" weight="0.32977462" />
-      <window_info anchor="bottom" id="Docker" order="8" sideWeight="0.49965635" weight="0.32858837" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.51340204" side_tool="true" visible="true" weight="0.32977462" />
-      <window_info anchor="bottom" id="Database Changes" order="10" weight="0.32977462" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.5745704" visible="true" weight="0.035587188" />
+      <window_info anchor="bottom" id="Docker" order="8" sideWeight="0.49896908" weight="0.32858837" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.42542955" side_tool="true" visible="true" weight="0.035587188" />
+      <window_info anchor="bottom" id="Database Changes" order="10" sideWeight="0.49965635" weight="0.32977462" />
       <window_info anchor="bottom" id="Version Control" order="11" sideWeight="0.49965635" weight="0.32977462" />
-      <window_info anchor="bottom" id="Floobits" order="12" />
+      <window_info anchor="bottom" id="Floobits" order="12" sideWeight="0.49965635" weight="0.32977462" />
       <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.020618556" />
       <window_info anchor="right" id="Maven" order="3" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
@@ -424,6 +422,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/profiles_api/views.py</url>
+          <line>438</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/profiles_rest_api$manage.coverage" NAME="manage Coverage Results" MODIFIED="1584195148816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -635,10 +644,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/permissions.py">
+    <entry file="file://$PROJECT_DIR$/profiles_api/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+        <state relative-caret-position="3026">
+          <caret line="178" selection-start-line="178" selection-end-line="178" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -648,9 +660,19 @@
     <entry file="file://$PROJECT_DIR$/profiles_api/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9843">
+          <caret line="579" selection-start-line="579" selection-end-line="579" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -658,10 +680,17 @@
     <entry file="file://$PROJECT_DIR$/profiles_api/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/permissions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="36" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="e#0#37#0" expanded="true" />
           </folding>
@@ -670,30 +699,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
+        <state relative-caret-position="663">
+          <caret line="108" selection-start-line="108" selection-end-line="108" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="568" column="12" lean-forward="true" selection-start-line="568" selection-start-column="12" selection-end-line="568" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="135" column="32" lean-forward="true" selection-start-line="135" selection-start-column="32" selection-end-line="135" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

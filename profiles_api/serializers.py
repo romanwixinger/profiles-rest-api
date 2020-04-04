@@ -67,7 +67,7 @@ class QuestionSerializer(serializers.ModelSerializer):
         fields = ('id', 'created_on', 'topic', 'subtopic', 'dependencies',
                   'question', 'correctAnswers', 'appendix', 'hint', 'imageSrc',
                   'user_profile', 'validation')
-        extra_kwargs = {'user_profile': {'read_only': True}, 'appendix':{'required': False}}
+        extra_kwargs = {'user_profile': {'read_only': True}, 'appendix': {'required': False}}
 
 
 class AnswerSerializer(serializers.ModelSerializer):

@@ -361,7 +361,7 @@ class QuestionView(APIView):
         imageSrc = request.data['imageSrc'] if 'imageSrc' in request.data else None
 
         if dependencies is not None and dependencies != "":
-            dependencies_string = dependencies.split(',')
+            dependencies_string = dependencies.split(';')
             for dependency_string in dependencies_string:
                 filter_dict = {'name': dependency_string}
                 try:
@@ -436,22 +436,22 @@ class CustomSubtopicView(APIView):
 
         if user is None or user.id == '':
             return Response(data='User not defined', status=400)
-        else:
-            topic = models.Topic.objects.get_or_create(
-                name=topic_name,
-                user_profile_id=user.id
-            )[0]
 
-            subtopic = models.Subtopic.objects.get_or_create(
-                topic=topic,
-                name=request.data['name'],
-                html=request.data['html'],
-                user_profile_id=user.id
-            )[0]
+        topic = models.Topic.objects.get_or_create(
+            name=topic_name,
+            user_profile_id=user.id
+        )[0]
 
-            serializer = serializers.SubTopicSerializer(subtopic)
+        subtopic = models.Subtopic.objects.get_or_create(
+            topic=topic,
+            name=request.data['name'],
+            html=request.data['html'],
+            user_profile_id=user.id
+        )[0]
 
-            return Response(data=serializer.data, status=201)
+        serializer = serializers.SubTopicSerializer(subtopic)
+
+        return Response(data=serializer.data, status=201)
 
 
 class TopicView(APIView):
