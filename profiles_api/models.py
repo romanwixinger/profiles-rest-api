@@ -162,18 +162,20 @@ class Answer(models.Model):
         if validation == 'multipleStrings':
             answerList = self.answers.split(';')
             correctAnswerList = self.question.correctAnswers.split(';')
-            wrongAnswers = []
-            for i in range(answerList.count()):
+            wrongAnswerList = []
+            for i in range(len(answerList)):
                 if answerList[i] != correctAnswerList[i]:
-                    wrongAnswers.append(i)
-            if wrongAnswers.count() == 0:
+                    wrongAnswerList.append(str(i+1))
+            if len(wrongAnswerList) == 0:
                 self.correct = True
-            elif wrongAnswers.count() == 1:
+            elif len(wrongAnswerList) == 1:
                 self.correct = False
-                self.comment = "Das Antwortfeld " + ', '.join(wrongAnswers) + " ist noch nicht korrekt ausgefüllt."
+                separator = ', '
+                self.comment = str("Das Antwortfeld " + separator.join(wrongAnswerList) + " ist noch nicht korrekt ausgefüllt.")
             else:
                 self.correct = False
-                self.comment = "Die Antwortfelder " + ', '.join(wrongAnswers) + " sind noch nicht korrekt ausgefüllt."
+                separator = ', '
+                self.comment = "Die Antwortfelder " + separator.join(wrongAnswerList) + " sind noch nicht korrekt ausgefüllt."
 
         # Single fractions
         if validation == 'singleFraction':
