@@ -4,11 +4,6 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
 
-from profiles_api.topic.topic_model import Topic
-from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.answer.answer_model import Answer
-from profiles_api.test.test_model import Test
-
 
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
