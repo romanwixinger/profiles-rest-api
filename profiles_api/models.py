@@ -5,6 +5,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
 import re
 
+from profiles_api.topic.topic_model import Topic
+
 
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
@@ -70,19 +72,6 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.status_text
-
-
-class Topic(models.Model):
-    """Topic"""
-    user_profile = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        """Return the model as a string"""
-        return self.name
 
 
 class Subtopic(models.Model):

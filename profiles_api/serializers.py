@@ -41,15 +41,6 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
-class TopicSerializer(serializers.ModelSerializer):
-    """Serializes topics"""
-
-    class Meta:
-        model = models.Topic
-        fields = ('id', 'user_profile', 'name')
-        extra_kwargs = {'user_profile': {'read_only': True}}
-
-
 class SubTopicSerializer(serializers.ModelSerializer):
     """Serializes subtopics"""
 
