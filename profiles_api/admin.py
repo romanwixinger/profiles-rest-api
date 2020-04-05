@@ -7,6 +7,7 @@ from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.question.question_model import Question
 from profiles_api.answer.answer_model import Answer
 from profiles_api.test.test_model import Test
+from profiles_api.completed_test.completed_test_model import CompletedTest
 
 
 admin.site.register(models.UserProfile)
@@ -16,6 +17,6 @@ admin.site.register(Topic)
 admin.site.register(Subtopic)
 admin.site.register(Answer)
 admin.site.register(Test)
-admin.site.register(models.CompletedTest)
+admin.site.register(CompletedTest)
 admin.site.register(models.TheoryPage)
 
