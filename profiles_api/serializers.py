@@ -41,16 +41,6 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
-class AnswerSerializer(serializers.ModelSerializer):
-    """Serializes answers"""
-
-    class Meta:
-        model = models.Answer
-        fields = ('id', 'user_profile', 'created_on', 'question',
-                  'duration', 'answers', 'correct', 'skipped', 'comment')
-        extra_kwargs = {'user_profile': {'read_only': True}}
-
-
 class TestSerializer(serializers.ModelSerializer):
     """Serializes tests"""
 
