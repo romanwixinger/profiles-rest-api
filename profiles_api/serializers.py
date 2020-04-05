@@ -39,13 +39,3 @@ class ProfileFeedItemSerializer(serializers.ModelSerializer):
         model = models.ProfileFeedItem
         fields = ('id', 'user_profile', 'status_text', 'created_on')
         extra_kwargs = {'user_profile': {'read_only': True}}
-
-
-class TheoryPageSerializer(serializers.ModelSerializer):
-    """Serializes theory page"""
-
-    class Meta:
-        model = models.TheoryPage
-        fields = ('id', 'user_profile', 'created_on', 'updated_on', 'topic', 'subtopic', 'title', 'html', 'test')
-        extra_kwargs = {'user_profile': {'read_only': True}}
-

@@ -76,23 +76,4 @@ class ProfileFeedItem(models.Model):
         return self.status_text
 
 
-class TheoryPage(models.Model):
-    """Theory page"""
-    user_profile = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    created_on = models.DateTimeField(auto_now_add=True)
-    updated_on = models.DateTimeField(auto_now_add=True)
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=True)
-    subtopic = models.ForeignKey(Subtopic, on_delete=models.CASCADE, blank=True)
-    title = models.CharField(max_length=255)
-    html = models.CharField(max_length=1024, blank=True)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=True)
-
-    def __str__(self):
-        """Return the model as a string"""
-        return self.title
-
-
 

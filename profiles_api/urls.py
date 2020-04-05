@@ -10,6 +10,7 @@ from profiles_api.question import question_api_view
 from profiles_api.answer import answer_api_view
 from profiles_api.test import test_api_view
 from profiles_api.completed_test import completed_test_api_view
+from profiles_api.theory_page import theory_page_api_view
 
 
 router = DefaultRouter()
@@ -22,7 +23,7 @@ router.register('topic', topic_api_view.TopicViewSet)
 router.register('answer', answer_api_view.AnswerViewSet)
 router.register('test', test_api_view.TestViewSet)
 router.register('completedTest', completed_test_api_view.CompletedTestViewSet)
-router.register('theoryPage', views.TheoryPageViewSet)
+router.register('theoryPage',  theory_page_api_view.TheoryPageViewSet)
 
 
 urlpatterns = [

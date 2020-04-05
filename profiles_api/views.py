@@ -126,16 +126,3 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user"""
         serializer.save(user_profile=self.request.user)
 
-
-class TheoryPageViewSet(viewsets.ModelViewSet):
-    """Handles creating, reading and updating theory pages"""
-    authentication_classes = (TokenAuthentication,)
-    serializer_class = serializers.TheoryPageSerializer
-    queryset = models.TheoryPage.objects.all()
-    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
-
-    def perform_create(self, serializer):
-        """Sets the user profile to the logged in user"""
-        serializer.save(user_profile=self.request.user)
-
-
