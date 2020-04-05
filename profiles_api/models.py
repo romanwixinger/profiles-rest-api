@@ -6,6 +6,7 @@ from django.conf import settings
 import re
 
 from profiles_api.topic.topic_model import Topic
+from profiles_api.subtopic.subtopic_model import Subtopic
 
 
 class UserProfileManager(BaseUserManager):
@@ -72,22 +73,6 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.status_text
-
-
-class Subtopic(models.Model):
-    """Subtopic"""
-    user_profile = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    name = models.CharField(max_length=255)
-    html = models.CharField(max_length=1024, blank=True)
-    """topic = models.ManyToManyField(Topic)"""
-    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
-
-    def __str__(self):
-        """Return the model as a string"""
-        return self.name
 
 
 class Question(models.Model):
