@@ -8,6 +8,7 @@ from profiles_api.topic import topic_api_view
 from profiles_api.subtopic import subtopic_api_view
 from profiles_api.question import question_api_view
 from profiles_api.answer import answer_api_view
+from profiles_api.test import test_api_view
 
 
 router = DefaultRouter()
@@ -18,7 +19,7 @@ router.register('question', question_api_view.QuestionViewSet)
 router.register('subtopic', subtopic_api_view.SubtopicViewSet)
 router.register('topic', topic_api_view.TopicViewSet)
 router.register('answer', answer_api_view.AnswerViewSet)
-router.register('test', views.TestViewSet)
+router.register('test', test_api_view.TestViewSet)
 router.register('completedTest', views.CompletedTestViewSet)
 router.register('theoryPage', views.TheoryPageViewSet)
 

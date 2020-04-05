@@ -3,12 +3,11 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 from django.conf import settings
-import re
 
 from profiles_api.topic.topic_model import Topic
 from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.question.question_model import Question
 from profiles_api.answer.answer_model import Answer
+from profiles_api.test.test_model import Test
 
 
 class UserProfileManager(BaseUserManager):
@@ -75,22 +74,6 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.status_text
-
-
-class Test(models.Model):
-    """Generic test"""
-    user_profile = models.ForeignKey(
-    settings.AUTH_USER_MODEL,
-    on_delete=models.CASCADE
-    )
-    questions = models.ManyToManyField(Question)
-    title = models.CharField(max_length=255)
-    html = models.CharField(max_length=1024, blank=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        """Return the model as a string"""
-        return self.title
 
 
 class CompletedTest(models.Model):
