@@ -12,7 +12,6 @@ class Subtopic(models.Model):
     )
     name = models.CharField(max_length=255)
     html = models.CharField(max_length=1024, blank=True)
-    """topic = models.ManyToManyField(Topic)"""
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
 
     def __str__(self):

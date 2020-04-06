@@ -1,20 +1,19 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from profiles_api import permissions
 
-from profiles_api.subtopic.subtopic_serializer import SubTopicSerializer
+from profiles_api.subtopic.subtopic_serializer import SubtopicSerializer, SubtopicDeserializer
 from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.topic.topic_model import Topic
 
 
 class SubtopicViewSet(viewsets.ModelViewSet):
     """Handles creating, reading and updating subtopics"""
     authentication_classes = (TokenAuthentication,)
-    serializer_class = SubTopicSerializer
+    serializer_class = SubtopicSerializer
     queryset = Subtopic.objects.all()
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
@@ -48,7 +47,6 @@ class SubtopicViewSet(viewsets.ModelViewSet):
         return subtopics
 
 
-
 class CustomSubtopicView(APIView):
     """Custom view for Subtopic"""
     authentication_classes = (TokenAuthentication,)
@@ -77,34 +75,23 @@ class CustomSubtopicView(APIView):
             subtopics = subtopics[:max(0, min(int(number), subtopics.count()))]
 
         if subtopics.count() > 0:
-            serializer = SubTopicSerializer(subtopics, many=True)
+            serializer = SubtopicSerializer(subtopics, many=True)
             return Response(data=serializer.data, status=200)
         else:
             return Response(status=204)
 
     def post(self, request):
         """Create a new subtopic. Additionally a new topic is created if necessary"""
-        topic_name = request.data['topic']
-        if topic_name is None or topic_name == '':
-            return Response(data='Topic not defined', status=400)
 
-        user = self.request.user
+        deserializer = SubtopicDeserializer(data=request.data)
 
-        if user is None or user.id == '':
-            return Response(data='User not defined', status=400)
+        if deserializer.is_valid():
+            deserializer.validated_data['user_id'] = self.request.user.id
+            subtopic = deserializer.create(deserializer.validated_data)
+            subtopic.save()
 
-        topic = Topic.objects.get_or_create(
-            name=topic_name,
-            user_profile_id=user.id
-        )[0]
+            serializer = SubtopicSerializer(subtopic)
+            return Response(data=serializer.data, status=201)
 
-        subtopic = Subtopic.objects.get_or_create(
-            topic=topic,
-            name=request.data['name'],
-            html=request.data['html'],
-            user_profile_id=user.id
-        )[0]
+        return Response(deserializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = SubTopicSerializer(subtopic)
-
-        return Response(data=serializer.data, status=201)
