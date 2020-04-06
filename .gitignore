@@ -136,3 +136,7 @@ dmypy.json
 eb-package.zip
 static/
 @romanwixinger
+
+# Intellij s
+.idea/workspace.xml
+
