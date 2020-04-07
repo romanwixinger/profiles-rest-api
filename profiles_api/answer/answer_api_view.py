@@ -57,8 +57,8 @@ class AnswerView(APIView):
         if answers.count() > 0:
             serializer = AnswerSerializer(answers, many=True)
             return Response(data=serializer.data, status=200)
-        else:
-            return Response(status=204)
+
+        return Response(status=204)
 
     def post(self, request):
         """Create a new answer"""
