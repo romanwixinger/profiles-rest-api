@@ -14,7 +14,7 @@ class Answer(models.Model):
     )
     created_on = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    duration = models.DecimalField(max_digits=8, decimal_places=2, blank=True) # in seconds
+    duration = models.DecimalField(max_digits=8, decimal_places=2, blank=True)  # in seconds
     answers = models.CharField(max_length=1024, blank=True)
 
     # Fields set after correction
@@ -31,6 +31,7 @@ class Answer(models.Model):
         validation = self.question.validation
 
         if self.skipped is not None and self.skipped:
+            self.correct = False
             return
         if self.answers is None or self.answers == '':
             self.correct = False

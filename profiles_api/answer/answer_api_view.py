@@ -1,14 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from profiles_api import permissions
 
-from profiles_api.answer.answer_serializer import AnswerSerializer
+from profiles_api.answer.answer_serializer import AnswerSerializer, AnswerDeserializer
 from profiles_api.answer.answer_model import Answer
-from profiles_api.question.question_model import Question
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -62,41 +61,23 @@ class AnswerView(APIView):
 
     def post(self, request):
         """Create a new answer"""
+
         user = self.request.user
-        skipped = False
-        duration = self.request.data['duration'] if 'duration' in self.request.data else 0
-
-        if user is None or user == '':
+        if user is None or user.id == '':
             return Response(data='User not defined', status=400)
-        if 'question' in self.request.data and self.request.data['question'] != '':
-            filter_dict = {'id': self.request.data['question']}
-            question = Question.objects.filter(**filter_dict)[0]
-            if question is None:
-                return Response(data='Question does not exist', status=400)
+
+        deserializer = AnswerDeserializer(data=request.data)
+
+        if deserializer.is_valid():
+            validated_data = deserializer.validated_data
+            validated_data['user_id'] = user.id
+            answer = deserializer.create(validated_data)
+            answer.performCorrection()
+
+            answer.save()
+
+            serializer = AnswerSerializer(answer)
+            return Response(data=serializer.data, status=201)
+
         else:
-            return Response(data='Question not defined', status=400)
-        if 'answers' in self.request.data and self.request.data['answers'] != '':
-            answers = self.request.data['answers']
-        else:
-            if 'skipped' in self.request.data and not bool(self.request.data['skipped']):
-                return Response(data='Answers not defined', status=400)
-            else:
-                answers = ""
-                skipped = True
-
-        answer = Answer.objects.get_or_create(
-            user_profile_id=user.id,
-            question=question,
-            answers=answers,
-            duration=duration,
-            skipped=skipped,
-            correct=False
-        )[0]
-
-        if 'comment' in self.request.data and self.request.data['comment'] != '':
-            answer.comment = self.request.data['comment']
-
-        answer.performCorrection()
-
-        serializer = AnswerSerializer(answer)
-        return Response(data=serializer.data, status=201)
+            return Response(deserializer.errors, status=status.HTTP_400_BAD_REQUEST)
