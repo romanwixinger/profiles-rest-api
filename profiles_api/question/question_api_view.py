@@ -81,26 +81,18 @@ class QuestionView(APIView):
 
     def post(self, request):
         """Create a new question. Additionally a new topic and subtopic is created if necessary"""
-        print("Post")
 
-        # Check user
         user = self.request.user
 
-        print("Second")
-
         if user is None or user.id == '':
-            print("User error")
             return Response(data='User not defined', status=400)
 
         deserializer = QuestionDeserializer(data=request.data)
 
         if deserializer.is_valid():
-            print("is valid")
             deserializer.validated_data['user_id'] = self.request.user.id
             question = deserializer.create(deserializer.validated_data)
             question.save()
-
-            print("Test")
 
             serializer = QuestionSerializer(question)
             return Response(data=serializer.data, status=201)
