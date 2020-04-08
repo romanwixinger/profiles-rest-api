@@ -20,3 +20,28 @@ class CompletedTestViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         """Sets the user profile to the logged in user"""
         serializer.save(user_profile=self.request.user)
+
+
+class CompletedTestView(APIView):
+    """Handles getting and creating completed tests"""
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def get(self, request):
+        """Get a completed test"""
+
+        filter_dict = {}
+        completed_test_id = self.request.query_params.get('id', None)
+
+        if completed_test_id is not None:
+            filter_dict['id'] = completed_test_id
+
+        completed_test = CompletedTest.objects.filter(**filter_dict)[0] \
+            if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
+        if completed_test is not None:
+            serializer = CompletedTestSerializer(completed_test)
+            return Response(data=serializer.data, status=201)
+
+        return Response(status=204)
+
+
