@@ -1,12 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from profiles_api import permissions
 
-from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer
+from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer, CompletedTestDeserializer
 from profiles_api.completed_test.completed_test_model import CompletedTest
 
 
@@ -36,12 +36,37 @@ class CompletedTestView(APIView):
         if completed_test_id is not None:
             filter_dict['id'] = completed_test_id
 
-        completed_test = CompletedTest.objects.filter(**filter_dict)[0] \
-            if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
+        completed_test = CompletedTest.objects.filter(**filter_dict)[0]
+
         if completed_test is not None:
             serializer = CompletedTestSerializer(completed_test)
             return Response(data=serializer.data, status=201)
 
         return Response(status=204)
 
+    def post(self, request):
+        """Create a completed test"""
+
+        deserializer = CompletedTestDeserializer(data=request.data)
+
+        if deserializer.is_valid():
+
+            user = self.request.user
+            validated_data = deserializer.validated_data
+            validated_data['user_id'] = user.id
+            completed_test = deserializer.create(validated_data)
+
+            if completed_test is None:
+                return Response(
+                    deserializer.errors,
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
+            serializer = CompletedTestSerializer(completed_test)
+            return Response(data=serializer.data, status=201)
+
+        return Response(
+            deserializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
