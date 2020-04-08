@@ -46,10 +46,7 @@ class CompletedTestDeserializer(serializers.Serializer):
             for answer_item in answers_list:
                 answer_deserializer = AnswerDeserializer(data=answer_item)
                 if not answer_deserializer.is_valid():
-                    print("Die Antwort war nicht gültig!")
                     return None
-
-                print("Die Antwort war gültig!")
 
                 answer_validated_data = answer_deserializer.validated_data
                 answer_validated_data['user_id'] = validated_data['user_id']
@@ -62,7 +59,6 @@ class CompletedTestDeserializer(serializers.Serializer):
                 perform_correction(answer)
                 answer.save()
 
-                print(type(answer))
                 completed_test.answers.add(answer)
 
         if 'duration' in validated_data:
