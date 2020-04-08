@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from profiles_api.test.test_model import Test
 from profiles_api.question.question_model import Question
+from profiles_api.models import UserProfile
 
 
 class TestDeserializer(serializers.Serializer):
@@ -17,7 +18,7 @@ class TestDeserializer(serializers.Serializer):
         if 'questions' not in data or data['questions'] == '':
             raise serializers.ValidationError("No questions provided.")
 
-        question_list = data['queestions'].split(';')
+        question_list = data['questions'].split(';')
 
         for question_str in question_list:
             if not question_str.isdigit():
@@ -29,10 +30,16 @@ class TestDeserializer(serializers.Serializer):
         """Create a new test"""
 
         html = validated_data['html'] if 'html' in validated_data else ""
+        filter_dict = {'id': validated_data['user_id']}
+        user = UserProfile.objects.filter(**filter_dict)[0]
+
         test = Test(
+            user_profile=user,
             title=validated_data['title'],
             html=html
         )
+
+        test.save()
 
         question_list = validated_data['questions'].split(';')
 
@@ -44,7 +51,7 @@ class TestDeserializer(serializers.Serializer):
             else:
                 test.questions.add(question)
 
-        return question
+        return test
 
 
 class TestSerializer(serializers.ModelSerializer):

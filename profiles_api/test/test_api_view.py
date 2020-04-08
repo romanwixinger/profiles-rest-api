@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -34,7 +34,7 @@ class TestView(APIView):
         title = self.request.query_params.get('title', None)
 
         filter_dict = {}
-        if id is not None and test_id.isdigit():
+        if test_id is not None and test_id.isdigit():
             print("true")
             filter_dict['id'] = int(test_id)
         if title is not None:
@@ -55,3 +55,24 @@ class TestView(APIView):
 
         serializer = TestSerializer(tests, many=True)
         return Response(data=serializer.data, status=200)
+
+    def post(self, request):
+        """Create new test"""
+
+        deserializer = TestDeserializer(data=request.data)
+
+        if deserializer.is_valid():
+
+            user = self.request.user
+            validated_data = deserializer.validated_data
+            validated_data['user_id'] = user.id
+            test = deserializer.create(validated_data)
+
+            serializer = TestSerializer(test)
+            return Response(data=serializer.data, status=201)
+
+        return Response(
+            deserializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
