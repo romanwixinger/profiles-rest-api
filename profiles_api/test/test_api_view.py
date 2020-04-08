@@ -22,7 +22,7 @@ class TestViewSet(viewsets.ModelViewSet):
         serializer.save(user_profile=self.request.user)
 
 
-class TestView(APIView)
+class TestView(APIView):
     """Handles creating and reading tests"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
@@ -30,11 +30,15 @@ class TestView(APIView)
     def get(self, request):
         """Retrieves selected tests"""
 
+        test_id = self.request.query_params.get('id', None)
+        title = self.request.query_params.get('title', None)
+
         filter_dict = {}
-        if 'topic_id' in request.data and request.data['topic_id'].isdigit():
-            filter_dict['id'] = int(request.data['topic_id'])
-        if 'title' in request.data:
-            filter_dict['title'] = request.data['title']
+        if id is not None and test_id.isdigit():
+            print("true")
+            filter_dict['id'] = int(test_id)
+        if title is not None:
+            filter_dict['title'] = title
 
         tests = Test.objects.filter(**filter_dict)
 

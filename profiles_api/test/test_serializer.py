@@ -7,9 +7,9 @@ from profiles_api.question.question_model import Question
 class TestDeserializer(serializers.Serializer):
     """Deserializes tests"""
 
-    questions = serializers.charField(max_length=1024)
-    title = serializers.charField(max_length=255)
-    html = serializers.charField(max_length=1024, required=False)
+    questions = serializers.CharField(max_length=1024)
+    title = serializers.CharField(max_length=255)
+    html = serializers.CharField(max_length=1024, required=False)
 
     def validate(self, data):
         """Validate the data"""

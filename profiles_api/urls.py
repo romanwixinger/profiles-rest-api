@@ -33,5 +33,6 @@ urlpatterns = [
     path('custom-question/', question_api_view.QuestionView.as_view()),
     path('custom-topic/', topic_api_view.TopicView.as_view()),
     path('custom-answer/', answer_api_view.AnswerView.as_view()),
+    path('custom-test/', test_api_view.TestView.as_view()),
     path('', include(router.urls))
 ]
