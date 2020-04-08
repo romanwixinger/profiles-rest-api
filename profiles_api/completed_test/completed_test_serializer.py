@@ -20,11 +20,11 @@ class CompletedTestDeserializer(serializers.Serializer):
         if 'answers' in data:
 
             answers_list = data['answers']
-            answer_item = answers_list
 
-            answer_deserializer = AnswerDeserializer(data=answer_item)
-            if not answer_deserializer.is_valid():
-                raise serializers.ValidationError('Invalid answers given.')
+            for answer_item in answers_list:
+                answer_deserializer = AnswerDeserializer(data=answer_item)
+                if not answer_deserializer.is_valid():
+                    raise serializers.ValidationError('Invalid answers given.')
 
         return data
 
@@ -43,27 +43,27 @@ class CompletedTestDeserializer(serializers.Serializer):
         if 'answers' in validated_data:
             answers_list = validated_data['answers']
 
-            answer_item = answers_list
-            answer_deserializer = AnswerDeserializer(data=answer_item)
-            if not answer_deserializer.is_valid():
-                print("Die Antwort war nicht gültig!")
-                return None
+            for answer_item in answers_list:
+                answer_deserializer = AnswerDeserializer(data=answer_item)
+                if not answer_deserializer.is_valid():
+                    print("Die Antwort war nicht gültig!")
+                    return None
 
-            print("Die Antwort war gültig!")
+                print("Die Antwort war gültig!")
 
-            answer_validated_data = answer_deserializer.validated_data
-            answer_validated_data['user_id'] = validated_data['user_id']
+                answer_validated_data = answer_deserializer.validated_data
+                answer_validated_data['user_id'] = validated_data['user_id']
 
-            answer = answer_deserializer.create(answer_validated_data)
+                answer = answer_deserializer.create(answer_validated_data)
 
-            if answer is None:
-                return None
+                if answer is None:
+                    return None
 
-            perform_correction(answer)
-            answer.save()
+                perform_correction(answer)
+                answer.save()
 
-            print(type(answer))
-            completed_test.answers.add(answer)
+                print(type(answer))
+                completed_test.answers.add(answer)
 
         if 'duration' in validated_data:
             completed_test.duration = validated_data['duration']
