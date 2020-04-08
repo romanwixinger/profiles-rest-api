@@ -68,6 +68,12 @@ class TestView(APIView):
             validated_data['user_id'] = user.id
             test = deserializer.create(validated_data)
 
+            if test is None:
+                return Response(
+                    deserializer.errors,
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
+
             serializer = TestSerializer(test)
             return Response(data=serializer.data, status=201)
 
