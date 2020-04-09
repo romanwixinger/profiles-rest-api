@@ -8,6 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer, CompletedTestDeserializer
 from profiles_api.completed_test.completed_test_model import CompletedTest
+from profiles_api.completed_test.completed_test_service import get_recommendations
 
 
 class CompletedTestViewSet(viewsets.ModelViewSet):
@@ -35,11 +36,13 @@ class CompletedTestView(APIView):
 
         if completed_test_id is not None:
             filter_dict['id'] = completed_test_id
-
-        completed_test = CompletedTest.objects.filter(**filter_dict)[0]
+            completed_test = CompletedTest.objects.filter(**filter_dict)[0]
+        else:
+            completed_test = CompletedTest.objects.filter(**{})
 
         if completed_test is not None:
-            serializer = CompletedTestSerializer(completed_test)
+
+            serializer = CompletedTestSerializer(completed_test, many=True)
             return Response(data=serializer.data, status=201)
 
         return Response(status=204)
@@ -61,6 +64,10 @@ class CompletedTestView(APIView):
                     deserializer.errors,
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
+
+            get_recommendations(completed_test)
+
+            completed_test.save()
 
             serializer = CompletedTestSerializer(completed_test)
             return Response(data=serializer.data, status=201)
