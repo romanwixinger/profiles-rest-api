@@ -19,7 +19,6 @@ def get_recommended_theory_pages(user: UserProfile, number: int = 2):
         for theory_page in theory_pages:
             recommended_theory_pages.append(theory_page.id)
 
-    print(recommended_theory_pages[:number])
     return recommended_theory_pages[:number]
 
 
