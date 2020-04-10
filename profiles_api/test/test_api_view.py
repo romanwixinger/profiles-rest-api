@@ -8,6 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.test.test_serializer import TestSerializer, TestDeserializer
 from profiles_api.test.test_model import Test
+from profiles_api.test.test_service import get_recommended_tests
 
 
 class TestViewSet(viewsets.ModelViewSet):
@@ -81,4 +82,34 @@ class TestView(APIView):
             deserializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class RecommendedTestView(APIView):
+    """Recommends tests bases on results of completed tests"""
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def get(self, request):
+        """Retrieves recommended tests"""
+
+        tests_id = get_recommended_tests(request.user)
+        tests = Test.objects.filter(id__in=tests_id)
+        if tests is None:
+            return Response(
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        start = self.request.query_params.get('start', None)
+        number = self.request.query_params.get('number', None)
+
+        if start is not None:
+            tests = tests[min(abs(int(start)), tests.count()):]
+        if number is not None:
+            tests = tests[:max(0, min(int(number), tests.count()))]
+
+        if tests.count() == 0:
+            return Response(status=204)
+
+        serializer = TestSerializer(tests, many=True)
+        return Response(data=serializer.data, status=200)
 

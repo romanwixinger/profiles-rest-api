@@ -34,6 +34,7 @@ urlpatterns = [
     path('custom-topic/', topic_api_view.TopicView.as_view()),
     path('custom-answer/', answer_api_view.AnswerView.as_view()),
     path('custom-test/', test_api_view.TestView.as_view()),
+    path('recommended-test/', test_api_view.RecommendedTestView.as_view()),
     path('custom-completed-test/', completed_test_api_view.CompletedTestView.as_view()),
     path('custom-theory-page/', theory_page_api_view.TheoryPageView.as_view()),
     path('recommended-theory-page/', theory_page_api_view.RecommendedTheoryPageView.as_view()),
