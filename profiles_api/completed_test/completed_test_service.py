@@ -6,7 +6,7 @@ from profiles_api.subtopic.subtopic_model import Subtopic
 def get_recommendations(completed_test: CompletedTest, number: int = 2):
     """Evaluates answers and recommends subtopics accordingly"""
 
-    suptopic_weight = 2
+    subtopic_weight = 2
     dependency_weight = 1
 
     answers = completed_test.answers.all()
@@ -18,9 +18,9 @@ def get_recommendations(completed_test: CompletedTest, number: int = 2):
             subtopic_dict[str(answer.question.subtopic_id)] = {"correct": 0, "incorrect": 0}
 
         if answer.correct:
-            subtopic_dict[str(answer.question.subtopic_id)]["correct"] += suptopic_weight
+            subtopic_dict[str(answer.question.subtopic_id)]["correct"] += subtopic_weight
         else:
-            subtopic_dict[str(answer.question.subtopic_id)]["incorrect"] += suptopic_weight
+            subtopic_dict[str(answer.question.subtopic_id)]["incorrect"] += subtopic_weight
 
         if answer.question.dependencies is None or answer.question.dependencies == []:
             continue
