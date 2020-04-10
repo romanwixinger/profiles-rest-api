@@ -8,6 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.theory_page.theory_page_serializer import TheoryPageSerializer, TheoryPageDeserializer
 from profiles_api.theory_page.theory_page_model import TheoryPage
+from profiles_api.theory_page.theory_page_service import get_recommended_theory_pages
 
 
 class TheoryPageViewSet(viewsets.ModelViewSet):
@@ -29,6 +30,8 @@ class TheoryPageView(APIView):
 
     def get(self, request):
         """Get certain theory pages"""
+
+        _ = get_recommended_theory_pages(request.user)
 
         theory_page_id = self.request.query_params.get('id', None)
         title = self.request.query_params.get('title', None)
@@ -81,4 +84,34 @@ class TheoryPageView(APIView):
             deserializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+
+class RecommendedTheoryPageView(APIView):
+    """Get recommended theory pages"""
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def get(self, request):
+        """Get recommended theory pages"""
+
+        theory_pages_id = get_recommended_theory_pages(request.user)
+        theory_pages = TheoryPage.objects.filter(id__in=theory_pages_id)
+        if theory_pages is None:
+            return Response(
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        start = self.request.query_params.get('start', None)
+        number = self.request.query_params.get('number', None)
+
+        if start is not None:
+            theory_pages = theory_pages[min(abs(int(start)), theory_pages.count()):]
+        if number is not None:
+            theory_pages = theory_pages[:max(0, min(int(number), theory_pages.count()))]
+
+        if theory_pages.count() == 0:
+            return Response(status=204)
+
+        serializer = TheoryPageSerializer(theory_pages, many=True)
+        return Response(data=serializer.data, status=200)
 
