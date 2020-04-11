@@ -140,3 +140,6 @@ static/
 # Intellij s
 .idea/workspace.xml
 
+# pipenv lock file
+Pipfile.lock
+

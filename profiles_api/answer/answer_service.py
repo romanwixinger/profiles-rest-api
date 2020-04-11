@@ -1,77 +1,71 @@
 import re
+from typing import List, Set
 
 from profiles_api.answer.answer_model import Answer
 
 
-def perform_correction(answer: Answer):
-    """Corrects the answer"""
-    validation = answer.question.validation
+class AnswerService:
 
-    if answer.skipped is not None and answer.skipped:
-        answer.correct = False
-        return
-    if answer.answers is None or answer.answers == '':
-        answer.correct = False
-        return
+    @classmethod
+    def perform_correction(cls, answer: Answer) -> Answer:
+        validation_type = answer.question.validation_type
+        if not answer.answers:
+            answer.correct = False
+            return answer
 
-    # Standard validation
-    if validation is None or validation == '':
+        if not validation_type:
+            return cls.__standard_validation(answer)
+
+        if validation_type == 'multipleString':
+            answer = cls.__multiple_string_validation(answer)
+            return answer
+
+        if validation_type == 'singleFraction':
+            answer = cls.__single_fraction_validation(answer)
+            return answer
+
+        raise ValueError("Validation type of question is not valid")
+
+    @classmethod
+    def __standard_validation(cls, answer: Answer) -> Answer:
         answer.correct = answer.answers == answer.question.correctAnswers
-        return
+        return answer
 
-    # Multiple strings
-    if validation == 'multipleStrings':
-        answer_list = answer.answers.split(';')
-        correct_answer_list = answer.question.correctAnswers.split(';')
-        wrong_answer_list = []
-        for i in range(len(answer_list)):
-            if answer_list[i] != correct_answer_list[i]:
-                wrong_answer_list.append(str(i+1))
-        if len(wrong_answer_list) == 0:
+    @classmethod
+    def __multiple_string_validation(cls, answer: Answer) -> Answer:
+        wrong_answers = cls.__compare_answers(answer.answers.split(';'), answer.question.correctAnswers.split(';'))
+        if not wrong_answers:
             answer.correct = True
-        elif len(wrong_answer_list) == 1:
+            return answer
+
+        answer.correct = False
+        answer.comment = "Die Antwortfelder {} sind nicht korrekt".format(wrong_answers)
+
+        return answer
+
+    @classmethod
+    def __compare_answers(cls, user_answers: List[str], correct_answers: List[str]) -> Set[int]:
+        wrong_answer_list = Set[int]
+        for i in range(len(user_answers)):
+            if user_answers[i] != correct_answers[i]:
+                wrong_answer_list.append(i + 1)
+        return wrong_answer_list
+
+    @classmethod
+    def __single_fraction_validation(cls, answer: Answer) -> Answer:
+        try:
+            user_answer = cls.__parse_float(answer.answers, "[/:]")
+            correct_answer = cls.__parse_float(answer.question.correctAnswers, "(frac|/)")
+            answer.correct = abs(user_answer - correct_answer) <= 1e-3
+        except Exception:
+            answer.comment = "Diese Frage konnte nicht korrigiert werden."
             answer.correct = False
-            separator = ', '
-            answer.comment = str("Das Antwortfeld " + separator.join(wrong_answer_list) + " ist noch nicht korrekt ausgefüllt.")
-        else:
-            answer.correct = False
-            separator = ', '
-            answer.comment = "Die Antwortfelder " + separator.join(wrong_answer_list) + " sind noch nicht korrekt ausgefüllt."
+        finally:
+            return answer
 
-    # Single fractions
-    if validation == 'singleFraction':
-        answerFloat = 1
-        correctAnswerFloat = 1
-
-        # Convert decimal or int to float
-        if not bool(re.search('/', answer.answers)) and not bool(re.search(':', answer.answers)):
-            answerFloat = float(answer.answers)
-        # Convert fraction to float
-        else:
-            try:
-                p = re.compile(r'\d+').findall(answer.answers)
-                nominator = int(p[0])
-                denominator = int(p[1])
-                answerFloat = float(nominator/denominator)
-                print(answerFloat)
-            except:
-                self.comment = "Die Frage konnte nicht korrigiert werden."
-                return
-        if not bool(re.search('frac', answer.question.correctAnswers)) and not bool(re.search('/', answer.answers)):
-            correctAnswerFloat = float(answer.question.correctAnswers)
-        # Convert fraction to float
-        else:
-            try:
-                p = re.compile(r'\d+').findall(answer.question.correctAnswers)
-                nominator = int(p[0])
-                denominator = int(p[1])
-                correctAnswerFloat = float(nominator/denominator)
-                print(answerFloat)
-            except:
-                answer.comment = "Die Frage konnte nicht korrigiert werden."
-                return
-
-        answer.correct = abs(answerFloat - correctAnswerFloat) <= 1e-3
-        return
-    else:
-        return
+    @classmethod
+    def __parse_float(cls, float_str: str, regex: str) -> float:
+        if not bool(re.search(regex, float_str)):
+            return float(float_str)
+        p = re.compile(r'\d+').findall(float_str)
+        return float(int(p[0]) / int(p[1]))

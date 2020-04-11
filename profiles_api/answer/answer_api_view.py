@@ -8,7 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.answer.answer_serializer import AnswerSerializer, AnswerDeserializer
 from profiles_api.answer.answer_model import Answer
-from profiles_api.answer.answer_service import perform_correction
+from profiles_api.answer.answer_service import AnswerService
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -73,7 +73,7 @@ class AnswerView(APIView):
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
             answer = deserializer.create(validated_data)
-            perform_correction(answer)
+            AnswerService.perform_correction(answer)
 
             answer.save()
 

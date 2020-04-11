@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.answer.answer_serializer import AnswerDeserializer
-from profiles_api.answer.answer_service import perform_correction
 from profiles_api.models import UserProfile
 
 
@@ -56,7 +55,7 @@ class CompletedTestDeserializer(serializers.Serializer):
                 if answer is None:
                     return None
 
-                perform_correction(answer)
+                # perform_correction(answer)
                 answer.save()
 
                 completed_test.answers.add(answer)
