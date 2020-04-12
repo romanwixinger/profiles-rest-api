@@ -126,29 +126,3 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user"""
         serializer.save(user_profile=self.request.user)
 
-
-class UserProfileQuestionViewSet(viewsets.ModelViewSet):
-    """Handles creating, reading and updating question items"""
-    authentication_classes = (TokenAuthentication,)
-    serializer_class = serializers.QuestionFeedItemSerializer
-    queryset = models.QuestionFeedItem.objects.all()
-    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
-
-    def perform_create(self, serializer):
-        """Sets the user profile to the logged in user"""
-        serializer.save(user_profile=self.request.user)
-
-    def get_queryset(self):
-        """Retrieve only selected number of questions"""
-        allquestions = models.QuestionFeedItem.objects.all()
-        number = self.request.query_params.get('number', None)
-        queryset = []
-
-        if number is not None:
-            for i in range(min(allquestions.count(), int(number))):
-                queryset.append(allquestions[i])
-            return queryset
-        else:
-            return allquestions
-
-

@@ -8,7 +8,7 @@ from django.conf import settings
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
 
-    def create_user(self, email, name, password=None):
+    def create_user(self, email: str, name: str, password=None):
         """Create a new user profile"""
         if not email:
             raise ValueError('User must have an email address')
@@ -71,22 +71,4 @@ class ProfileFeedItem(models.Model):
         return self.status_text
 
 
-class QuestionFeedItem(models.Model):
-    """Question"""
-    user_profile = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    created_on = models.DateTimeField(auto_now_add=True)
-    topic = models.CharField(max_length=255)
-    subtopic = models.CharField(max_length=255)
-    dependencies = models.CharField(max_length=255, blank=True)
-    question = models.CharField(max_length=1024)
-    correctAnswers = models.CharField(max_length=255)
-    appendix = models.CharField(max_length=255, blank=True)
-    hint = models.CharField(max_length=1024, blank=True)
-    imageSrc = models.CharField(max_length=1024, blank=True)
 
-    def __str__(self):
-        """Return the model as a string"""
-        return self.question
