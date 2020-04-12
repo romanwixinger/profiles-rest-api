@@ -24,3 +24,7 @@ class Answer(models.Model):
         """Return the model as a string"""
         return self.answers
 
+
+
+
+

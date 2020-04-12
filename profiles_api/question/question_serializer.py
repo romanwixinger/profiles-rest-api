@@ -15,7 +15,9 @@ class QuestionDeserializer(serializers.Serializer):
     dependencies = serializers.CharField(max_length=255, default=None)
     question = serializers.CharField(max_length=1024)
     correctAnswers = serializers.CharField(max_length=1024)
-    validation = serializers.CharField(max_length=255, required=False)
+    validation_type = serializers.ChoiceField([('standardValidation', ''),
+                                               ('multipleStrings', 'multipleStrings'),
+                                               ('singleFraction', 'singleFraction')])
     appendix = serializers.CharField(max_length=1024, required=False)
     hint = serializers.CharField(max_length=1024, required=False)
     imageSrc = serializers.CharField(max_length=1024, required=False)
@@ -91,7 +93,7 @@ class QuestionDeserializer(serializers.Serializer):
 
         dependencies = validated_data['dependencies'] if 'dependencies' in validated_data else None
         dependencies_id = validated_data['dependencies_id'] if 'dependencies_id' in validated_data else None
-        validation = validated_data['validation'] if 'validation' in validated_data else None
+        validation_type = validated_data['validation_type'] if 'validation_type' in validated_data else None
         appendix = validated_data['appendix'] if 'appendix' in validated_data else None
         hint = validated_data['hint'] if 'hint' in validated_data else None
         imageSrc = validated_data['imageSrc'] if 'imageSrc' in validated_data else None
@@ -116,8 +118,8 @@ class QuestionDeserializer(serializers.Serializer):
                 except:
                     pass
 
-        if validation is not None and validation != '':
-            question.validation = validation
+        if validation_type is not None and validation_type != '':
+            question.validation_type = validation_type
         if appendix is not None and appendix != '':
             question.appendix = appendix
         if hint is not None and hint != '':
@@ -135,5 +137,5 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ('id', 'created_on', 'topic', 'subtopic', 'dependencies',
                   'question', 'correctAnswers', 'appendix', 'hint', 'imageSrc',
-                  'user_profile', 'validation')
+                  'user_profile', 'validation_type')
         extra_kwargs = {'user_profile': {'read_only': True}, 'appendix': {'required': False}}

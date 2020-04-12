@@ -17,7 +17,9 @@ class Question(models.Model):
     dependencies = models.ManyToManyField(Subtopic, related_name='question_dependencies', blank=True)
     question = models.CharField(max_length=1024)
     correctAnswers = models.CharField(max_length=1024)
-    validation_type = models.CharField(max_length=255, blank=True)
+    validation_type = models.CharField(max_length=255, choices=[('standardValidation', ''),
+                                                                ('multipleStrings', 'multipleStrings'),
+                                                                ('singleFraction', 'singleFraction')])
     appendix = models.CharField(max_length=1024, blank=True)
     hint = models.CharField(max_length=1024, blank=True)
     imageSrc = models.CharField(max_length=1024, blank=True)
