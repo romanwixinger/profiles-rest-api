@@ -136,3 +136,10 @@ dmypy.json
 eb-package.zip
 static/
 @romanwixinger
+
+# Intellij s
+.idea/workspace.xml
+
+# pipenv lock file
+Pipfile.lock
+
