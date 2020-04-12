@@ -32,10 +32,10 @@ class AnswerDeserializer(serializers.Serializer):
 
         if 'answers' in data and data['answers'] != '':
             return data
-        elif 'skipped' in data and data['skipped']:
+        if 'skipped' in data and data['skipped']:
             return data
-        else:
-            raise serializers.ValidationError("No answer was provided and the question was not skipped.")
+
+        raise serializers.ValidationError("No answer was provided and the question was not skipped.")
 
     def create(self, validated_data):
         """Creates an answer"""
