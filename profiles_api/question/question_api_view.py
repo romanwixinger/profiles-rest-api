@@ -90,7 +90,7 @@ class QuestionView(APIView):
         deserializer = QuestionDeserializer(data=request.data)
 
         if deserializer.is_valid():
-            deserializer.validated_data['user_id'] = self.request.user.id
+            deserializer.validated_data['user_id'] = user.id
             question = deserializer.create(deserializer.validated_data)
             question.save()
 
