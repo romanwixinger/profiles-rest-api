@@ -1,11 +1,11 @@
-**Create User Profile**
+**Get user profiles**
 ----
   This view handles getting user profiles.
 
 * **URL**
 
-  /profile/ <br>
-  /profile/id/
+  profile/ <br>
+  profile/id/
 
 * **Method:**
 

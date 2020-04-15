@@ -5,6 +5,7 @@ from django.conf import settings
 from profiles_api.topic.topic_model import Topic
 from profiles_api import models
 
+
 class TopicSerializer(serializers.ModelSerializer):
     """Serializes topics"""
 

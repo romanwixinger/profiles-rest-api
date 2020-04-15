@@ -1,56 +1,70 @@
-**Title**
+**Create and retrieve topics**
 ----
-  <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
-
+  This is a simple for for creating and retrieving topics. 
 * **URL**
 
-  <_The URL Structure (path only, no root url)_>
+  custom-topic/
 
 * **Method:**
-  
-  <_The request type_>
 
-  `GET` | `POST` | `DELETE` | `PUT`
+  `GET` | `POST` 
   
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._> 
+   For `GET` the following query-parameters exist: 
 
-   **Required:**
- 
-   `id=[integer]`
-
-   **Optional:**
- 
-   `photo_id=[alphanumeric]`
+   **Optional:** <br>
+   
+    Specify the index of the first topic to be retrieved: <br>
+    `start=[integer]` 
+       
+    Specify the maximum number of topics to be retrieved:  <br>
+    `number=[integer]` 
 
 * **Data Params**
 
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
-
+    The body should be a JSON object with the key 'name'. <br> An authorization header has to be provided. The key is 'token' 
+    and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
+    
 * **Success Response:**
-  
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+  * **Code:** 201 Created <br />
+    **Content:** `{'id': 20, 'user_profile': 6, 'name': 'Division of fractions'}`
+    
+  * **Code:** 200 OK <br />
+    **Content:** `[{"id": 1, "user_profile": 1, "name": "Rechenoperationen"}, ... , {"id": 6, "user_profile": 1, 
+                 "name": "Brüche"}]`
+  
+  * **Code:** 204 No Content <br />
  
 * **Error Response:**
 
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
-
   * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+    **Content:** `{ detail : "Authentication credentials were not provided." }`
 
   OR
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+  * **Code:** 400 Bad Request <br />
+    **Content:** `{"name": ["This field may not be blank."]}`
 
 * **Sample Call:**
 
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._> 
-
+    ```python
+    import requests
+    base_url = 'http://127.0.0.1:8000/api/'
+    topic = {'name': 'Division of fractions'}
+    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
+    headers =  {'Authorization': 'token ' + token}
+    topic_post = requests.post(url=base_url + "custom-topic/", 
+                               json=topic, 
+                               headers=headers)
+     ``` 
+     
+     This request should get a status 201 Created and print:
+     ```python
+     {'id': 20, 'user_profile': 6, 'name': 'Division of fractions'}
+     ```
+    
 * **Notes:**
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
+    This is not the only request that can create topics, there are others that create topics on-the-fly.

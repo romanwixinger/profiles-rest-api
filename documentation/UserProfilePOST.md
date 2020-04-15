@@ -1,10 +1,10 @@
-**Create User Profile**
+**Create user profile**
 ----
   This view handles creating user profiles.
 
 * **URL**
 
-  /profile
+  profile/
 
 * **Method:**
 
