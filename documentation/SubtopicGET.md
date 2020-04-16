@@ -42,9 +42,13 @@
   * **Code:** 201 Created <br />
     **Content:** `{"id": 44, "user_profile": 1, "name": "Brüche subtrahieren", "html": "<h1> Brüche subtrahieren </h1>",
      "topic": 22}`
+     
+  OR
     
   * **Code:** 200 OK <br />
     **Content:** `[{ "id": 13, "user_profile": 1, "name": "Brüche addieren", "html": "", "topic": 12}]`
+                  
+  OR
                   
   * **Code:** 204 No Content <br />
  

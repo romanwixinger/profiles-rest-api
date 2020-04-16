@@ -31,9 +31,13 @@
   * **Code:** 201 Created <br />
     **Content:** `{'id': 20, 'user_profile': 6, 'name': 'Division of fractions'}`
     
+  OR  
+   
   * **Code:** 200 OK <br />
     **Content:** `[{"id": 1, "user_profile": 1, "name": "Rechenoperationen"}, ... , {"id": 6, "user_profile": 1, 
                  "name": "Brüche"}]`
+                 
+  OR
   
   * **Code:** 204 No Content <br />
  

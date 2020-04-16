@@ -21,8 +21,6 @@
 
 * **Success Response:**
   
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
-
   * **Code:** 200 OK <br />
     **Content:** `{"token": "0f7XXXXXXXXXXXXXXXXXXXXXXXXXXXXX6e"}`
  
