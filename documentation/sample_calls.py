@@ -92,6 +92,12 @@ print(subtopic_get.json())
 """Answer"""
 
 print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
+answer =  {"question": 32, "duration": 5.5, "answers": "5/2", "skipped": False, 
+           "comment": "I am not sure about the answer."}
+answer_post = requests.post(url=base_url + "custom-answer/", 
+                            headers=headers,
+                            json=answer)
+print(answer_post.json())
 
 
 
