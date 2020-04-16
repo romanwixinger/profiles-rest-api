@@ -1,6 +1,6 @@
 **Create answers**
 ----
-  This is a simple for creating answers. The corrected answer is send as answer. 
+  This is a simple for for creating answers. 
   
 * **URL**
 
@@ -12,8 +12,7 @@
   
 *  **URL Params**
 
-    There are no query-parameters. 
-  
+    There are no query-parameters.
   
 * **Data Params**
 
