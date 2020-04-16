@@ -20,12 +20,12 @@ class AnswerDeserializer(serializers.Serializer):
     """Deserializes answers"""
 
     question = serializers.IntegerField()
-    duration = serializers.FloatField(required=False)
-    answers = serializers.CharField(max_length=1024, required=False)
+    duration = serializers.FloatField(required=False, default=0)
+    answers = serializers.CharField(max_length=1024, required=False, allow_blank=True)
 
     correct = serializers.BooleanField(required=False)
     skipped = serializers.BooleanField(default=False)
-    comment = serializers.CharField(max_length=1024, required=False)
+    comment = serializers.CharField(max_length=1024, required=False, allow_blank=True)
 
     def validate(self, data):
         """Validates the data: Checks whether an answer was given or the question was skipped"""
