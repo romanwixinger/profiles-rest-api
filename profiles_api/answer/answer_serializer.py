@@ -44,7 +44,10 @@ class AnswerDeserializer(serializers.Serializer):
         user_profile = UserProfile.objects.filter(**filter_dict)[0]
 
         filter_dict = {'id': validated_data['question']}
-        question = Question.objects.filter(**filter_dict)[0]
+        question = Question.objects.filter(**filter_dict)[0] \
+            if Question.objects.filter(**filter_dict).count() > 0 else None
+        if question is None:
+            raise ValueError("The question for this answer does not exist.")
 
         answer = Answer(
             question=question,
