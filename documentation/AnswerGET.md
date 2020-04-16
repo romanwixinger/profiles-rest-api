@@ -1,6 +1,6 @@
-**Create answers**
+**Retrieve answers**
 ----
-  This is a simple for for creating answers. 
+  This request is for retrieving answers of the logged in user.
   
 * **URL**
 
@@ -8,43 +8,50 @@
 
 * **Method:**
 
-  `POST` 
+  `GET` 
   
 *  **URL Params**
 
-    There are no query-parameters.
+   **Optional:** <br>
+            
+   Specify the index of the first answer to be retrieved: <br>
+   `start=[integer]`
+              
+   Specify the maximum number of answers to be retrieved:  <br>
+   `number=[integer]`
+   
+   Specify the question of the answer by its id: <br>
+   `question_id=[integer]`
+              
+   Specify the topic of the answer by its id: <br>
+   `topic_id=[integer]`
+              
+   Specify the subtopic of the answer by its id: <br>
+   `subtopic_id=[integer]`
+  
   
 * **Data Params**
 
     An authorization header has to be provided. The key is 'token' 
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
     
-    The body should be a JSON object of the following form: <br>
-    
-    `{"question": 1, "duration": 12.5, "answers": "5/2", "skipped": false, "comment": "I am not sure about the answer."}` <br>
-    
-    The field 'question' is strictly required, 'comment' and 'duration' are optional. The field 'answers' can only be left out 
-    if the field 'skipped' is set to true. 
-    
+    No body has to be provided. 
     
 * **Success Response:**
 
-  * **Code:** 201 Created <br />
-    **Content:** ` {"id": 107, "user_profile": 1, "created_on": "2020-04-16T20:24:12.371529Z", "question": 32, 
+  * **Code:** 200 OK <br />
+    **Content:** `{"id": 107, "user_profile": 1, "created_on": "2020-04-16T20:24:12.371529Z", "question": 32, 
     "duration": "12.50", "answers": "5/2", "correct": false, "skipped": false, 
     "comment": "I am not sure about the answer."}`
     
+ OR
+ 
+  *  **Code:** 204 No Content <br />
  
 * **Error Response:**
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ detail : "Authentication credentials were not provided." }`
-
-  OR
-    
-  If one of the conditions on the data mentioned above is not fulfilled, a response similar to the following is send. 
-  * **Code:** 400 Bad Request <br />
-    **Content:** `{ "non_field_errors": [ "No answer was provided and the question was not skipped."]}`
 
 * **Sample Call:**
 
@@ -53,20 +60,18 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    answer =  {"question": 32, "duration": 5.5, "answers": "5/2", "skipped": False, 
-               "comment": "I am not sure about the answer."}
-    answer_post = requests.post(url=base_url + "custom-answer/", 
-                                headers=headers,
-                                json=answer)
-    print(answer_post.json())
+    answer_get = requests.get(url=base_url + "custom-answer/", 
+                              headers=headers,
+                              params={'number': 1})
+    print(answer_get.json())
      ``` 
      
      This request should get a status 201 Created and print:
      ```python
-     {'id': 118, 'user_profile': 6, 'created_on': '2020-04-16T20:54:39.944256Z', 'question': 32, 'duration': '5.50', 
-   'answers': '5/2', 'correct': False, 'skipped': False, 'comment': 'I am not sure about the answer.'}
+     [{'id': 107, 'user_profile': 1, 'created_on': '2020-04-16T20:24:12.371529Z', 'question': 32, 'duration': '12.50', 
+     'answers': '5/2', 'correct': False, 'skipped': False, 'comment': 'I am not sure about the answer.'}]
      ```
     
 * **Notes:**
 
-    This is not the only request that can create answers. 
+    It is not possible to retrieve answers given by other users.  
