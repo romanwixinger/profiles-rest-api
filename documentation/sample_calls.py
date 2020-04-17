@@ -217,6 +217,7 @@ print("\n" + 10 * "*" + "\n")
 
 theory_page_get = requests.get(url=base_url + "custom-theory-page/", 
                                  headers=headers)
+print(theory_page_get.json())
 
 
 
