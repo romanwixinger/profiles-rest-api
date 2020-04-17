@@ -57,7 +57,13 @@ class CompletedTestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            completed_test = deserializer.create(validated_data)
+            try:
+                completed_test = deserializer.create(validated_data)
+            except ValueError:
+                return Response(
+                    {"answers": "The question to one of the answers does not exist."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if completed_test is None:
                 return Response(
