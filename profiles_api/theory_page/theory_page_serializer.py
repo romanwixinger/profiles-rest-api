@@ -10,8 +10,6 @@ from profiles_api.test.test_model import Test
 class TheoryPageDeserializer(serializers.Serializer):
     """Deserializes theory pages"""
 
-    topic = serializers.CharField(max_length=255, required=False)
-    topic_id = serializers.IntegerField(required=False)
     subtopic = serializers.CharField(max_length=255, required=False)
     subtopic_id = serializers.IntegerField(required=False)
     title = serializers.CharField(max_length=255, required=True)
@@ -40,15 +38,6 @@ class TheoryPageDeserializer(serializers.Serializer):
         filter_dict = {'id': user_id}
         user = UserProfile.objects.filter(**filter_dict)[0]
 
-        if 'topic_id' in validated_data:
-            filter_dict = {'id': validated_data['topic_id']}
-            topic = Topic.objects.filter(**filter_dict)[0] if Topic.objects.filter(**filter_dict).count() > 0 else None
-        else:
-            filter_dict = {'name': validated_data['topic']}
-            topic = Topic.objects.filter(**filter_dict)[0] if Topic.objects.filter(**filter_dict).count() > 0 else None
-        if topic is None:
-            raise ValueError("The topic does not exist.")
-
         if 'subtopic_id' in validated_data:
             filter_dict = {'id': validated_data['subtopic_id']}
             subtopic = Subtopic.objects.filter(**filter_dict)[0] if Subtopic.objects.filter(**filter_dict).count() > 0 else None
@@ -58,6 +47,7 @@ class TheoryPageDeserializer(serializers.Serializer):
         if subtopic is None:
             raise ValueError("The subtopic does not exist.")
 
+        topic = subtopic.topic
         html = validated_data['html'] if 'html' in validated_data else ""
 
         if 'test_id' in validated_data:
