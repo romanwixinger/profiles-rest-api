@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.db.models.query import QuerySet
 
 from profiles_api import permissions
 
@@ -41,7 +42,7 @@ class CompletedTestView(APIView):
         else:
             completed_test = CompletedTest.objects.filter(**{})
 
-        if completed_test is not None and type(completed_test) is list:
+        if completed_test is not None and isinstance(completed_test, QuerySet):
             serializer = CompletedTestSerializer(completed_test, many=True)
             return Response(data=serializer.data, status=200)
 
