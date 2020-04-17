@@ -69,7 +69,14 @@ class TheoryPageView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            theory_page = deserializer.create(validated_data)
+
+            try:
+                theory_page = deserializer.create(validated_data)
+            except ValueError:
+                return Response(
+                    data={"topic_id": "The given topic, subtopic or test does not exist."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if theory_page is None:
                 return Response(

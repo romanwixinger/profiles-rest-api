@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.db.models.query import QuerySet
 
 from profiles_api import permissions
 
@@ -36,14 +37,18 @@ class CompletedTestView(APIView):
 
         if completed_test_id is not None:
             filter_dict['id'] = completed_test_id
-            completed_test = CompletedTest.objects.filter(**filter_dict)[0]
+            completed_test = CompletedTest.objects.filter(**filter_dict)[0] \
+                if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
         else:
             completed_test = CompletedTest.objects.filter(**{})
 
-        if completed_test is not None:
-
+        if completed_test is not None and isinstance(completed_test, QuerySet):
             serializer = CompletedTestSerializer(completed_test, many=True)
-            return Response(data=serializer.data, status=201)
+            return Response(data=serializer.data, status=200)
+
+        if completed_test is not None:
+            serializer = CompletedTestSerializer(completed_test)
+            return Response(data=serializer.data, status=200)
 
         return Response(status=204)
 
@@ -57,7 +62,13 @@ class CompletedTestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            completed_test = deserializer.create(validated_data)
+            try:
+                completed_test = deserializer.create(validated_data)
+            except ValueError:
+                return Response(
+                    {"answers": "The question to one of the answers does not exist."},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if completed_test is None:
                 return Response(

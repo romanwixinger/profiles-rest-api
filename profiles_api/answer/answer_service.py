@@ -13,7 +13,7 @@ class AnswerService:
             answer.correct = False
             return answer
 
-        if not validation_type:
+        if not validation_type or validation_type == 'standardValidation':
             return cls.__standard_validation(answer)
 
         if validation_type == 'multipleString':

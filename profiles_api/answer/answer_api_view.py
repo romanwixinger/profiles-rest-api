@@ -72,7 +72,12 @@ class AnswerView(APIView):
         if deserializer.is_valid():
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            answer = deserializer.create(validated_data)
+
+            try:
+                answer = deserializer.create(validated_data)
+            except ValueError:
+                return Response(data={"question": "The question for this answer does not exist."}, status=400)
+
             AnswerService.perform_correction(answer)
 
             answer.save()

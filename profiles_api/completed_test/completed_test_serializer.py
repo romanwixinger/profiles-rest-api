@@ -50,7 +50,10 @@ class CompletedTestDeserializer(serializers.Serializer):
                 answer_validated_data = answer_deserializer.validated_data
                 answer_validated_data['user_id'] = validated_data['user_id']
 
-                answer = answer_deserializer.create(answer_validated_data)
+                try:
+                    answer = answer_deserializer.create(answer_validated_data)
+                except ValueError:
+                    raise ValueError("The question for this answer does not exist.")
 
                 if answer is None:
                     return None
