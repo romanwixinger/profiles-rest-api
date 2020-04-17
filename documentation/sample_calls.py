@@ -138,6 +138,31 @@ print(answer_get.json())
 
 
 
+"""Test"""
+
+print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
+
+# Test POST
+test =  {
+            "questions": "31;32;33;34",
+            "title": "Brüche subtrahieren",
+            "html": "<h1> Brüche subtrahieren </h1>"
+        }
+test_post = requests.post(url=base_url + "custom-test/",
+                          headers=headers,
+                          json=test
+                          )
+print(test_post.json())
+print("\n" + 10 * "*" + "\n")
+
+test_get = requests.get(url=base_url + "custom-test/",
+                          headers=headers,
+                          params={'number': 1}
+                          )
+print(test_get.json())
+
+
+
 
 
 
