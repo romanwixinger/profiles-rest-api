@@ -22,7 +22,7 @@ router.register('subtopic', subtopic_api_view.SubtopicViewSet)
 router.register('topic', topic_api_view.TopicViewSet)
 router.register('answer', answer_api_view.AnswerViewSet)
 router.register('test', test_api_view.TestViewSet)
-router.register('completedTest', completed_test_api_view.CompletedTestViewSet)
+router.register('completed-test', completed_test_api_view.CompletedTestViewSet)
 router.register('theoryPage',  theory_page_api_view.TheoryPageViewSet)
 
 
