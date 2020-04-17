@@ -1,6 +1,6 @@
-**Create completed test**
+**Retrieve completed test**
 ----
-  This is a simple for creating completed tests.
+  This is a simple for retrieving completed tests. 
   
 * **URL**
 
@@ -8,97 +8,56 @@
 
 * **Method:**
 
-  `POST` 
+  `GET` 
   
 *  **URL Params**
 
-    There are no query-parameters. 
+    **Optional:** <br>
+                    
+    Specify the id of the completed test: <br>
+    `id=[integer]`
   
   
 * **Data Params**
 
     An authorization header has to be provided. The key is 'token' 
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
-    
-    The body should be a JSON object of the following form: <br>
-    
-    ```json
-     {
-         "answers": 
-     [{
-             "question": 31,
-             "duration": "21.00",
-             "answers": "1/3",
-             "skipped": false
-     },
-     {
-             "question": 32,
-             "duration": "24.00",
-             "answers": "1/2",
-             "skipped": false
-     }],
-         "state": "First question answered",
-         "duration": "12.00",
-         "comment": "This questions are easy!"
-     }
-    ```
-    
-    Here 'answers' is not required and may be an empty list. This will be a useful feature when HTTP PATCH is released. 
-    The answers have to be given in the form specified in the POST method of Answer. Both fields 'state' and 'duration' 
-    are required and may not be blank. The field 'comment' is optional but may not be blank. 
  
     
 * **Success Response:**
 
-  * **Code:** 201 Created <br />
+  * **Code:** 200 OK <br />
     **Content:** 
     ```json
-    {
-        "id": 26,
-        "user_profile": 1,
-        "answers": [
-            127,
-            128
-        ],
-        "state": "First question answered",
-        "created_on": "2020-04-17T20:37:28.593765Z",
-        "updated_on": "2020-04-17T20:37:28.593765Z",
-        "duration": "12.00",
-        "comment": "",
-        "recommendedSubtopics": [
-            13
-        ]
-    }
-
+    [
+        {
+            "id": 25,
+            "user_profile": 1,
+            "answers": [
+                107,
+                108,
+                109
+            ],
+            "state": "started",
+            "created_on": "2020-04-17T20:28:57.908528Z",
+            "updated_on": "2020-04-17T20:28:57.908528Z",
+            "duration": "105.00",
+            "comment": "I did not answer all questions.",
+            "recommendedSubtopics": []
+         }
+    ]
     ```
+    
+   OR
+   
+   * **Code:** 204 No Content <br />
  
 * **Error Response:**
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ detail : "Authentication credentials were not provided." }`
 
-  OR
-    
-  If one of the conditions on the data mentioned above is not fulfilled, a response similar to the following is send. 
-  * **Code:** 400 Bad Request <br />
-    **Content:** 
-    ```json
-    {
-        "state": [
-            "This field may not be blank."
-        ],
-        "duration": [
-            "This field may not be null."
-        ]
-    }
-    ```
-    
-    OR
-    
-    * **Code:** 400 Bad Request <br />
-        **Content:** `{"answers": "The question to one of the answers does not exist."}`
 
-    
 * **Sample Call:**
 
    ```python
