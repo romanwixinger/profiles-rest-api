@@ -163,6 +163,36 @@ print(test_get.json())
 
 
 
+"""CompletedTest"""
+
+print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
+
+# CompletedTest POST
+completed_test = {
+    "answers": 
+                [{
+                        "question": 31,
+                        "duration": "21.00",
+                        "answers": "1/3",
+                        "skipped": False
+                },
+                {
+                        "question": 32,
+                        "duration": "24.00",
+                        "answers": "1/2",
+                        "skipped": False
+                }],
+    "state": "First question answered",
+    "duration": "12.00"
+}
+completed_test_post = requests.post(url=base_url + "custom-completed-test/",
+                                    headers=headers,
+                                    json=completed_test
+                                    )
+print(completed_test_post.json())
+print("\n" + 10 * "*" + "\n")
+
+                
 
 
 

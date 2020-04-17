@@ -1,10 +1,10 @@
-**Create tests**
+**Create completed test**
 ----
-  This is a simple for creating tests. 
+  This is a simple for creating completed tests.
   
 * **URL**
 
-  custom-test/
+  custom-completed-test/
 
 * **Method:**
 
@@ -24,15 +24,29 @@
     
     ```json
      {
-            "questions": "31;32;33;34",
-            "title": "Brüche subtrahieren",
-            "html": "<h1> Brüche subtrahieren </h1>"
+         "answers": 
+     [{
+             "question": 31,
+             "duration": "21.00",
+             "answers": "1/3",
+             "skipped": false
+     },
+     {
+             "question": 32,
+             "duration": "24.00",
+             "answers": "1/2",
+             "skipped": false
+     }],
+         "state": "First question answered",
+         "duration": "12.00",
+         "comment": "This questions are easy!"
      }
     ```
     
-    The field 'questions' and "title" are strictly required and may not be blank. The field 'html' is optional but 
-    must not be left blank. In the field 'questions', the ids of the questions have to be separated by semicolons as 
-    delimiters.  
+    Here 'answers' is not required and may be an empty list. This will be a useful feature when HTTP PATCH is released. 
+    The answers have to be given in the form specified in the POST method of Answer. Both fields 'state' and 'duration' 
+    are required and may not be blank. The field 'comment' is optional but may not be blank. 
+ 
     
 * **Success Response:**
 
@@ -40,18 +54,22 @@
     **Content:** 
     ```json
     {
-            "id": 10,
-            "user_profile": 1,
-            "questions": [
-                31,
-                32,
-                33,
-                34
-            ],
-            "title": "Brüche subtrahieren",
-            "html": "<h1> Brüche subtrahieren </h1>",
-            "created_on": "2020-04-17T19:39:31.271382Z"
-        }
+        "id": 26,
+        "user_profile": 1,
+        "answers": [
+            127,
+            128
+        ],
+        "state": "First question answered",
+        "created_on": "2020-04-17T20:37:28.593765Z",
+        "updated_on": "2020-04-17T20:37:28.593765Z",
+        "duration": "12.00",
+        "comment": "",
+        "recommendedSubtopics": [
+            13
+        ]
+    }
+
     ```
  
 * **Error Response:**
@@ -66,14 +84,20 @@
     **Content:** 
     ```json
     {
-        "questions": [
-            "This field is required."
+        "state": [
+            "This field may not be blank."
         ],
-        "title": [
-            "This field is required."
+        "duration": [
+            "This field may not be null."
         ]
     }
     ```
+    
+    OR
+    
+    * **Code:** 400 Bad Request <br />
+        **Content:** `{"answers": "The question to one of the answers does not exist."}`
+
     
 * **Sample Call:**
 
@@ -82,29 +106,46 @@
    base_url = 'http://127.0.0.1:8000/api/'
    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
    headers =  {'Authorization': 'token ' + token}
-   test =  {
-         "questions": "31;32;33;34",
-         "title": "Brüche subtrahieren",
-         "html": "<h1> Brüche subtrahieren </h1>"
-    }
-   test_post = requests.post(url=base_url + "custom-test/",
-                          headers=headers,
-                          json=test)
-  print(test_post.json())
+   completed_test = {
+      "answers": 
+                [{
+                        "question": 31,
+                        "duration": "21.00",
+                        "answers": "1/3",
+                        "skipped": False
+                },
+                {
+                        "question": 32,
+                        "duration": "24.00",
+                        "answers": "1/2",
+                        "skipped": False
+                }],
+      "state": "First question answered",
+      "duration": "12.00"
+      }
+  completed_test_post = requests.post(url=base_url + "custom-completed-test/",
+                                    headers=headers,
+                                    json=completed_test
+                                    )
+  print(completed_test_post.json())
   ``` 
      
   This request should get a status 201 Created and print:
   ```python
   {
-      'id': 13, 
+      'id': 31, 
       'user_profile': 6, 
-      'questions': [31, 32, 33, 34], 
-      'title': 'Brüche subtrahieren', 
-      'html': '<h1> Brüche subtrahieren </h1>', 
-      'created_on': '2020-04-17T19:50:11.711909Z'
+      'answers': [132, 133], 
+      'state': 'First question answered', 
+      'created_on': '2020-04-17T21:10:08.800956Z', 
+      'updated_on': '2020-04-17T21:10:08.800956Z', 
+      'duration': '12.00', 
+      'comment': '', 
+      'recommendedSubtopics': [13]
   }
   ```
     
 * **Notes:**
 
-    This is not the only request that can create answers. 
+    This request is intended to be used with a corresponding HTTP PATCH request. However, this method is not 
+    released yet.
