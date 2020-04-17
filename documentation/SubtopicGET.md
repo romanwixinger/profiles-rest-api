@@ -1,6 +1,6 @@
 **Retrieve subtopics**
 ----
-  This is a simple for for retrieving subtopics. 
+  This is a request for retrieving subtopics. 
   
 * **URL**
 

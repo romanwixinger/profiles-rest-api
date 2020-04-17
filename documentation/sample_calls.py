@@ -140,7 +140,7 @@ print(answer_get.json())
 
 """Test"""
 
-print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
+print("\n" + 30 * "*" + " Test " + 30 * "*" + "\n")
 
 # Test POST
 test =  {
@@ -165,7 +165,7 @@ print(test_get.json())
 
 """CompletedTest"""
 
-print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
+print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 
 # CompletedTest POST
 completed_test = {
@@ -192,10 +192,31 @@ completed_test_post = requests.post(url=base_url + "custom-completed-test/",
 print(completed_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
-                
+completed_test_get = requests.get(url=base_url + "custom-completed-test/",
+                                    headers=headers
+                                    )
+print(completed_test_get.json())
 
 
+"""TheoryPage"""
 
+print("\n" + 30 * "*" + " TheoryPage " + 30 * "*" + "\n")
+
+# TheoryPage POST
+theory_page = {
+        "subtopic": "Folgen",
+        "title": "Folgen",
+        "html": "<h1> Folgen </h1>",
+        "test": "Brüche subtrahieren"
+}
+theory_page_post = requests.post(url=base_url + "custom-theory-page/", 
+                                 headers=headers,
+                                 json=theory_page)
+print(theory_page_post.json())
+print("\n" + 10 * "*" + "\n")
+
+theory_page_get = requests.get(url=base_url + "custom-theory-page/", 
+                                 headers=headers)
 
 
 

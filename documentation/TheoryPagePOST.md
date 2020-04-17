@@ -1,56 +1,69 @@
-**Retrieve subtopics**
+**POST theory pages**
 ----
-  This is a simple for for retrieving subtopics. 
+  This is a request for creating theory pages. 
   
 * **URL**
 
-  custom-subtopic/
+  custom-theory-page/
 
 * **Method:**
 
-  `GET' 
+  `POST' 
   
 *  **URL Params**
 
-     **Optional:** <br>
-     
-      Specify the index of the first topic to be retrieved: <br>
-      `start=[integer]`
-       
-      Specify the maximum number of topics to be retrieved:  <br>
-      `number=[integer]`
-       
-      Specify the topic of the subtopic by its name: <br>
-      `topic=[string]`
-       
-      Specify the topic of the subtopic by its id: <br>
-      `topic_id=[integer]`
+   There are no query-parameters.
         
-  
+ 
 * **Data Params**
 
     An authorization header has to be provided. The key is 'token' 
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
     
     The body should be a JSON object of the following form: <br>
-    `{"name": "Brüche addieren", "html": "<h1> Brüche addieren </h1>", "topic": 1}` <br>
-    All the fields are required but 'html' can have an empty string as value.
+    ```json
+    {
+        "subtopic_id": 24,
+        "title": "Folgen",
+        "html": "<h1> Folgen </h1>",
+        "test_id": 11
+    }
+    ```
+    
+    OR
+    
+    ```json
+    {
+        "subtopic": "Folgen",
+        "title": "Folgen",
+        "html": "<h1> Folgen </h1>",
+        "test": "Brüche subtrahieren"
+    }
+    ```
+    
+    At least one of the fields 'subtopic' or 'subtopic_id' has to be filled. Note that 'subtopic' will set the subtopic 
+    to the first subtopic that has the given name. The same goes for the fields 'test' and 'test_id'. The field 'title' 
+    is required and may not be blank. The field 'html' is not required but may not be left blank too. 
+   
     
     
 * **Success Response:**
 
   * **Code:** 201 Created <br />
-    **Content:** `{"id": 44, "user_profile": 1, "name": "Brüche subtrahieren", "html": "<h1> Brüche subtrahieren </h1>",
-     "topic": 22}`
-     
-  OR
-    
-  * **Code:** 200 OK <br />
-    **Content:** `[{ "id": 13, "user_profile": 1, "name": "Brüche addieren", "html": "", "topic": 12}]`
-                  
-  OR
-                  
-  * **Code:** 204 No Content <br />
+    **Content:** 
+    ```json
+    {
+        "id": 8,
+        "user_profile": 1,
+        "created_on": "2020-04-17T22:26:33.743303Z",
+        "updated_on": "2020-04-17T22:26:33.743303Z",
+        "topic": 15,
+        "subtopic": 24,
+        "title": "Folgen",
+        "html": "<h1> Folgen </h1>",
+        "test": 10
+    }
+    ```
  
 * **Error Response:**
 
@@ -60,11 +73,14 @@
   OR
 
   * **Code:** 400 Bad Request <br />
-    **Content:** `{ 
-                      "name": ["This field is required."], 
-                      "html": ["This field is required."], 
-                      "topic": ["This field is required."] 
-                  }`
+    **Content:** `
+    ```json
+    {
+        "title": [
+                  "This field is required."
+                  ]
+    }
+    ```
 
 * **Sample Call:**
 
@@ -73,18 +89,31 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    subtopic_get = requests.get(url=base_url + "custom-subtopic/", 
-                            headers=headers, 
-                            params={'topic_id': 12}
-                            )
-    print(subtopic_get.json())
+    theory_page = {
+        "subtopic": "Folgen",
+        "title": "Folgen",
+        "html": "<h1> Folgen </h1>",
+        "test": "Brüche subtrahieren"
+    }
+    theory_page_post = requests.post(url=base_url + "custom-theory-page/", 
+                                 headers=headers,
+                                 json=theory_page)
+    print(theory_page_post.json())
      ``` 
      
-     This request should get a status 200 OK and print
-     ```python
-      [{'id': 13, 'user_profile': 1, 'name': 'Brüche addieren', 'html': '', 'topic': 12}]     
-     ```
-     if a subtopic with a topic with id 1 exists. Otherwise, one gets a status 204 No Content. 
+    This request should get a status 200 OK and print
+    ```python
+    {
+       'id': 13, 
+       'user_profile': 6, 
+       'created_on': '2020-04-17T22:47:38.025198Z', 
+       'updated_on': '2020-04-17T22:47:38.025198Z', 
+       'topic': 15, 'subtopic': 24, 'title': 
+       'Folgen', 
+       'html': '<h1> Folgen </h1>', 
+       'test': 10
+    }     
+    ```
     
 * **Notes:**
 

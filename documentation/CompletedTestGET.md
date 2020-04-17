@@ -65,31 +65,13 @@
    base_url = 'http://127.0.0.1:8000/api/'
    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
    headers =  {'Authorization': 'token ' + token}
-   completed_test = {
-      "answers": 
-                [{
-                        "question": 31,
-                        "duration": "21.00",
-                        "answers": "1/3",
-                        "skipped": False
-                },
-                {
-                        "question": 32,
-                        "duration": "24.00",
-                        "answers": "1/2",
-                        "skipped": False
-                }],
-      "state": "First question answered",
-      "duration": "12.00"
-      }
-  completed_test_post = requests.post(url=base_url + "custom-completed-test/",
-                                    headers=headers,
-                                    json=completed_test
-                                    )
-  print(completed_test_post.json())
+   completed_test_get = requests.get(url=base_url + "custom-completed-test/",
+                                      headers=headers
+                                      )
+   print(completed_test_get.json())
   ``` 
      
-  This request should get a status 201 Created and print:
+  This request should get a status 200 OK and print:
   ```python
   {
       'id': 31, 
