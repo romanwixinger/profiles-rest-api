@@ -20,7 +20,13 @@
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
     
     The body should be a JSON object of the following form: <br>
-    `{"name": "Brüche addieren", "html": "<h1> Brüche addieren </h1>", "topic": 1}` <br>
+    ```json
+    {
+        "name": "Brüche addieren", 
+        "html": "<h1> Brüche addieren </h1>",
+        "topic": 1
+   }
+    ```
     All the fields are required but 'html' can have an empty string as value.
     
     
@@ -47,11 +53,14 @@
   OR
 
   * **Code:** 400 Bad Request <br />
-    **Content:** `{ 
-                      "name": ["This field is required."], 
-                      "html": ["This field is required."], 
-                      "topic": ["This field is required."] 
-                  }`
+    **Content:** 
+    ```json
+    { 
+        "name": ["This field is required."], 
+        "html": ["This field is required."], 
+        "topic": ["This field is required."] 
+    }
+    ```
 
 * **Sample Call:**
 

@@ -22,15 +22,7 @@
     
     The body should be a JSON object of the following form: <br>
     
-    ```json
-    {
-        "question": 1, 
-        "duration": 12.5, 
-        "answers": "5/2", 
-        "skipped": false, 
-        "comment": "I am not sure about the answer.",
-    }
-    ```
+    `{"question": 1, "duration": 12.5, "answers": "5/2", "skipped": false, "comment": "I am not sure about the answer."}` <br>
     
     The field 'question' is strictly required, 'comment' and 'duration' are optional. The field 'answers' can only be left out 
     if the field 'skipped' is set to true. 
@@ -39,20 +31,10 @@
 * **Success Response:**
 
   * **Code:** 201 Created <br />
-    **Content:** 
-    ```json
-    {
-         "id": 107,
-         "user_profile": 1, 
-         "created_on": "2020-04-16T20:24:12.371529Z", 
-         "question": 32, 
-         "duration": "12.50", 
-         "answers": "5/2", 
-          "correct": false, 
-         "skipped": false, 
-         "comment": "I am not sure about the answer.",
-     }
-    ```
+    **Content:** ` {"id": 107, "user_profile": 1, "created_on": "2020-04-16T20:24:12.371529Z", "question": 32, 
+    "duration": "12.50", "answers": "5/2", "correct": false, "skipped": false, 
+    "comment": "I am not sure about the answer."}`
+    
  
 * **Error Response:**
 
@@ -82,17 +64,8 @@
      
      This request should get a status 201 Created and print:
      ```python
-     {
-          'id': 118,
-          'user_profile': 6, 
-          'created_on': '2020-04-16T20:54:39.944256Z', 
-          'question': 32, 
-          'duration': '5.50', 
-          'answers': '5/2', 
-          'correct': False, 
-          'skipped': False, 
-          'comment': 'I am not sure about the answer.',
-     }
+     {'id': 118, 'user_profile': 6, 'created_on': '2020-04-16T20:54:39.944256Z', 'question': 32, 'duration': '5.50', 
+   'answers': '5/2', 'correct': False, 'skipped': False, 'comment': 'I am not sure about the answer.'}
      ```
     
 * **Notes:**
