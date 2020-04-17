@@ -36,14 +36,18 @@ class CompletedTestView(APIView):
 
         if completed_test_id is not None:
             filter_dict['id'] = completed_test_id
-            completed_test = CompletedTest.objects.filter(**filter_dict)[0]
+            completed_test = CompletedTest.objects.filter(**filter_dict)[0] \
+                if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
         else:
             completed_test = CompletedTest.objects.filter(**{})
 
-        if completed_test is not None:
-
+        if completed_test is not None and type(completed_test) is list:
             serializer = CompletedTestSerializer(completed_test, many=True)
-            return Response(data=serializer.data, status=201)
+            return Response(data=serializer.data, status=200)
+
+        if completed_test is not None:
+            serializer = CompletedTestSerializer(completed_test)
+            return Response(data=serializer.data, status=200)
 
         return Response(status=204)
 
