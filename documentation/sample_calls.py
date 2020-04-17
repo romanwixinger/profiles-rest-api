@@ -18,7 +18,7 @@ base_url = 'http://127.0.0.1:8000/api/'
 print("\n" + 30 * "*" + " User profile " + 30 * "*" + "\n")
 
 # User profile POST
-user_profile = {'email': 'email@email.com','name': 'Name', 'password': 'PW'}
+user_profile = {'email': 'email@email.com', 'name': 'Name', 'password': 'PW'}
 user_profile_post = requests.post(url=base_url + "profile/", json=user_profile)
 print(user_profile_post.json())
 print("\n" + 10 * "*" + "\n")
@@ -89,6 +89,34 @@ print(subtopic_get.json())
 
 
 
+
+"""Question"""
+
+print("\n" + 30 * "*" + " Subtopic " + 30 * "*" + "\n")
+
+# Question POST
+question = {
+        "topic": 12,
+        "subtopic": 13,
+        "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
+        "correctAnswers": "$\\\\frac{15}{7}}$",
+        "validation_type": "standardValidation"
+    }
+question_post = requests.post(url=base_url + "custom-question/",
+                              headers=headers,
+                              json=question)
+print(question_post.json())
+print("\n" + 10 * "*" + "\n")
+
+# Question GET
+question_get = requests.get(url=base_url + "custom-question/", 
+                            headers=headers, 
+                            params={"number": 2}
+                            )
+print(question_get.json())
+
+
+
 """Answer"""
 
 print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
@@ -107,7 +135,6 @@ answer_get = requests.get(url=base_url + "custom-answer/",
                           headers=headers,
                           params={'number': 1})
 print(answer_get.json())
-
 
 
 

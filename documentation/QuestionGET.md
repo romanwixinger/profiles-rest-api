@@ -1,6 +1,6 @@
-**Create questions**
+**Retrieve questions**
 ----
-  This is a simple for creating questions. 
+  This is a simple for getting questions. 
   
 * **URL**
 
@@ -8,11 +8,29 @@
 
 * **Method:**
 
-  `POST` 
+  `GET` 
   
 *  **URL Params**
 
-    There are no query-parameters. 
+    **Optional:** <br>
+                
+    Specify the index of the first question to be retrieved: <br>
+    `start=[integer]`
+                  
+    Specify the maximum number of questions to be retrieved:  <br>
+    `number=[integer]`
+       
+    Specify the topic of the question by its name: <br>
+    `topic=[string]`
+                  
+    Specify the topic of the question by its id: <br>
+    `topic_id=[integer]`
+                  
+    Specify the subtopic of the question by its name: <br>
+    `subtopic=[string]`
+                      
+    Specify the subtopic of the question by its id: <br>
+    `subtopic_id=[integer]`
   
   
 * **Data Params**
@@ -20,68 +38,38 @@
     An authorization header has to be provided. The key is 'token' 
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
     
-    The body should be a JSON object of the following form: <br>
-    
-    ```json
-    {
-            "topic": 12, 
-            "subtopic": 13,
-            "dependencies": “1;3;8”,
-            "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
-            "correctAnswers": "$\\\\frac{15}{7}}$",
-            "appendix": "mL",
-            "hint": "Addiere die beiden Zähler.",
-            "imageSrc": "http://...",
-            "validation_type": "standardValidation"
-     }
-     ```
-    
-    The fields 'topic', 'subtopic', 'question', 'correctAnswers' and 'validation_type' are strictly required. The fields
-    'dependencies', 'appendix', 'hint' and 'imageSrc' are optional but must not be left blank. 
-    
-    
 * **Success Response:**
 
-  * **Code:** 201 Created <br />
+  * **Code:** 200 OK <br />
     **Content:** 
     ```json
-    {
-        "id": 81,
-        "created_on": "2020-04-17T18:25:44.169382Z",
-        "topic": 22,
-        "subtopic": 46,
-        "dependencies": [],
-        "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
-        "correctAnswers": "$\\\\frac{15}{7}}$",
-        "appendix": "",
-        "hint": "",
-        "imageSrc": "",
-        "user_profile": 1,
-        "validation_type": "standardValidation"
-    }
+    [
+         {
+              "id": 31,
+              "created_on": "2020-04-13T21:22:30.321628Z",
+              "topic": 12,
+              "subtopic": 13,
+              "dependencies": [],
+              "question": "$\\\\frac{2}{7} + \\\\frac{13}{7}$",
+              "correctAnswers": "$\\\\frac{15}{7}}$",
+              "appendix": "",
+              "hint": "",
+              "imageSrc": "",
+              "user_profile": 1,
+              "validation_type": "standardValidation"
+         }
+    ]
     ```
     
+   OR
+    
+  * **Code:** 204 No Content <br />
  
 * **Error Response:**
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ detail : "Authentication credentials were not provided." }`
 
-  OR
-    
-  If one of the conditions on the data mentioned above is not fulfilled, a response similar to the following is send. 
-  * **Code:** 400 Bad Request <br />
-    **Content:** 
-    ```json
-    {
-        "dependencies": [
-            "This field may not be blank."
-        ],
-        "appendix": [
-            "This field may not be blank."
-        ]
-    }
-    ```
 
 * **Sample Call:**
 
@@ -90,34 +78,29 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    question = {
-            "topic": 12,
-            "subtopic": 13,
-            "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
-            "correctAnswers": "$\\\\frac{15}{7}}$",
-            "validation_type": "standardValidation"
-            }
-    question_post = requests.post(url=base_url + "custom-question/",
-                                  headers=headers,
-                                  json=question)
-    print(question_post.json())
+    question_get = requests.get(url=base_url + "custom-question/", 
+                            headers=headers, 
+                            params={"number": 2}
+                            )
+    print(question_get.json())
      ``` 
      
-     This request should get a status 201 Created and print:
+     This request should get a status 200 OK and print:
      ```python
-      {
-          'id': 82, 
-          'created_on': '2020-04-17T18:56:11.262467Z', 
-          'topic': 22, 
-          'subtopic': 47, 
-          'dependencies': [], 
-          'question': '$\\\\frac{3}{7} + \\\\frac{12}{7}$', 
-          'correctAnswers': '$\\\\frac{15}{7}}$', 
-          'appendix': '', 
-          'hint': '', 
-          'imageSrc': '', 'user_profile': 6, 
-          'validation_type': 'standardValidation'
-      }
+      [
+          {   
+              'id': 31, 
+              'created_on': '2020-04-13T21:22:30.321628Z', 
+              'topic': 12, 'subtopic': 13, 
+              'dependencies': [], 
+              'question': '$\\\\frac{2}{7} + \\\\frac{13}{7}$', 
+              'correctAnswers': '$\\\\frac{15}{7}}$', 
+              'appendix': '', 
+              'hint': '', 'imageSrc': '', 
+              'user_profile': 1, 
+              'validation_type': 'standardValidation'
+            }
+     ]
      ```
     
 * **Notes:**
