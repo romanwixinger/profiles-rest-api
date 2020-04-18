@@ -242,3 +242,4 @@ recommended_test_get = requests.get(url=base_url + "recommended-test/",
                                     params={'number': 1}
                                     )
 print(recommended_test_get.json())
+print("\n" + 10 * "*" + "\n")
