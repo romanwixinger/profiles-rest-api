@@ -72,7 +72,7 @@
    print(recommended_test_get.json())
   ``` 
      
-  This request should get a status 201 Created and print:
+  This request should get a status 200 OK and print:
   ```python
   [
     {

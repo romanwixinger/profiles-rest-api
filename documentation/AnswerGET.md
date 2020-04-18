@@ -66,7 +66,7 @@
     print(answer_get.json())
      ``` 
      
-     This request should get a status 201 Created and print:
+     This request should get a status 200 OK and print:
      ```python
      [{'id': 107, 'user_profile': 1, 'created_on': '2020-04-16T20:24:12.371529Z', 'question': 32, 'duration': '12.50', 
      'answers': '5/2', 'correct': False, 'skipped': False, 'comment': 'I am not sure about the answer.'}]
