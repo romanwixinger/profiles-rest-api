@@ -11,8 +11,5 @@ def get_recommended_subtopics(user: UserProfile, number: int = 2):
     ratio_list = [subtopic_dict[x]["ratio"] for x in subtopic_list]
     sorted_subtopics = [subtopic for _, subtopic in sorted(zip(ratio_list, subtopic_list))]
 
-    print(subtopic_dict)
-    print(sorted_subtopics)
-
     return sorted_subtopics[:number]
 
