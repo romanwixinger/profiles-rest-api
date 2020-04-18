@@ -221,4 +221,24 @@ print(theory_page_get.json())
 
 
 
+"""RecommendedTheoryPage"""
 
+print("\n" + 30 * "*" + " RecommendedTheoryPage " + 30 * "*" + "\n")
+
+# RecommendedTheoryPage GET 
+recommended_theory_page_get = requests.get(url=base_url + "recommended-theory-page/", 
+                               headers=headers)
+print(recommended_theory_page_get.json())
+
+
+
+"""RecommendedTest"""
+
+print("\n" + 30 * "*" + " RecommendedTest " + 30 * "*" + "\n")
+
+# RecommendedTest GET
+recommended_test_get = requests.get(url=base_url + "recommended-test/",
+                                    headers=headers,
+                                    params={'number': 1}
+                                    )
+print(recommended_test_get.json())
