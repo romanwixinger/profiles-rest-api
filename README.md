@@ -26,6 +26,8 @@ response.
           
 * Test: [POST](../profiles-rest-api/documentation/TestPOST.md) and 
          [GET](../profiles-rest-api/documentation/TestGET.md) tests.
+         
+* RecommendedTest: [GET](../profiles-rest-api/documentation/RecommendedTestGET.md) recommended tests.
                   
 * CompletedTest: [POST](../profiles-rest-api/documentation/CompletedTestPOST.md) and 
                   [GET](../profiles-rest-api/documentation/CompletedTestGET.md) completed tests.
@@ -33,3 +35,4 @@ response.
 * TheoryPage: [POST](../profiles-rest-api/documentation/TheoryPagePOST.md) and 
               [GET](../profiles-rest-api/documentation/TheoryPageGET.md) theory pages. 
 
+* RecommendedTheoryPage: [GET](../profiles-rest-api/documentation/RecommendedTheoryPageGET.md) recommended theory pages. 
