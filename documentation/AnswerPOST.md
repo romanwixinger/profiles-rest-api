@@ -32,8 +32,8 @@
     }
     ```
     
-    The field 'question' is strictly required, 'comment' and 'duration' are optional. The field 'answers' can only be left out 
-    if the field 'skipped' is set to true. 
+    The field 'question' is strictly required, 'comment' and 'duration' are optional. The field 'answers' can only be 
+    left out if the field 'skipped' is set to true. The fields should not be left blank. 
     
     
 * **Success Response:**
