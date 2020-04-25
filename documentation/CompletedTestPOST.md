@@ -43,7 +43,7 @@
      }
     ```
     
-    Here 'answers' is not required and may be an empty list. This will be a useful feature when HTTP PATCH is released. 
+    Here 'answers' is not required, may be an empty list but must not be blank. This will be a useful feature when HTTP PATCH is released. 
     The answers have to be given in the form specified in the POST method of Answer. Both fields 'state' and 'duration' 
     are required and may not be blank. The field 'comment' is optional but may not be blank. 
  

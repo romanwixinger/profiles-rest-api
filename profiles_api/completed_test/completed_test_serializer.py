@@ -8,10 +8,10 @@ from profiles_api.models import UserProfile
 class CompletedTestDeserializer(serializers.Serializer):
     """Deserializes completed tests"""
 
-    answers = serializers.JSONField(required=False)
-    state = serializers.CharField(max_length=255, required=True)
-    duration = serializers.DecimalField(max_digits=8, decimal_places=2)  # in seconds
-    comment = serializers.CharField(max_length=1024, required=False)
+    answers = serializers.JSONField(required=False, allow_null=False)
+    state = serializers.CharField(max_length=255, required=True, allow_null=False)
+    duration = serializers.DecimalField(max_digits=8, decimal_places=2, default=0)  # in seconds
+    comment = serializers.CharField(max_length=1024, required=False, allow_blank=False)
 
     def validate(self, data):
         """Validates the completed test: Checks if the answers are valid"""
