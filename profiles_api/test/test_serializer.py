@@ -8,9 +8,9 @@ from profiles_api.models import UserProfile
 class TestDeserializer(serializers.Serializer):
     """Deserializes tests"""
 
-    questions = serializers.CharField(max_length=1024)
-    title = serializers.CharField(max_length=255)
-    html = serializers.CharField(max_length=1024, required=False)
+    questions = serializers.CharField(max_length=1024, required=True)
+    title = serializers.CharField(max_length=255, required=True)
+    html = serializers.CharField(max_length=8191, required=False)
 
     def validate(self, data):
         """Validate the data"""

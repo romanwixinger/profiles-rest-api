@@ -12,7 +12,7 @@ class Test(models.Model):
     )
     questions = models.ManyToManyField(Question)
     title = models.CharField(max_length=255)
-    html = models.CharField(max_length=1024, blank=True)
+    html = models.CharField(max_length=8191, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

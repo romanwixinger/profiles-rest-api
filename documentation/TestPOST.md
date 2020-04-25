@@ -32,7 +32,7 @@
     
     The field 'questions' and "title" are strictly required and may not be blank. The field 'html' is optional but 
     must not be left blank. In the field 'questions', the ids of the questions have to be separated by semicolons as 
-    delimiters.  
+    delimiters.  In the field 'html', the length of the string should not exceed 8191 characters. 
     
 * **Success Response:**
 
