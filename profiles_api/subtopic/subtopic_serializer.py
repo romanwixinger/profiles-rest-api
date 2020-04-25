@@ -9,9 +9,9 @@ from profiles_api.topic.topic_model import Topic
 class SubtopicDeserializer(serializers.Serializer):
     """Deserializes subtopics"""
 
-    name = serializers.CharField(max_length=255)
-    html = serializers.CharField(max_length=1024, allow_blank=True)
-    topic = serializers.CharField(max_length=255)
+    name = serializers.CharField(max_length=255, required=True, allow_blank=False)
+    html = serializers.CharField(max_length=8192, required=False, allow_blank=False)
+    topic = serializers.CharField(max_length=255, required=True, allow_blank=False)
 
     def create(self, validated_data):
 
