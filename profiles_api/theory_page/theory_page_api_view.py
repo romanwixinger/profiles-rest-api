@@ -31,25 +31,8 @@ class TheoryPageView(APIView):
     def get(self, request):
         """Get certain theory pages"""
 
-        theory_page_id = self.request.query_params.get('id', None)
-        title = self.request.query_params.get('title', None)
-
-        filter_dict = {}
-        if theory_page_id is not None and theory_page_id.isdigit():
-            print("true")
-            filter_dict['id'] = int(theory_page_id)
-        if title is not None:
-            filter_dict['title'] = title
-
-        theory_pages = TheoryPage.objects.filter(**filter_dict)
-
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        if start is not None:
-            theory_pages = theory_pages[min(abs(int(start)), theory_pages.count()):]
-        if number is not None:
-            theory_pages = theory_pages[:max(0, min(int(number), theory_pages.count()))]
+        query_params_dict = self.request.query_params.dict()
+        theory_pages = TheoryPageService.get_theory_pages(query_params_dict)
 
         if theory_pages.count() == 0:
             return Response(status=204)
