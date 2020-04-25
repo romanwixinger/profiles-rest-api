@@ -1,8 +1,5 @@
 from profiles_api.models import UserProfile
-from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.test.test_model import Test
 from profiles_api.completed_test.completed_test_model import CompletedTest
-from profiles_api.theory_page.theory_page_model import TheoryPage
 
 
 def get_subtopic_statistics(user: UserProfile):

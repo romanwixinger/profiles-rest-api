@@ -9,7 +9,7 @@ from profiles_api import permissions
 
 from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer, CompletedTestDeserializer
 from profiles_api.completed_test.completed_test_model import CompletedTest
-from profiles_api.completed_test.completed_test_service import get_recommendations
+from profiles_api.completed_test.completed_test_service import CompletedTestService
 
 
 class CompletedTestViewSet(viewsets.ModelViewSet):
@@ -32,22 +32,24 @@ class CompletedTestView(APIView):
     def get(self, request):
         """Get a completed test"""
 
-        filter_dict = {}
-        completed_test_id = self.request.query_params.get('id', None)
+        query_params_dict = self.request.query_params.dict()
+        query_params_dict['user_id'] = self.request.user.id
+        try:
+            completed_tests = CompletedTestService.get_completed_tests(query_params_dict)
+        except LookupError:
+            return Response(
+                {"id": "The completed test with this id does not exist."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except PermissionError:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        if completed_test_id is not None:
-            filter_dict['id'] = completed_test_id
-            completed_test = CompletedTest.objects.filter(**filter_dict)[0] \
-                if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
-        else:
-            completed_test = CompletedTest.objects.filter(**{})
-
-        if completed_test is not None and isinstance(completed_test, QuerySet):
-            serializer = CompletedTestSerializer(completed_test, many=True)
+        if completed_tests is not None and isinstance(completed_tests, QuerySet):
+            serializer = CompletedTestSerializer(completed_tests, many=True)
             return Response(data=serializer.data, status=200)
 
-        if completed_test is not None:
-            serializer = CompletedTestSerializer(completed_test)
+        if completed_tests is not None:
+            serializer = CompletedTestSerializer(completed_tests)
             return Response(data=serializer.data, status=200)
 
         return Response(status=204)
@@ -76,7 +78,7 @@ class CompletedTestView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
-            get_recommendations(completed_test)
+            CompletedTestService.get_recommended_completed_tests(completed_test)
 
             completed_test.save()
 

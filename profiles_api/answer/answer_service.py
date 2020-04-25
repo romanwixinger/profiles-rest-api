@@ -72,7 +72,7 @@ class AnswerService:
 
     @classmethod
     def get_answers(cls, query_params_dict: dict) -> list:
-        """Get answers according to query parameters stored in a dict"""
+        """Get the answers of a user according to query parameters stored in a dict"""
 
         user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
         if user_id is None or user_id == '':
@@ -84,7 +84,8 @@ class AnswerService:
         topic_id = query_params_dict['topic_id'] if 'topic_id' in query_params_dict else None
         subtopic_id = query_params_dict['subtopic_id'] if 'subtopic_id' in query_params_dict else None
 
-        filter_dict = dict()
+        filter_dict = {'user_profile': user_id}
+
         if question_id is not None and question_id != '':
             filter_dict['question__id'] = question_id
         if topic_id is not None and question_id != '':
