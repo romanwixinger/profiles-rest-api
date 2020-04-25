@@ -31,25 +31,8 @@ class TestView(APIView):
     def get(self, request):
         """Retrieves selected tests"""
 
-        test_id = self.request.query_params.get('id', None)
-        title = self.request.query_params.get('title', None)
-
-        filter_dict = {}
-        if test_id is not None and test_id.isdigit():
-            print("true")
-            filter_dict['id'] = int(test_id)
-        if title is not None:
-            filter_dict['title'] = title
-
-        tests = Test.objects.filter(**filter_dict)
-
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        if start is not None:
-            tests = tests[min(abs(int(start)), tests.count()):]
-        if number is not None:
-            tests = tests[:max(0, min(int(number), tests.count()))]
+        query_params_dict = self.request.query_params.dict()
+        tests = TestService.get_tests(query_params_dict)
 
         if tests.count() == 0:
             return Response(status=204)

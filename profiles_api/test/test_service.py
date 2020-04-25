@@ -24,3 +24,29 @@ class TestService:
 
         return recommended_tests[:number]
 
+    @classmethod
+    def get_tests(cls, query_params_dict: dict) -> list:
+        """Get tests according to query parameters stored in a dict"""
+
+        test_id = query_params_dict['id'] if 'id' in query_params_dict else None
+        title = query_params_dict['title'] if 'title' in query_params_dict else None
+
+        filter_dict = {}
+        if test_id is not None and test_id.isdigit():
+            print("true")
+            filter_dict['id'] = int(test_id)
+        if title is not None:
+            filter_dict['title'] = title
+
+        tests = Test.objects.filter(**filter_dict)
+
+        start = query_params_dict['start'] if 'start' in query_params_dict else None
+        number = query_params_dict['number'] if 'number' in query_params_dict else None
+
+        if start is not None:
+            tests = tests[min(abs(int(start)), tests.count()):]
+        if number is not None:
+            tests = tests[:max(0, min(int(number), tests.count()))]
+
+        return tests
+
