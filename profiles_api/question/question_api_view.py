@@ -8,6 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.question.question_serializer import QuestionSerializer, QuestionDeserializer
 from profiles_api.question.question_model import Question
+from profiles_api.question.question_service import QuestionService
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
@@ -53,28 +54,9 @@ class QuestionView(APIView):
 
     def get(self, request):
         """Retrieve only certain questions"""
-        topic = self.request.query_params.get('topic', None)
-        topic_id = self.request.query_params.get('topic_id', None)
-        subtopic = self.request.query_params.get('subtopic', None)
-        subtopic_id = self.request.query_params.get('subtopic_id', None)
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
 
-        filter_dict = {}
-        if topic is not None:
-            filter_dict['topic__name'] = topic
-        if topic_id is not None:
-            filter_dict['topic__id'] = topic_id
-        if subtopic is not None:
-            filter_dict['subtopic__name'] = subtopic
-        if subtopic_id is not None:
-            filter_dict['subtopic__id'] = subtopic_id
-        questions = Question.objects.filter(**filter_dict)
-
-        if start is not None:
-            questions = questions[min(abs(int(start)), questions.count()):]
-        if number is not None:
-            questions = questions[:max(0, min(int(number), questions.count()))]
+        query_params_dict = self.request.query_params.dict()
+        questions = QuestionService.get_questions(query_params_dict)
 
         serializer = QuestionSerializer(questions, many=True)
         return Response(data=serializer.data, status=200)
