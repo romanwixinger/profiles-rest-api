@@ -11,7 +11,7 @@ class Subtopic(models.Model):
         on_delete=models.CASCADE
     )
     name = models.CharField(max_length=255, blank=False)
-    html = models.CharField(max_length=8192, blank=True)
+    html = models.CharField(max_length=8191, blank=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=False)
 
     def __str__(self):
