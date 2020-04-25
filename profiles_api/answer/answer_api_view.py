@@ -50,7 +50,7 @@ class AnswerView(APIView):
         answers = Answer.objects.filter(**filter_dict)
 
         if start is not None:
-            answers =answers[min(abs(int(start)), answers.count()):]
+            answers = answers[min(abs(int(start)), answers.count()):]
         if number is not None:
             answers = answers[:max(0, min(int(number), answers.count()))]
 

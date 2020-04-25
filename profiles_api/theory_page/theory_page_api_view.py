@@ -8,7 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.theory_page.theory_page_serializer import TheoryPageSerializer, TheoryPageDeserializer
 from profiles_api.theory_page.theory_page_model import TheoryPage
-from profiles_api.theory_page.theory_page_service import get_recommended_theory_pages
+from profiles_api.theory_page.theory_page_service import TheoryPageService
 
 
 class TheoryPageViewSet(viewsets.ModelViewSet):
@@ -30,8 +30,6 @@ class TheoryPageView(APIView):
 
     def get(self, request):
         """Get certain theory pages"""
-
-        _ = get_recommended_theory_pages(request.user)
 
         theory_page_id = self.request.query_params.get('id', None)
         title = self.request.query_params.get('title', None)
@@ -101,12 +99,10 @@ class RecommendedTheoryPageView(APIView):
     def get(self, request):
         """Get recommended theory pages"""
 
-        theory_pages_id = get_recommended_theory_pages(request.user)
+        theory_pages_id = TheoryPageService.get_recommended_theory_pages(request.user)
         theory_pages = TheoryPage.objects.filter(id__in=theory_pages_id)
         if theory_pages is None:
-            return Response(
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+            Response(status=204)
 
         start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)

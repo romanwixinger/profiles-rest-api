@@ -8,7 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.test.test_serializer import TestSerializer, TestDeserializer
 from profiles_api.test.test_model import Test
-from profiles_api.test.test_service import get_recommended_tests
+from profiles_api.test.test_service import TestService
 
 
 class TestViewSet(viewsets.ModelViewSet):
@@ -92,11 +92,11 @@ class RecommendedTestView(APIView):
     def get(self, request):
         """Retrieves recommended tests"""
 
-        tests_id = get_recommended_tests(request.user)
-        tests = Test.objects.filter(id__in=tests_id)
+        tests_id = TestService.get_recommended_tests(request.user)
+        tests = Test.objects.filter(id__in=tests_id) if tests_id != [] else None
         if tests is None:
             return Response(
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                status=status.HTTP_204_NO_CONTENT
             )
 
         start = self.request.query_params.get('start', None)
