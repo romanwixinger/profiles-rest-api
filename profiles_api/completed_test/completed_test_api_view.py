@@ -33,6 +33,8 @@ class CompletedTestView(APIView):
         """Get a completed test"""
 
         query_params_dict = self.request.query_params.dict()
+        if 'user_id' in query_params_dict:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         query_params_dict['user_id'] = self.request.user.id
         try:
             completed_tests = CompletedTestService.get_completed_tests(query_params_dict)

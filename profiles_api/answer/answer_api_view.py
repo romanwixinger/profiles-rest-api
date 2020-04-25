@@ -32,6 +32,8 @@ class AnswerView(APIView):
         """Get certain answers of the user"""
 
         query_params_dict = self.request.query_params.dict()
+        if 'user_id' in query_params_dict:
+            return Response(status=status.HTTP_403_FORBIDDEN)
         query_params_dict['user_id'] = self.request.user.id
         answers = AnswerService.get_answers(query_params_dict)
 

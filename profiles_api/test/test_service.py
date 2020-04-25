@@ -33,7 +33,6 @@ class TestService:
 
         filter_dict = {}
         if test_id is not None and test_id.isdigit():
-            print("true")
             filter_dict['id'] = int(test_id)
         if title is not None:
             filter_dict['title'] = title
