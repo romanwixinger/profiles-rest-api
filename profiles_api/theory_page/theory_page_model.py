@@ -17,7 +17,7 @@ class TheoryPage(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=True)
     subtopic = models.ForeignKey(Subtopic, on_delete=models.CASCADE, blank=True)
     title = models.CharField(max_length=255)
-    html = models.CharField(max_length=1024, blank=True)
+    html = models.CharField(max_length=8191, blank=True)
     test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=True)
 
     def __str__(self):
