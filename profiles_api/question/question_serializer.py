@@ -8,19 +8,22 @@ from profiles_api.subtopic.subtopic_model import Subtopic
 class QuestionDeserializer(serializers.Serializer):
     """Deserializes questions"""
 
-    topic = serializers.CharField(max_length=255, default=None)
-    topic_id = serializers.IntegerField(default=None)
-    subtopic = serializers.CharField(max_length=255, default=None)
-    subtopic_id = serializers.IntegerField(default=None)
-    dependencies = serializers.CharField(max_length=255, default=None)
-    question = serializers.CharField(max_length=1024)
-    correctAnswers = serializers.CharField(max_length=1024)
+    topic = serializers.CharField(max_length=255, required=False, allow_blank=False)
+    topic_id = serializers.IntegerField(required=False, allow_null=False)
+    subtopic = serializers.CharField(max_length=255, required=False, allow_blank=False)
+    subtopic_id = serializers.IntegerField(required=False, allow_null=False)
+    dependencies = serializers.CharField(max_length=255, required=False, allow_blank=False)
+    question = serializers.CharField(max_length=1024, required=True, allow_blank=False)
+    correctAnswers = serializers.CharField(max_length=1024, required=True, allow_blank=False)
     validation_type = serializers.ChoiceField([('standardValidation', ''),
                                                ('multipleStrings', 'multipleStrings'),
-                                               ('singleFraction', 'singleFraction')])
-    appendix = serializers.CharField(max_length=1024, required=False)
-    hint = serializers.CharField(max_length=1024, required=False)
-    imageSrc = serializers.CharField(max_length=1024, required=False)
+                                               ('singleFraction', 'singleFraction')],
+                                              default='standardValidation',
+                                              required=False,
+                                              allow_blank=False)
+    appendix = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+    hint = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+    imageSrc = serializers.CharField(max_length=1024, required=False, allow_blank=False)
 
     def validate(self, data):
         """Validate if topic and subtopic are given"""
