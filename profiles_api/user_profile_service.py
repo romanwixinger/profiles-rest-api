@@ -1,6 +1,9 @@
+import numpy as np
+
 from profiles_api.models import UserProfile
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.answer.answer_service import AnswerService
+from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
 
 
 class UserProfileService:
@@ -45,6 +48,7 @@ class UserProfileService:
 
         for key in subtopic_dict.keys():
             subtopic_dict[key]["ratio"] = subtopic_dict[key]["correct"] / (subtopic_dict[key]["correct"] + subtopic_dict[key]["incorrect"])
+            # print("Subtopic_id: " + key + ", level: ", UserProfileService.get_knowledge_level(user_id=user.id, subtopic_id=int(key)))
 
         return subtopic_dict
 
@@ -56,6 +60,31 @@ class UserProfileService:
         user = UserProfile.objects.filter(**filter_dict)[0]
 
         return user
+
+    @classmethod
+    def get_knowledge_level(cls, user_id: int, subtopic_id: int):
+        """Get the knowledge level of a user in a specific subtopic"""
+
+        query_params_dict = {'user_id': user_id,
+                             'subtopic_id': subtopic_id}
+        answers = AnswerService.get_answers(query_params_dict)
+
+        correct = 0
+        incorrect = 0
+        for answer in answers:
+            if answer.correct:
+                correct += 1
+            else:
+                incorrect += 1
+
+        data = np.array([[3], [correct], [incorrect]])
+        level = KnowledgeLevelService.knowledge_level(data)
+
+        return level
+
+
+
+
 
 
 
