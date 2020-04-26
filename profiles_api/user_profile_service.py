@@ -2,6 +2,7 @@ from profiles_api.models import UserProfile
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.answer.answer_service import AnswerService
 
+
 class UserProfileService:
     """Services that are related to the user"""
 
