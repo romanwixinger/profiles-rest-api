@@ -11,6 +11,8 @@ Django = "==2.2"
 django-cors-headers = "==3.2.1"
 cloudbiolinux = "*"
 enum = "*"
+scipy = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.7"
