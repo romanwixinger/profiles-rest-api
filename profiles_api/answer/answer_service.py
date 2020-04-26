@@ -101,3 +101,15 @@ class AnswerService:
 
         return answers
 
+    @classmethod
+    def get_all_answers(cls, question_id: int, query_params_dict: dict):
+        """Get the answers of all user to a specific question"""
+
+        filter_dict = {'question__id': question_id}
+        answers = Answer.objects.filter(**filter_dict)
+
+        number = query_params_dict['number'] if 'number' in query_params_dict else None
+        if number is not None:
+            answers = answers[:max(0, min(int(number), answers.count()))]
+
+        return answers
