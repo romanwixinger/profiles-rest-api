@@ -4,10 +4,23 @@ from scipy.stats import binom, norm
 from scipy.optimize import minimize
 
 from profiles_api.answer.answer_service import AnswerService
+from profiles_api.question.question_service import QuestionService
 
 
 class KnowledgeLevelService:
     """Class for knowledge level estimation"""
+
+    @classmethod
+    def knowledge_level_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
+        """Get the knowledge level of a user for a list of subtopics"""
+
+        level_dict = {}
+
+        for subtopic_id in subtopic_id_list:
+            level = cls.knowledge_level(user_id=user_id, subtopic_id=subtopic_id)
+            level_dict[subtopic_id] = level
+
+        return level_dict
 
     @classmethod
     def knowledge_level(cls, user_id: int, subtopic_id: int):
@@ -26,15 +39,26 @@ class KnowledgeLevelService:
                              'subtopic_id': subtopic_id}
         answers = AnswerService.get_answers(query_params_dict)
 
-        correct = 0
-        incorrect = 0
-        for answer in answers:
-            if answer.correct:
-                correct += 1
-            else:
-                incorrect += 1
+        # Gather necessary information about the answers
+        question_id_list = [answer.question.id for answer in answers]
+        difficulty_list = QuestionService.difficulty_list(question_id_list=question_id_list)
+        correctness_list = [answer.correct for answer in answers]
 
-        data = np.array([[3], [correct], [incorrect]])
+        # Initialise data dict
+        data = {}
+        for difficulty in np.unique(np.array(difficulty_list)):
+            data[difficulty] = {'correct': 0, 'incorrect': 0, 'total': 0, 'ratio': 0.0}
+
+        # Fill information in the dict
+        for difficulty, correct in zip(difficulty_list, correctness_list):
+            data[difficulty]['total'] += 1
+            if correct:
+                data[difficulty]['correct'] += 1
+            else:
+                data[difficulty]['incorrect'] += 1
+
+        for difficulty in difficulty_list:
+            data[difficulty]['ratio'] = data[difficulty]['correct'] / (data[difficulty]['correct'] + data[difficulty]['incorrect'])
 
         return data
 
@@ -60,22 +84,19 @@ class KnowledgeLevelService:
         return int(level)
 
     @classmethod
-    def __log_likelihood(cls, data: np.array, mu: float, sigma: float):
+    def __log_likelihood(cls, data: dict, mu: float, sigma: float):
         """
         Negative of the natural logarithm of the likelihood that the data occurs given the
         parameters mu, sigma and delta.
 
         """
 
-        levels = data[0,:]              # Difficulty level that occur in the data
-        correct = data[1,:]             # Number of correctly answered questions
-        incorrect = data[2,:]           # Number of incorrectly answered questions
         log_prob = 0
 
-        for i, level in enumerate(levels):
+        for level in data.keys():
 
-            k = correct[i]
-            n = correct[i] + incorrect[i]
+            k = data[level]['correct']
+            n = data[level]['total']
             if n == 0:
                 continue
 

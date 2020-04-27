@@ -65,8 +65,7 @@ class QuestionService:
     def facility(cls, question_id: int) -> float:
         """Get the facility of a question. Possible values are in the range [0,1]."""
 
-        query_params_dict = {'question_id': question_id}
-        answers = AnswerService.get_answers(query_params_dict=query_params_dict)
+        answers = AnswerService.get_all_answers(question_id=question_id, query_params_dict={})
 
         correct = 0
         incorrect = 0

@@ -3,6 +3,7 @@ from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.answer.answer_service import AnswerService
 
+from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
 
 class SubtopicService:
 
@@ -11,6 +12,10 @@ class SubtopicService:
         """Evaluates all completed tests of the user and recommends subtopics accordingly"""
 
         subtopic_dict = cls.subtopic_statistics(user)
+
+        # Test
+        # level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_dict.keys())
+        # print(level_dict)
 
         subtopic_list = subtopic_dict.keys()
         ratio_list = [subtopic_dict[x]["ratio"] for x in subtopic_list]
@@ -62,24 +67,24 @@ class SubtopicService:
         answers = AnswerService.get_answers(query_params_dict={'user_id': user.id})
 
         for answer in answers:
-            if str(answer.question.subtopic_id) not in subtopic_dict:
-                subtopic_dict[str(answer.question.subtopic_id)] = {"correct": 0, "incorrect": 0}
+            if answer.question.subtopic_id not in subtopic_dict:
+                subtopic_dict[answer.question.subtopic_id] = {"correct": 0, "incorrect": 0}
 
             if answer.correct:
-                subtopic_dict[str(answer.question.subtopic_id)]["correct"] += subtopic_weight
+                subtopic_dict[answer.question.subtopic_id]["correct"] += subtopic_weight
             else:
-                subtopic_dict[str(answer.question.subtopic_id)]["incorrect"] += subtopic_weight
+                subtopic_dict[answer.question.subtopic_id]["incorrect"] += subtopic_weight
 
             if answer.question.dependencies is None or answer.question.dependencies == []:
                 continue
             for dependency in answer.question.dependencies.all():
-                if str(dependency.id) not in subtopic_dict:
-                    subtopic_dict[str(dependency.id)] = {"correct": 0, "incorrect": 0}
+                if dependency.id not in subtopic_dict:
+                    subtopic_dict[dependency.id] = {"correct": 0, "incorrect": 0}
 
                 if answer.correct:
-                    subtopic_dict[str(dependency.id)]["correct"] += dependency_weight
+                    subtopic_dict[dependency.id]["correct"] += dependency_weight
                 else:
-                    subtopic_dict[str(dependency.id)]["incorrect"] += dependency_weight
+                    subtopic_dict[dependency.id]["incorrect"] += dependency_weight
 
         for key in subtopic_dict.keys():
             subtopic_dict[key]["total"] = subtopic_dict[key]["correct"] + subtopic_dict[key]["incorrect"]
