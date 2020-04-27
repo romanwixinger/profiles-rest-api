@@ -71,7 +71,7 @@ class AnswerService:
         return float(int(p[0]) / int(p[1]))
 
     @classmethod
-    def get_answers(cls, query_params_dict: dict) -> list:
+    def get_answers(cls, query_params_dict: dict) -> [Answer]:
         """Get the answers of a user according to query parameters stored in a dict"""
 
         user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
@@ -102,7 +102,7 @@ class AnswerService:
         return answers
 
     @classmethod
-    def get_all_answers(cls, question_id: int, query_params_dict: dict):
+    def get_all_answers(cls, question_id: int, query_params_dict: dict) -> [Answer]:
         """Get the answers of all user to a specific question"""
 
         filter_dict = {'question__id': question_id}
@@ -120,3 +120,15 @@ class AnswerService:
 
         filter_dict = {'user_profile': user_id, 'subtopic_id': subtopic_id}
         return Answer.objects.filter(**filter_dict).count()
+
+    @classmethod
+    def number_of_answers_list(cls, user_id: int, subtopic_id_list: [int]) -> [int]:
+        """Get the number of answers of a user to questions of a certain subtopic"""
+
+        number_list = []
+
+        for subtopic_id in subtopic_id_list:
+            number_of_answers = AnswerService.number_of_answers(user_id=user_id, subtopic_id=subtopic_id)
+            number_list.append(number_of_answers)
+
+        return number_list
