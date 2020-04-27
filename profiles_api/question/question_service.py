@@ -1,5 +1,5 @@
 from profiles_api.question.question_model import Question
-
+from profiles_api.answer.answer_service import AnswerService
 
 class QuestionService:
 
@@ -46,12 +46,37 @@ class QuestionService:
 
     @classmethod
     def difficulty(cls, question_id: int) -> int:
-        """Get the difficulty of a question."""
+        """Get the difficulty of a question. Possible values are in the set {1, 2, 3, 4, 5}."""
 
-        return 3
+        facility = QuestionService.facility(question_id=question_id)
 
+        if facility > 0.9:
+            return 1
+        if facility > 0.7:
+            return 2
+        if facility > 0.5:
+            return 3
+        if facility > 0.3:
+            return 4
+        return 5
 
+    @classmethod
+    def facility(cls, question_id: int) -> float:
+        """Get the facility of a question. Possible values are in the range [0,1]."""
 
+        query_params_dict = {'question_id': question_id}
+        answers = AnswerService.get_answers(query_params_dict=query_params_dict)
 
+        correct = 0
+        incorrect = 0
+
+        for answer in answers:
+            if answer.correct:
+                correct += 1
+            else:
+                incorrect += 1
+
+        facility = correct / (correct + incorrect)
+        return facility
 
 
