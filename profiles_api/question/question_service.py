@@ -31,3 +31,27 @@ class QuestionService:
             questions = questions[:max(0, min(int(number), questions.count()))]
 
         return questions
+
+    @classmethod
+    def difficulty_list(cls, question_id_list: [int]) -> [int]:
+        """Takes a list of question ids and return a list of their difficulties"""
+
+        difficulty_list = []
+
+        for question_id in question_id_list:
+            difficulty = QuestionService.difficulty(question_id)
+            difficulty_list.append(difficulty)
+
+        return difficulty_list
+
+    @classmethod
+    def difficulty(cls, question_id: int) -> int:
+        """Get the difficulty of a question."""
+
+        return 3
+
+
+
+
+
+
