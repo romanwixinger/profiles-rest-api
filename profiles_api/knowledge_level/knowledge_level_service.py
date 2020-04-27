@@ -3,6 +3,8 @@ import scipy.special
 from scipy.stats import binom, norm
 from scipy.optimize import minimize
 
+from profiles_api.answer.answer_service import AnswerService
+
 
 class KnowledgeLevelService:
     """Class for knowledge level estimation"""
@@ -21,15 +23,33 @@ class KnowledgeLevelService:
 
         cost_function = lambda mu: cls.__log_likelihood(data=data, mu=mu, sigma=sigma)
 
-        results = minimize(cost_function,
-                           x0=start_mu,
-                           bounds=[(min_mu, max_mu)],
-                           options={'disp': False})
+        results = minimize(cost_function, x0=np.array([start_mu]), bounds=[(min_mu, max_mu)], options={'disp': False})
 
         level = results['x'] - norm.ppf(q=correct_goal, scale=sigma)
         level = min(max_level, max(min_level, level + 0.5))
 
         return int(level)
+
+    @classmethod
+    def get_knowledge_level(cls, user_id: int, subtopic_id: int):
+        """Get the knowledge level of a user in a specific subtopic"""
+
+        query_params_dict = {'user_id': user_id,
+                             'subtopic_id': subtopic_id}
+        answers = AnswerService.get_answers(query_params_dict)
+
+        correct = 0
+        incorrect = 0
+        for answer in answers:
+            if answer.correct:
+                correct += 1
+            else:
+                incorrect += 1
+
+        data = np.array([[3], [correct], [incorrect]])
+        level = KnowledgeLevelService.knowledge_level(data)
+
+        return level
 
     @classmethod
     def __log_likelihood(cls, data: np.array, mu: float, sigma: float):

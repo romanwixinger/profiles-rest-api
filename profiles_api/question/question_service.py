@@ -1,6 +1,7 @@
 from profiles_api.question.question_model import Question
 from profiles_api.answer.answer_service import AnswerService
 
+
 class QuestionService:
 
     @classmethod
