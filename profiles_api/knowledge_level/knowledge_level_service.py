@@ -10,7 +10,36 @@ class KnowledgeLevelService:
     """Class for knowledge level estimation"""
 
     @classmethod
-    def knowledge_level(cls, data: np.array) -> float:
+    def knowledge_level(cls, user_id: int, subtopic_id: int):
+        """Get the knowledge level of a user in a specific subtopic"""
+
+        data = cls.__get_knowledge_data(user_id=user_id, subtopic_id=subtopic_id)
+        level = cls.__knowledge_level_estimation(data)
+
+        return level
+
+    @classmethod
+    def __get_knowledge_data(cls, user_id: int, subtopic_id: int) -> np.array:
+        """Get the data necessary for the estimation of the knowledge level"""
+
+        query_params_dict = {'user_id': user_id,
+                             'subtopic_id': subtopic_id}
+        answers = AnswerService.get_answers(query_params_dict)
+
+        correct = 0
+        incorrect = 0
+        for answer in answers:
+            if answer.correct:
+                correct += 1
+            else:
+                incorrect += 1
+
+        data = np.array([[3], [correct], [incorrect]])
+
+        return data
+
+    @classmethod
+    def __knowledge_level_estimation(cls, data: np.array) -> float:
         """Returns the estimated knowledge level"""
 
         sigma = 1           # Standard deviation that corresponds to the Q-function
@@ -29,27 +58,6 @@ class KnowledgeLevelService:
         level = min(max_level, max(min_level, level + 0.5))
 
         return int(level)
-
-    @classmethod
-    def get_knowledge_level(cls, user_id: int, subtopic_id: int):
-        """Get the knowledge level of a user in a specific subtopic"""
-
-        query_params_dict = {'user_id': user_id,
-                             'subtopic_id': subtopic_id}
-        answers = AnswerService.get_answers(query_params_dict)
-
-        correct = 0
-        incorrect = 0
-        for answer in answers:
-            if answer.correct:
-                correct += 1
-            else:
-                incorrect += 1
-
-        data = np.array([[3], [correct], [incorrect]])
-        level = KnowledgeLevelService.knowledge_level(data)
-
-        return level
 
     @classmethod
     def __log_likelihood(cls, data: np.array, mu: float, sigma: float):

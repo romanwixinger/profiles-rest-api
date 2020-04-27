@@ -10,7 +10,7 @@ class SubtopicService:
     def get_recommended_subtopics(cls, user: UserProfile, number: int = 2) -> list:
         """Evaluates all completed tests of the user and recommends subtopics accordingly"""
 
-        subtopic_dict = SubtopicService.get_subtopic_statistics(user)
+        subtopic_dict = cls.subtopic_statistics(user)
 
         subtopic_list = subtopic_dict.keys()
         ratio_list = [subtopic_dict[x]["ratio"] for x in subtopic_list]
@@ -45,7 +45,7 @@ class SubtopicService:
         return subtopics
 
     @classmethod
-    def get_subtopic_statistics(cls, user: UserProfile):
+    def subtopic_statistics(cls, user: UserProfile):
         """Return a dict with subtopics as key and dict with statistics as value."""
 
         subtopic_weight = 1
