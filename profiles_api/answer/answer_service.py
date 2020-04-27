@@ -113,3 +113,10 @@ class AnswerService:
             answers = answers[:max(0, min(int(number), answers.count()))]
 
         return answers
+
+    @classmethod
+    def number_of_answers(cls, user_id: int, subtopic_id: int) -> int:
+        """Get the number of answers of a user to questions of a certain subtopic"""
+
+        filter_dict = {'user_profile': user_id, 'subtopic_id': subtopic_id}
+        return Answer.objects.filter(**filter_dict).count()
