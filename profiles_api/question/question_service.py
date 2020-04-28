@@ -79,4 +79,19 @@ class QuestionService:
         facility = correct / (correct + incorrect)
         return facility
 
+    @classmethod
+    def question_list(cls, question_id_list: [int]) -> [Question]:
+        """Returns a list with the requested questions"""
 
+        question_list = []
+
+        for question_id in question_id_list:
+            filter_dict = {'id': question_id}
+            question = Question.objects.filter(**filter_dict)[0] \
+                if Question.objects.filter(**filter_dict).count() > 0 else None
+            if question is not None:
+                question_list.append(question)
+            else:
+                raise LookupError("The question with id " + str(question_id) + " does not exist.")
+
+        return question_list
