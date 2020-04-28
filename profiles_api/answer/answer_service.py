@@ -118,17 +118,17 @@ class AnswerService:
     def number_of_answers(cls, user_id: int, subtopic_id: int) -> int:
         """Get the number of answers of a user to questions of a certain subtopic"""
 
-        filter_dict = {'user_profile': user_id, 'subtopic_id': subtopic_id}
+        filter_dict = {'user_profile': user_id, 'question__subtopic_id': subtopic_id}
         return Answer.objects.filter(**filter_dict).count()
 
     @classmethod
-    def number_of_answers_list(cls, user_id: int, subtopic_id_list: [int]) -> [int]:
+    def number_of_answers_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
         """Get the number of answers of a user to questions of a certain subtopic"""
 
-        number_list = []
+        number_dict = {}
 
         for subtopic_id in subtopic_id_list:
             number_of_answers = AnswerService.number_of_answers(user_id=user_id, subtopic_id=subtopic_id)
-            number_list.append(number_of_answers)
+            number_dict[subtopic_id] = number_of_answers
 
-        return number_list
+        return number_dict
