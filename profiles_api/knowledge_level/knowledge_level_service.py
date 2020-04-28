@@ -24,11 +24,14 @@ class KnowledgeLevelService:
 
     @classmethod
     def knowledge_level(cls, user_id: int, subtopic_id: int):
-        """Get the knowledge level of a user in a specific subtopic"""
+        """Get the knowledge level of a user in a specific subtopic. The knowledge level takes values between 1 to 5
+        where 5 is the best level. If the user did not give any answers in this subtopic, the level is 0."""
 
         data = cls.__get_knowledge_data(user_id=user_id, subtopic_id=subtopic_id)
-        level = cls.__knowledge_level_estimation(data)
+        if data == {}:
+            return 0
 
+        level = cls.__knowledge_level_estimation(data)
         return level
 
     @classmethod
@@ -41,6 +44,10 @@ class KnowledgeLevelService:
 
         # Gather necessary information about the answers
         question_id_list = [answer.question.id for answer in answers]
+        if len(question_id_list) == 0:
+            empty_dict = {}
+            return empty_dict
+
         difficulty_list = QuestionService.difficulty_list(question_id_list=question_id_list)
         correctness_list = [answer.correct for answer in answers]
 

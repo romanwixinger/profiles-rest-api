@@ -5,21 +5,23 @@ from profiles_api.answer.answer_service import AnswerService
 
 from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
 
+
 class SubtopicService:
 
     @classmethod
     def get_recommended_subtopics(cls, user: UserProfile, number: int = 2) -> list:
-        """Evaluates all completed tests of the user and recommends subtopics accordingly"""
+        """Evaluates all answers of the user and recommends subtopics accordingly"""
 
-        subtopic_dict = cls.subtopic_statistics(user)
+        subtopic_id_list = cls.subtopic_id_list()
 
-        # Test
-        # level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_dict.keys())
-        # print(level_dict)
+        level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
+        number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
 
-        subtopic_list = subtopic_dict.keys()
-        ratio_list = [subtopic_dict[x]["ratio"] for x in subtopic_list]
-        sorted_subtopics = [subtopic for _, subtopic in sorted(zip(ratio_list, subtopic_list))]
+        weighted_level_list =[]
+        for subtopic_id in subtopic_id_list:
+            weighted_level_list.append(level_dict[subtopic_id] * number_dict[subtopic_id])
+
+        sorted_subtopics = [subtopic for _, subtopic in sorted(zip(weighted_level_list, subtopic_id_list))]
 
         return sorted_subtopics[:number]
 
@@ -92,3 +94,9 @@ class SubtopicService:
 
         return subtopic_dict
 
+    @classmethod
+    def subtopic_id_list(cls):
+        """Get a list with all subtopic ids"""
+
+        subtopic_id_list = [subtopic.id for subtopic in Subtopic.objects.all()]
+        return subtopic_id_list
