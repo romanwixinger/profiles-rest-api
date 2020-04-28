@@ -1,6 +1,7 @@
 from profiles_api.models import UserProfile
 from profiles_api.test.test_model import Test
 from profiles_api.subtopic.subtopic_service import SubtopicService
+from profiles_api.subtopic.subtopic_model import Subtopic
 
 
 class TestService:
@@ -13,16 +14,14 @@ class TestService:
         if recommended_subtopics is None or len(recommended_subtopics) == 0:
             return []
 
-        recommended_tests = []  # contains ids
-        for recommended_subtopic in recommended_subtopics:
-            filter_dict = {'questions__subtopic_id': int(recommended_subtopic)}
-            tests = Test.objects.filter(**filter_dict)
-            if tests is None:
-                continue
-            for test in tests:
-                recommended_tests.append(test.id)
+        test_accordance_dict = cls.test_accordance_dict(recommended_subtopics)
 
-        return recommended_tests[:number]
+        recommended_tests = [test for _, test in sorted(zip(test_accordance_dict.values(), test_accordance_dict.keys()))]
+
+        print(recommended_tests)
+
+        return recommended_tests[-number:]
+
 
     @classmethod
     def get_tests(cls, query_params_dict: dict) -> list:
@@ -49,3 +48,16 @@ class TestService:
 
         return tests
 
+    @classmethod
+    def test_accordance_dict(cls, recommended_subtopics: [Subtopic]):
+        """Get a dict with test ids as keys and their accordance with the recommended subtopics as value"""
+
+        test_accordance_dict = {}
+
+        tests = Test.objects.all()
+        for test in tests:
+            question_id_list = [question.id for question in test.questions.all()]
+            subtopic_frequency_dict = SubtopicService.subtopic_frequency_dict(question_id_list)
+            test_accordance_dict[test.id] = SubtopicService.accordance(recommended_subtopics, subtopic_frequency_dict)
+
+        return test_accordance_dict

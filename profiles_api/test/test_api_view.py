@@ -75,15 +75,18 @@ class RecommendedTestView(APIView):
     def get(self, request):
         """Retrieves recommended tests"""
 
-        tests_id = TestService.get_recommended_tests(request.user)
+        start = self.request.query_params.get('start', None)
+        number = self.request.query_params.get('number', None)
+
+        nr = int(number) if number is not None else 1
+        nr += int(start) if start is not None else 0
+
+        tests_id = TestService.get_recommended_tests(request.user, number=nr)
         tests = Test.objects.filter(id__in=tests_id) if tests_id != [] else None
         if tests is None:
             return Response(
                 status=status.HTTP_204_NO_CONTENT
             )
-
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
 
         if start is not None:
             tests = tests[min(abs(int(start)), tests.count()):]

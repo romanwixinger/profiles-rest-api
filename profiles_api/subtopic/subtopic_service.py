@@ -1,9 +1,10 @@
 from profiles_api.models import UserProfile
 from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.completed_test.completed_test_model import CompletedTest
-from profiles_api.answer.answer_service import AnswerService
 
+from profiles_api.answer.answer_service import AnswerService
 from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
+from profiles_api.question.question_service import QuestionService
 
 
 class SubtopicService:
@@ -52,7 +53,7 @@ class SubtopicService:
         return subtopics
 
     @classmethod
-    def subtopic_statistics(cls, user: UserProfile):
+    def subtopic_statistics(cls, user: UserProfile) -> dict:
         """Return a dict with subtopics as key and dict with statistics as value."""
 
         subtopic_weight = 1
@@ -95,8 +96,44 @@ class SubtopicService:
         return subtopic_dict
 
     @classmethod
-    def subtopic_id_list(cls):
+    def subtopic_id_list(cls) -> [int]:
         """Get a list with all subtopic ids"""
 
         subtopic_id_list = [subtopic.id for subtopic in Subtopic.objects.all()]
         return subtopic_id_list
+
+    @classmethod
+    def subtopic_frequency_dict(cls,  question_id_list: [int]) -> dict:
+        """Creates a dict with the occurring subtopics as keys and the number of occurrences as value"""
+
+        subtopic_frequency_dict = {}
+
+        question_list = QuestionService.question_list(question_id_list)
+        for question in question_list:
+            if question.subtopic.id in subtopic_frequency_dict:
+                subtopic_frequency_dict[question.subtopic.id] += 1
+            else:
+                subtopic_frequency_dict[question.subtopic.id] = 1
+
+            dependencies = question.dependencies.all() if question.dependencies is not None else []
+            for dependency in dependencies:
+                if dependency.id in subtopic_frequency_dict:
+                    subtopic_frequency_dict[dependency.id] += 1
+                else:
+                    subtopic_frequency_dict[dependency.id] = 1
+
+        return subtopic_frequency_dict
+
+    @classmethod
+    def accordance(cls, recommended_subtopics: [int], subtopic_frequency_dict: dict) -> float:
+        """Quantifies the accordance between a list of recommended subtopics and test"""
+
+        if len(recommended_subtopics) == 0 or subtopic_frequency_dict == {}:
+            return 0
+
+        accordance = 0
+        for subtopic_id in recommended_subtopics:
+            accordance += subtopic_frequency_dict[subtopic_id] if subtopic_id in subtopic_frequency_dict else 0
+
+        accordance /= len(subtopic_frequency_dict.keys())
+        return accordance
