@@ -2,6 +2,7 @@ from profiles_api.models import UserProfile
 from profiles_api.test.test_model import Test
 from profiles_api.subtopic.subtopic_service import SubtopicService
 from profiles_api.subtopic.subtopic_model import Subtopic
+from profiles_api.completed_test.completed_test_model import CompletedTest
 
 
 class TestService:
@@ -18,10 +19,15 @@ class TestService:
 
         recommended_tests = [test for _, test in sorted(zip(test_accordance_dict.values(), test_accordance_dict.keys()))]
 
-        print(recommended_tests)
+        # Solved tests are avoided in the recommendation.
+        solved_tests = cls.solved_tests(user.id)
+
+        for test_id in solved_tests:
+            if test_id in recommended_tests:
+                recommended_tests.remove(test_id)
+                recommended_tests = [test_id] + recommended_tests
 
         return recommended_tests[-number:]
-
 
     @classmethod
     def get_tests(cls, query_params_dict: dict) -> list:
@@ -31,7 +37,7 @@ class TestService:
         title = query_params_dict['title'] if 'title' in query_params_dict else None
 
         filter_dict = {}
-        if test_id is not None and test_id.isdigit():
+        if test_id is not None and ((test_id is str and test_id.isdigit()) or test_id is int):
             filter_dict['id'] = int(test_id)
         if title is not None:
             filter_dict['title'] = title
@@ -61,3 +67,17 @@ class TestService:
             test_accordance_dict[test.id] = SubtopicService.accordance(recommended_subtopics, subtopic_frequency_dict)
 
         return test_accordance_dict
+
+    @classmethod
+    def solved_tests(cls, user_id) -> [int]:
+        """Get a list with the ids of all the tests that have been solved"""
+
+        filter_dict = {'user_profile': user_id}
+        completed_tests = CompletedTest.objects.filter(**filter_dict)
+        solved_tests = [completed_test.test.id for completed_test in completed_tests]
+
+        unique_solved_tests = {}
+        for solved_test in solved_tests:
+            unique_solved_tests[solved_test] = 1
+
+        return list(unique_solved_tests.keys())

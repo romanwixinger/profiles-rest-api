@@ -6,7 +6,7 @@ class CompletedTestService:
     """Service class for completed tests"""
 
     @classmethod
-    def get_recommended_completed_tests(completed_test: CompletedTest, number: int = 2):
+    def get_recommended_subtopics(cls, completed_test: CompletedTest, number: int = 2):
         """Evaluates answers and recommends subtopics accordingly"""
 
         subtopic_weight = 2
@@ -42,9 +42,6 @@ class CompletedTestService:
         subtopic_list = subtopic_dict.keys()
         ratio_list = [subtopic_dict[x]["ratio"] for x in subtopic_list]
         sorted_subtopics = [subtopic for _, subtopic in sorted(zip(ratio_list, subtopic_list))]
-
-        print(subtopic_dict)
-        print(sorted_subtopics)
 
         for subtopic_id in sorted_subtopics[:number]:
             filter_dict = {'id': subtopic_id}

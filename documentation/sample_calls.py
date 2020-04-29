@@ -183,7 +183,8 @@ completed_test = {
                         "skipped": False
                 }],
     "state": "First question answered",
-    "duration": "12.00"
+    "duration": "12.00",
+    "test": 8
 }
 completed_test_post = requests.post(url=base_url + "custom-completed-test/",
                                     headers=headers,

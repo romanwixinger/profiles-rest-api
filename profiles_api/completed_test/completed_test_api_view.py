@@ -80,7 +80,7 @@ class CompletedTestView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
-            CompletedTestService.get_recommended_completed_tests(completed_test)
+            CompletedTestService.get_recommended_subtopics(completed_test)
 
             completed_test.save()
 

@@ -3,6 +3,7 @@ from rest_framework import serializers
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.answer.answer_serializer import AnswerDeserializer
 from profiles_api.models import UserProfile
+from profiles_api.test.test_service import TestService
 
 
 class CompletedTestDeserializer(serializers.Serializer):
@@ -12,6 +13,7 @@ class CompletedTestDeserializer(serializers.Serializer):
     state = serializers.CharField(max_length=255, required=True, allow_null=False)
     duration = serializers.DecimalField(max_digits=8, decimal_places=2, default=0)  # in seconds
     comment = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+    test = serializers.IntegerField(required=False, allow_null=False)
 
     def validate(self, data):
         """Validates the completed test: Checks if the answers are valid"""
@@ -33,10 +35,19 @@ class CompletedTestDeserializer(serializers.Serializer):
         filter_dict= {'id': validated_data['user_id']}
         user = UserProfile.objects.filter(**filter_dict)[0]
 
+        if 'test' in validated_data:
+            test_id = validated_data['test']
+            tests = TestService.get_tests(query_params_dict={'id': test_id})
+
+            test = tests[0] if len(tests) > 0 else None
+            if test is None:
+                raise ValueError
+
         completed_test = CompletedTest.objects.get_or_create(
             user_profile=user,
             state=validated_data['state'],
-            duration=0
+            duration=0,
+            test=test
         )[0]
 
         if 'answers' in validated_data:
@@ -79,7 +90,7 @@ class CompletedTestSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompletedTest
         fields = ('id', 'user_profile', 'answers', 'state', 'created_on',
-                  'updated_on', 'duration', 'comment', 'recommendedSubtopics')
+                  'updated_on', 'duration', 'comment', 'recommendedSubtopics', 'test')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
