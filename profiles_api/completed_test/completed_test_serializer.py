@@ -13,7 +13,7 @@ class CompletedTestDeserializer(serializers.Serializer):
     state = serializers.CharField(max_length=255, required=True, allow_null=False)
     duration = serializers.DecimalField(max_digits=8, decimal_places=2, default=0)  # in seconds
     comment = serializers.CharField(max_length=1024, required=False, allow_blank=False)
-    test = serializers.IntegerField(required=False, allow_null=False)
+    test = serializers.IntegerField(required=True, allow_null=False)
 
     def validate(self, data):
         """Validates the completed test: Checks if the answers are valid"""

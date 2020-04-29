@@ -39,13 +39,14 @@
      }],
          "state": "First question answered",
          "duration": "12.00",
-         "comment": "This questions are easy!"
+         "comment": "This questions are easy!",
+         "test": 8
      }
     ```
     
-    Here 'answers' is not required, may be an empty list but must not be blank. This will be a useful feature when HTTP PATCH is released. 
-    The answers have to be given in the form specified in the POST method of Answer. Both fields 'state' and 'duration' 
-    are required and may not be blank. The field 'comment' is optional but may not be blank. 
+    Here 'answers' is not required, may be an empty list but must not be blank. This will be a useful feature when HTTP 
+    PATCH is released. The answers have to be given in the form specified in the POST method of Answer. The fields 
+    'state', 'duration' and 'test' are required and may not be blank. The field 'comment' is optional but may not be blank. 
  
     
 * **Success Response:**
@@ -141,7 +142,8 @@
       'updated_on': '2020-04-17T21:10:08.800956Z', 
       'duration': '12.00', 
       'comment': '', 
-      'recommendedSubtopics': [13]
+      'recommendedSubtopics': [13],
+      'test': 8
   }
   ```
     
