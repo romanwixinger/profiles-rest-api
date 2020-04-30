@@ -32,7 +32,7 @@ class TestView(APIView):
         """Retrieves selected tests"""
 
         query_params_dict = self.request.query_params.dict()
-        tests = TestService.get_tests(query_params_dict)
+        tests = TestService.search_tests(query_params_dict)
 
         if tests.count() == 0:
             return Response(status=204)
@@ -87,8 +87,8 @@ class RecommendedTestView(APIView):
         nr = int(number) if number is not None else 1
         nr += int(start) if start is not None else 0
 
-        tests_id = TestService.get_recommended_tests(request.user, number=nr)
-        tests = Test.objects.filter(id__in=tests_id) if tests_id != [] else None
+        test_ids = TestService.recommended_tests(request.user, number=nr)
+        tests = Test.objects.filter(id__in=test_ids) if test_ids != [] else None
         if tests is None:
             return Response(
                 status=status.HTTP_204_NO_CONTENT

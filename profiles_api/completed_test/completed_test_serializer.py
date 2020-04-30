@@ -37,7 +37,7 @@ class CompletedTestDeserializer(serializers.Serializer):
 
         if 'test' in validated_data:
             test_id = validated_data['test']
-            tests = TestService.get_tests(query_params_dict={'id': test_id})
+            tests = TestService.search_tests(query_params_dict={'id': test_id})
 
             test = tests[0] if len(tests) > 0 else None
             if test is None:

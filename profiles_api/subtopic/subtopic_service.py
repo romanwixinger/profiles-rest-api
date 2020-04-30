@@ -10,7 +10,7 @@ from profiles_api.question.question_service import QuestionService
 class SubtopicService:
 
     @classmethod
-    def get_recommended_subtopics(cls, user: UserProfile, number: int = 2) -> list:
+    def recommended_subtopics(cls, user: UserProfile, number: int = 2) -> [int]:
         """Evaluates all answers of the user and recommends subtopics accordingly"""
 
         subtopic_id_list = cls.subtopic_id_list()
@@ -27,7 +27,7 @@ class SubtopicService:
         return sorted_subtopics[:number]
 
     @classmethod
-    def get_subtopics(cls, query_params_dict: dict) -> list:
+    def get_subtopics(cls, query_params_dict: dict) -> [Subtopic]:
         """Get subtopics according to query parameters stored in a dict"""
 
         topic = query_params_dict['topic'] if 'topic' in query_params_dict else None
@@ -67,7 +67,7 @@ class SubtopicService:
         # Create a dict with subtopics as key and dict with relevant information as value.
         subtopic_dict = {}
 
-        answers = AnswerService.get_answers(query_params_dict={'user_id': user.id})
+        answers = AnswerService.search_answers(query_params_dict={'user_id': user.id})
 
         for answer in answers:
             if answer.question.subtopic_id not in subtopic_dict:
@@ -108,7 +108,7 @@ class SubtopicService:
 
         subtopic_frequency_dict = {}
 
-        question_list = QuestionService.question_list(question_id_list)
+        question_list = QuestionService.get_questions(question_id_list)
         for question in question_list:
             if question.subtopic.id in subtopic_frequency_dict:
                 subtopic_frequency_dict[question.subtopic.id] += 1

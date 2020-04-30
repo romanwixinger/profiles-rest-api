@@ -71,12 +71,12 @@ class AnswerService:
         return float(int(p[0]) / int(p[1]))
 
     @classmethod
-    def get_answers(cls, query_params_dict: dict) -> [Answer]:
+    def search_answers(cls, query_params_dict: dict) -> [Answer]:
         """Get the answers of a user according to query parameters stored in a dict"""
 
         user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
         if user_id is None or user_id == '':
-            raise Exception("The class method get_answers must only be used with a user_id.")
+            raise Exception("The class method search_answers must only be used with a user_id.")
 
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None

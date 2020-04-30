@@ -32,7 +32,7 @@ class TheoryPageView(APIView):
         """Get certain theory pages"""
 
         query_params_dict = self.request.query_params.dict()
-        theory_pages = TheoryPageService.get_theory_pages(query_params_dict)
+        theory_pages = TheoryPageService.search_theory_pages(query_params_dict)
 
         if theory_pages.count() == 0:
             return Response(status=204)
@@ -82,7 +82,7 @@ class RecommendedTheoryPageView(APIView):
     def get(self, request):
         """Get recommended theory pages"""
 
-        theory_pages_id = TheoryPageService.get_recommended_theory_pages(request.user)
+        theory_pages_id = TheoryPageService.recommended_theory_pages(request.user)
         theory_pages = TheoryPage.objects.filter(id__in=theory_pages_id)
         if theory_pages is None:
             Response(status=204)

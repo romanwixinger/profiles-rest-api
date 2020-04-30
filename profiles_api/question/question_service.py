@@ -5,7 +5,7 @@ from profiles_api.answer.answer_service import AnswerService
 class QuestionService:
 
     @classmethod
-    def get_questions(cls, query_params_dict: dict) -> list:
+    def search_questions(cls, query_params_dict: dict) -> list:
         """Get questions according to query parameters stored in a dict"""
 
         topic = query_params_dict['topic'] if 'topic' in query_params_dict else None
@@ -80,7 +80,7 @@ class QuestionService:
         return facility
 
     @classmethod
-    def question_list(cls, question_id_list: [int]) -> [Question]:
+    def get_questions(cls, question_id_list: [int]) -> [Question]:
         """Returns a list with the requested questions"""
 
         question_list = []

@@ -9,10 +9,10 @@ from profiles_api.question.question_model import Question
 class TestService:
 
     @classmethod
-    def get_recommended_tests(cls, user: UserProfile, number: int = 2) -> list:
-        """"Evaluates all completed tests of the user and recommends tests accordingly"""
+    def recommended_tests(cls, user: UserProfile, number: int = 2) -> [int]:
+        """"Evaluates all completed tests of the user and recommends test ids accordingly"""
 
-        recommended_subtopics = SubtopicService.get_recommended_subtopics(user)
+        recommended_subtopics = SubtopicService.recommended_subtopics(user)
         if recommended_subtopics is None or len(recommended_subtopics) == 0:
             return []
 
@@ -31,7 +31,32 @@ class TestService:
         return recommended_tests[-number:]
 
     @classmethod
-    def get_tests(cls, query_params_dict: dict) -> list:
+    def get_recommended_tests(cls, user: UserProfile, number: int = 2) -> [Test]:
+        """"Evaluates all completed tests of the user and recommends tests accordingly"""
+
+        test_id_list = cls.recommended_tests(user=user, number=number)
+        recommended_tests = cls.get_tests(test_id_list=test_id_list)
+
+        return recommended_tests
+
+    @classmethod
+    def get_tests(cls, test_id_list: [int]) -> [Test]:
+        """Gets specific tests"""
+
+        tests = []
+
+        for test_id in test_id_list:
+            filter_dict = {'id': test_id}
+            test = Test.objects.get(**filter_dict)[0] if Test.objects.get(**filter_dict).count() > 0 else None
+            if test is None:
+                raise LookupError
+            else:
+                tests.append(test)
+
+        return tests
+
+    @classmethod
+    def search_tests(cls, query_params_dict: dict) -> list:
         """Get tests according to query parameters stored in a dict"""
 
         test_id = query_params_dict['id'] if 'id' in query_params_dict else None
@@ -90,10 +115,11 @@ class TestService:
         filter_dict = {'id': user_id}
         user = UserProfile.objects.filter(**filter_dict)[0]
 
-        test = Test.objects.get_or_create(
+        test = Test.objects.create(
             user_profile=user,
             title=title,
-            html=html
+            html=html,
+
         )
 
         test.save()

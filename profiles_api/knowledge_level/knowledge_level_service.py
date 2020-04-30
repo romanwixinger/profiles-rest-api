@@ -40,7 +40,7 @@ class KnowledgeLevelService:
 
         query_params_dict = {'user_id': user_id,
                              'subtopic_id': subtopic_id}
-        answers = AnswerService.get_answers(query_params_dict)
+        answers = AnswerService.search_answers(query_params_dict)
 
         # Gather necessary information about the answers
         question_id_list = [answer.question.id for answer in answers]

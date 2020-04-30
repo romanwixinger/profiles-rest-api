@@ -6,7 +6,7 @@ class CompletedTestService:
     """Service class for completed tests"""
 
     @classmethod
-    def get_recommended_subtopics(cls, completed_test: CompletedTest, number: int = 2):
+    def get_recommended_subtopics(cls, completed_test: CompletedTest, number: int = 2) -> [Subtopic]:
         """Evaluates answers and recommends subtopics accordingly"""
 
         subtopic_weight = 2
@@ -53,7 +53,7 @@ class CompletedTestService:
         return
 
     @classmethod
-    def get_completed_tests(cls, query_params_dict: dict) -> list:
+    def search_completed_tests(cls, query_params_dict: dict) -> [CompletedTest]:
         """Get the completed tests of a user according to query parameters stored in a dict"""
 
         user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None

@@ -6,10 +6,10 @@ from profiles_api.subtopic.subtopic_service import SubtopicService
 class TheoryPageService:
 
     @classmethod
-    def get_recommended_theory_pages(cls, user: UserProfile, number: int = 2) -> list:
+    def recommended_theory_pages(cls, user: UserProfile, number: int = 2) -> [int]:
         """"Evaluates all completed tests of the user and recommends theory pages accordingly"""
 
-        recommended_subtopics = SubtopicService.get_recommended_subtopics(user, number)
+        recommended_subtopics = SubtopicService.recommended_subtopics(user, number)
         if recommended_subtopics is None:
             return []
 
@@ -25,7 +25,7 @@ class TheoryPageService:
         return recommended_theory_pages[:number]
 
     @classmethod
-    def get_theory_pages(cls, query_params_dict: dict) -> list:
+    def search_theory_pages(cls, query_params_dict: dict) -> [TheoryPage]:
         """Get theory pages according to query parameters stored in a dict"""
 
         theory_page_id = query_params_dict['id'] if 'id' in query_params_dict else None
