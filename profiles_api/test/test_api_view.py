@@ -50,7 +50,13 @@ class TestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            test = deserializer.create(validated_data)
+            try:
+                test = deserializer.create(validated_data)
+            except LookupError:
+                return Response(
+                    deserializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if test is None:
                 return Response(

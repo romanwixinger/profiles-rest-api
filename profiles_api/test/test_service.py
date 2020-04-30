@@ -3,6 +3,7 @@ from profiles_api.test.test_model import Test
 from profiles_api.subtopic.subtopic_service import SubtopicService
 from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.completed_test.completed_test_model import CompletedTest
+from profiles_api.question.question_model import Question
 
 
 class TestService:
@@ -81,3 +82,29 @@ class TestService:
             unique_solved_tests[solved_test] = 1
 
         return list(unique_solved_tests.keys())
+
+    @classmethod
+    def create_test(cls, user_id: int, question_id_list: [int], title: str, html: str = "") -> Test:
+        """Create a test"""
+
+        filter_dict = {'id': user_id}
+        user = UserProfile.objects.filter(**filter_dict)[0]
+
+        test = Test.objects.get_or_create(
+            user_profile=user,
+            title=title,
+            html=html
+        )
+
+        test.save()
+
+        for question_id in question_id_list:
+            filter_dict = {'id': question_id}
+            question = Question.objects.filter(**filter_dict)[0]\
+                if Question.objects.filter(**filter_dict).count() > 0 else None
+            if question is None:
+                raise LookupError
+            else:
+                test.questions.add(question)
+
+        return test

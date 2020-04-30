@@ -144,9 +144,9 @@ print("\n" + 30 * "*" + " Test " + 30 * "*" + "\n")
 
 # Test POST
 test =  {
-            "questions": "31;32;33;34",
-            "title": "Brüche subtrahieren",
-            "html": "<h1> Brüche subtrahieren </h1>"
+            "questions": "31;32;33;34;35",
+            "title": "Brüche addieren",
+            "html": "<h1> Brüche addieren </h1>"
         }
 test_post = requests.post(url=base_url + "custom-test/",
                           headers=headers,
