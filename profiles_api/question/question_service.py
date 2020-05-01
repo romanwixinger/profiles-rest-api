@@ -1,5 +1,7 @@
 from profiles_api.question.question_model import Question
+from profiles_api.models import UserProfile
 from profiles_api.answer.answer_service import AnswerService
+from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
 
 
 class QuestionService:
@@ -34,52 +36,6 @@ class QuestionService:
         return questions
 
     @classmethod
-    def difficulty_list(cls, question_id_list: [int]) -> [int]:
-        """Takes a list of question ids and return a list of their difficulties"""
-
-        difficulty_list = []
-
-        for question_id in question_id_list:
-            difficulty = QuestionService.difficulty(question_id)
-            difficulty_list.append(difficulty)
-
-        return difficulty_list
-
-    @classmethod
-    def difficulty(cls, question_id: int) -> int:
-        """Get the difficulty of a question. Possible values are in the set {1, 2, 3, 4, 5}."""
-
-        facility = QuestionService.facility(question_id=question_id)
-
-        if facility > 0.9:
-            return 1
-        if facility > 0.7:
-            return 2
-        if facility > 0.5:
-            return 3
-        if facility > 0.3:
-            return 4
-        return 5
-
-    @classmethod
-    def facility(cls, question_id: int) -> float:
-        """Get the facility of a question. Possible values are in the range [0,1]."""
-
-        answers = AnswerService.get_all_answers(question_id=question_id, query_params_dict={})
-
-        correct = 0
-        incorrect = 0
-
-        for answer in answers:
-            if answer.correct:
-                correct += 1
-            else:
-                incorrect += 1
-
-        facility = correct / (correct + incorrect)
-        return facility
-
-    @classmethod
     def get_questions(cls, question_id_list: [int]) -> [Question]:
         """Returns a list with the requested questions"""
 
@@ -95,3 +51,26 @@ class QuestionService:
                 raise LookupError("The question with id " + str(question_id) + " does not exist.")
 
         return question_list
+
+    @classmethod
+    def recommended_questions(cls, user: UserProfile, number: int = 2, length: int = 10) -> [int]:
+        """Get a list of recommended question ids"""
+
+        subtopic_id_list = cls.subtopic_id_list()
+        level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
+        number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
+
+        question_id_list = []
+
+        # Rest of logic commes here
+
+        return [0]
+
+    def get_question_of_level(cls, subtopic_id: int, level: int, number: int):
+        """Get a number of questions of a subtopic of a certain level of difficulty"""
+        pass
+
+
+
+
+

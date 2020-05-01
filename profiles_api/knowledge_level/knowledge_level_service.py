@@ -4,7 +4,6 @@ from scipy.stats import binom, norm
 from scipy.optimize import minimize
 
 from profiles_api.answer.answer_service import AnswerService
-from profiles_api.question.question_service import QuestionService
 
 
 class KnowledgeLevelService:
@@ -48,7 +47,7 @@ class KnowledgeLevelService:
             empty_dict = {}
             return empty_dict
 
-        difficulty_list = QuestionService.difficulty_list(question_id_list=question_id_list)
+        difficulty_list = AnswerService.difficulty_list(question_id_list=question_id_list)
         correctness_list = [answer.correct for answer in answers]
 
         # Initialise data dict

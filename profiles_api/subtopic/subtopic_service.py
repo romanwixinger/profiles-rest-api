@@ -18,12 +18,7 @@ class SubtopicService:
         level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
 
-        weighted_level_list =[]
-        for subtopic_id in subtopic_id_list:
-            weighted_level_list.append(level_dict[subtopic_id] * number_dict[subtopic_id])
-
-        sorted_subtopics = [subtopic for _, subtopic in sorted(zip(weighted_level_list, subtopic_id_list))]
-
+        sorted_subtopics = cls.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
         return sorted_subtopics[:number]
 
     @classmethod
@@ -137,3 +132,19 @@ class SubtopicService:
 
         accordance /= len(subtopic_frequency_dict.keys())
         return accordance
+
+    @classmethod
+    def sorted_subtopics(cls, level_dict: dict, number_dict: dict):
+        """Get a sorted list of subtopic ids: The earlier a subtopic appears, the more necessary it is to practice."""
+
+        if set(level_dict.keys()) != set(number_dict.keys()):
+            raise KeyError("The level_dict and the number_dict must have the same subtopics as keys.")
+
+        weighted_level_list = []
+        for subtopic_id in level_dict.keys():
+            weighted_level_list.append(level_dict[subtopic_id] * number_dict[subtopic_id])
+
+        sorted_subtopics = [subtopic for _, subtopic in sorted(zip(weighted_level_list, level_dict.keys()))]
+
+        return sorted_subtopics
+

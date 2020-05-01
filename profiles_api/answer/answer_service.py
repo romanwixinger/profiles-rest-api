@@ -132,3 +132,49 @@ class AnswerService:
             number_dict[subtopic_id] = number_of_answers
 
         return number_dict
+
+    @classmethod
+    def difficulty_list(cls, question_id_list: [int]) -> [int]:
+        """Takes a list of question ids and return a list of their difficulties"""
+
+        difficulty_list = []
+
+        for question_id in question_id_list:
+            difficulty = cls.difficulty(question_id)
+            difficulty_list.append(difficulty)
+
+        return difficulty_list
+
+    @classmethod
+    def difficulty(cls, question_id: int) -> int:
+        """Get the difficulty of a question. Possible values are in the set {1, 2, 3, 4, 5}."""
+
+        facility = cls.facility(question_id=question_id)
+
+        if facility > 0.9:
+            return 1
+        if facility > 0.7:
+            return 2
+        if facility > 0.5:
+            return 3
+        if facility > 0.3:
+            return 4
+        return 5
+
+    @classmethod
+    def facility(cls, question_id: int) -> float:
+        """Get the facility of a question. Possible values are in the range [0,1]."""
+
+        answers = cls.get_all_answers(question_id=question_id, query_params_dict={})
+
+        correct = 0
+        incorrect = 0
+
+        for answer in answers:
+            if answer.correct:
+                correct += 1
+            else:
+                incorrect += 1
+
+        facility = correct / (correct + incorrect)
+        return facility
