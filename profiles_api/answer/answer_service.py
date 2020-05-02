@@ -2,6 +2,7 @@ import re
 from typing import List, Set
 
 from profiles_api.answer.answer_model import Answer
+from profiles_api.question.question_model import Question
 
 
 class AnswerService:
@@ -134,32 +135,36 @@ class AnswerService:
         return number_dict
 
     @classmethod
-    def difficulty_list(cls, question_id_list: [int]) -> [int]:
+    def difficulty_list(cls, question_id_list: [int], update: bool=False) -> [int]:
         """Takes a list of question ids and return a list of their difficulties"""
 
         difficulty_list = []
 
         for question_id in question_id_list:
-            difficulty = cls.difficulty(question_id)
+
+            question = Question.objects.get(pk=question_id)
+            if update:
+                difficulty = cls.difficulty(question_id)
+                question.difficulty = difficulty
+            else:
+                difficulty = question.difficulty
             difficulty_list.append(difficulty)
 
         return difficulty_list
 
     @classmethod
     def difficulty(cls, question_id: int) -> int:
-        """Get the difficulty of a question. Possible values are in the set {1, 2, 3, 4, 5}."""
+        """Calculate the difficulty of a question. Possible values are in the set {1, 2, 3, 4, 5}."""
 
         facility = cls.facility(question_id=question_id)
+        set_difficulty = cls.set_difficulty(question_id=question_id)
 
-        if facility > 0.9:
-            return 1
-        if facility > 0.7:
-            return 2
-        if facility > 0.5:
-            return 3
-        if facility > 0.3:
-            return 4
-        return 5
+        fac_difficulty = int(5.5 - facility * 5)
+
+        difficulty = int(set_difficulty + fac_difficulty + 0.5)
+        difficulty = max(1, min(5, difficulty))
+
+        return difficulty
 
     @classmethod
     def facility(cls, question_id: int) -> float:
@@ -178,3 +183,21 @@ class AnswerService:
 
         facility = correct / (correct + incorrect)
         return facility
+
+    @classmethod
+    def set_difficulty(cls, question_id: int):
+        """Retrieve the set difficulty of a question"""
+
+        question = Question.objects.get(pk=question_id)
+        set_difficulty = question.set_difficulty
+
+        return set_difficulty
+
+    @classmethod
+    def update_difficulty(cls):
+        """Update the difficulty estimate of all questions"""
+
+        questions = Question.objects.all()
+
+        for question in questions:
+            question.difficulty = cls.difficulty(question_id=question.id)

@@ -105,3 +105,23 @@ class RecommendedTestView(APIView):
         serializer = TestSerializer(tests, many=True)
         return Response(data=serializer.data, status=200)
 
+    def post(self, request):
+        """"Create a recommended test"""
+
+        number = self.request.query_params.get('number', None)
+        number = int(number) if number is not None else 2
+        length = self.request.query_params.get('length', None)
+        length = int(length) if length is not None else 10
+
+        title = "Persönliche Übungen"
+        html = ""
+
+        test = TestService.create_recommended_test(user=self.request.user, number=number, length=length,
+                                                   title=title, html=html)
+
+        serializer = TestSerializer(test)
+        return Response(data=serializer.data, status=201)
+
+
+
+

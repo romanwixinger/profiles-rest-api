@@ -2,6 +2,7 @@ from profiles_api.question.question_model import Question
 from profiles_api.models import UserProfile
 from profiles_api.answer.answer_service import AnswerService
 from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
+from profiles_api.subtopic.subtopic_service import SubtopicService
 
 
 class QuestionService:
@@ -56,19 +57,39 @@ class QuestionService:
     def recommended_questions(cls, user: UserProfile, number: int = 2, length: int = 10) -> [int]:
         """Get a list of recommended question ids"""
 
-        subtopic_id_list = cls.subtopic_id_list()
+        subtopic_id_list = SubtopicService.subtopic_id_list()
         level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
+        sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
 
-        question_id_list = []
+        recommended_questions = []
 
-        # Rest of logic commes here
+        for subtopic_id in sorted_subtopics[:min(number, len(sorted_subtopics))]:
 
-        return [0]
+            new_questions = cls.questions_of_level(subtopic_id=subtopic_id, difficulty=level_dict[subtopic_id],
+                                                   number=length)
+            if len(new_questions) < length:
+                for level in [level for level in [1, 2, 3, 4, 5] if level != level_dict[subtopic_id]]:
+                    new_questions += cls.questions_of_level(subtopic_id=subtopic_id, difficulty=level, number=length)
 
-    def get_question_of_level(cls, subtopic_id: int, level: int, number: int):
-        """Get a number of questions of a subtopic of a certain level of difficulty"""
-        pass
+            recommended_questions += new_questions[:min(number, len(new_questions))]
+
+        return recommended_questions
+
+    @classmethod
+    def questions_of_level(cls, subtopic_id: int, difficulty: int, number: int) -> [int]:
+        """Get a number of question ids of a subtopic of a certain level of difficulty"""
+
+        filter_dict = {'subtopic__id': subtopic_id, 'difficulty': difficulty}
+
+        questions = Question.objects.filter(**filter_dict)
+        questions = questions[:max(0, min(int(number), questions.count()))]
+
+        questions_of_level = [question.id for question in questions]
+
+        return questions_of_level
+
+
 
 
 
