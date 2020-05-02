@@ -23,6 +23,8 @@ class Question(models.Model):
     appendix = models.CharField(max_length=1024, blank=True)
     hint = models.CharField(max_length=1024, blank=True)
     imageSrc = models.CharField(max_length=1024, blank=True)
+    difficulty = models.IntegerField(blank=False, default=3)  # Difficulty estimated over facility and set difficulty
+    set_difficulty = models.IntegerField(blank=False, default=0)  # Manually set difficulty
 
     def __str__(self):
         """Return the model as a string"""
