@@ -53,7 +53,7 @@ print("\n" + 30 * "*" + " Topic " + 30 * "*" + "\n")
 
 # Topic POST
 topic = {'name': 'Division of fractions'}
-token = '3e8e8c442748d5c05e34079f24b4b105f63d3481'
+token = '0f78ea7db6b17d9864f99b6613ddbd8908b56e6e'
 headers =  {'Authorization': 'token ' + token}
 topic_post = requests.post(url=base_url + "custom-topic/", 
                            json=topic, 
@@ -244,3 +244,14 @@ recommended_test_get = requests.get(url=base_url + "recommended-test/",
                                     )
 print(recommended_test_get.json())
 print("\n" + 10 * "*" + "\n")
+
+# RecommendedTest POST
+recommended_test_post = requests.post(url=base_url + "recommended-test/",
+                                    headers=headers,
+                                    params={'number': 5, 'length': 1}
+                                    )
+print(recommended_test_post.json())
+print("\n" + 10 * "*" + "\n")
+
+
+

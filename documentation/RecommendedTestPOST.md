@@ -1,6 +1,6 @@
-**Retrieve recommended tests**
+**Create recommended tests**
 ----
-  This is a request for getting the recommended tests.
+  This is a request for creating a personal test.
   
 * **URL**
 
@@ -13,12 +13,12 @@
 *  **URL Params**
   
     **Optional:** <br>
-                  
-    Specify the index of the first recommended test to be retrieved: <br>
-    `start=[integer]`
                     
-    Specify the maximum number of recommended tests to be retrieved:  <br>
+    Specify the maximum number of recommended subtopics to be tested:  <br>
     `number=[integer]`
+    
+    Specify the maximum number of questions per subtopic to be tested:  <br>
+    `length=[integer]`
          
   
 * **Data Params**
@@ -28,29 +28,23 @@
     
 * **Success Response:**
 
-  * **Code:** 200 OK <br />
+  * **Code:** 201 Created <br />
     **Content:** 
     ```json
-    [
-        {
-            "id": 8,
-            "user_profile": 1,
-            "questions": [
-                31,
-                32,
-                33,
-                34,
-                35
-            ],
-            "title": "Brüche addieren",
-            "html": "<h1> Brüche addieren </h1>",
-            "created_on": "2020-04-13T21:41:48.048939Z"
-        }
-    ]
+    {
+        "id": 74,
+        "user_profile": 1,
+        "questions": [
+            41,
+            42,
+            66,
+            67
+        ],
+        "title": "Persönliche Übungen",
+        "html": "",
+        "created_on": "2020-05-03T08:08:20.387275Z"
+    }
     ```
-  OR 
-  
-  * **Code:** 204 No Content <br />
   
 * **Error Response:**
 
@@ -65,31 +59,32 @@
    base_url = 'http://127.0.0.1:8000/api/'
    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
    headers =  {'Authorization': 'token ' + token}
-   recommended_test_get = requests.get(url=base_url + "recommended-test/",
+   recommended_test_post = requests.post(url=base_url + "recommended-test/",
                              headers=headers,
-                             params={'number': 1}
+                             params={'number': 3, 'length': 2}
                              )
-   print(recommended_test_get.json())
+   print(recommended_test_post.json())
   ``` 
      
-  This request should get a status 200 OK and print:
+  This request should get a status 201 Created and print:
   ```python
-  [
-    {
-        "id": 8,
-        "user_profile": 1,
-        "questions": [
-            31,
-            32,
-            33,
-            34,
-            35
-        ],
-        "title": "Brüche addieren",
-        "html": "<h1> Brüche addieren </h1>",
-        "created_on": "2020-04-13T21:41:48.048939Z"
-    }
-  ]
+  {
+      "id": 92,
+      "user_profile": 1,
+      "questions": [
+          41,
+          42,
+          43,
+          44,
+          66,
+          67
+      ],
+      "title": "Persönliche Übungen",
+      "html": "",
+      "created_on": "2020-05-03T08:19:36.067806Z"
+  }
+  
+
   ```
     
 * **Notes:**
