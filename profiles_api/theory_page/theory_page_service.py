@@ -9,7 +9,7 @@ class TheoryPageService:
     def recommended_theory_pages(cls, user: UserProfile, number: int = 2) -> [int]:
         """"Evaluates all completed tests of the user and recommends theory pages accordingly"""
 
-        recommended_subtopics = SubtopicService.recommended_subtopics(user, number)
+        recommended_subtopics = SubtopicService.recommended_subtopics(user, number=5*number)
         if recommended_subtopics is None:
             return []
 
