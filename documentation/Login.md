@@ -36,6 +36,7 @@
 
   * **Code:** 400 Bad Request <br />
     **Content:** `{"non_field_errors": [ "Unable to log in with provided credentials."]}`
+    
 
 * **Sample Call:**
     
