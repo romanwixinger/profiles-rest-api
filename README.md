@@ -21,8 +21,8 @@ response.
 * Question: [POST](../profiles-rest-api/tree/master/documentation/QuestionPOST.md) and 
              [GET](../profiles-rest-api/tree/master/documentation/QuestionGET.md) questions.
  
-* Answer: [POST](../profiles-rest-api/tree/master/documentation/AnswerPOST.md) and 
-           [GET](../profiles-rest-api/tree/master/documentation/AnswerGET.md) answers.
+* Answer: [POST](../profiles-rest-api/blob/master/documentation/AnswerPOST.md) and 
+           [GET](../profiles-rest-api/blob/master/documentation/AnswerGET.md) answers.
           
 * Test: [POST](../profiles-rest-api/tree/master/documentation/TestPOST.md) and 
          [GET](../profiles-rest-api/tree/master/documentation/TestGET.md) tests.
