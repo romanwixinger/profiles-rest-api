@@ -7,7 +7,7 @@ Code for the first Nasci learning tool backend based on the Profiles REST API co
 In the following, all possible requests to the API are listed with links to their documentation. The requests are 
 grouped according to their underlying model and arranged after increasing complexity. 
 
-* UserProfile: [POST](../profiles-rest-api/tree/master/documentation/UserProfilePOST.md) and 
+* UserProfile: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/UserProfilePOST.md) and 
 [GET](../profiles-rest-api/documentation/UserProfileGET.md) user profiles. 
 
 * Login: [POST](../profiles-rest-api/documentation/Login.md) the credentials and get an authorization token with the 
