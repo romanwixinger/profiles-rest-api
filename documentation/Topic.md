@@ -20,6 +20,10 @@
        
     Specify the maximum number of topics to be retrieved:  <br>
     `number=[integer]` 
+    
+    Set the parameter to 'random' to shuffle the recommended topics randomly. Otherwise, the topics are 
+    ordered by their id. <br> 
+    `mode = [string]`
 
 * **Data Params**
 

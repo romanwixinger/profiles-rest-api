@@ -19,6 +19,10 @@
     
     Specify the title of the theory page: <br>
     `title=[string]`
+    
+    Set the parameter to 'random' to shuffle the theory pages randomly. Otherwise, the theory pages are 
+    ordered by their id. <br> 
+    `mode = [string]`
         
 * **Data Params**
 

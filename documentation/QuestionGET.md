@@ -31,6 +31,9 @@
                       
     Specify the subtopic of the question by its id: <br>
     `subtopic_id=[integer]`
+    
+    Set the parameter to 'random' to shuffle the questions randomly. <br> 
+    `mode = [string]`
   
   
 * **Data Params**
