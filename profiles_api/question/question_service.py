@@ -30,18 +30,17 @@ class QuestionService:
             filter_dict['subtopic__name'] = subtopic
         if subtopic_id is not None:
             filter_dict['subtopic__id'] = subtopic_id
-        questions = Question.objects.filter(**filter_dict)
 
-        questions_list = list(questions)
+        questions = list(Question.objects.filter(**filter_dict))
 
+        if mode == 'random':
+            random.shuffle(questions)
         if start is not None:
-            questions_list = questions_list[min(abs(int(start)), len(questions_list)):]
+            questions = questions[min(abs(int(start)), len(questions)):]
         if number is not None:
-            questions_list = questions[:max(0, min(int(number), len(questions_list)))]
-        if mode is not None and mode == 'random':
-            random.shuffle(questions_list)
+            questions = questions[:max(0, min(int(number), len(questions)))]
 
-        return questions_list
+        return questions
 
     @classmethod
     def get_questions(cls, question_id_list: [int]) -> [Question]:

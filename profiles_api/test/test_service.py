@@ -77,12 +77,12 @@ class TestService:
 
         tests = list(Test.objects.filter(**filter_dict))
 
+        if mode == 'random':
+            random.shuffle(tests)
         if start is not None:
             tests = tests[min(abs(int(start)), len(tests)):]
         if number is not None:
             tests = tests[:max(0, min(int(number), len(tests)))]
-        if mode is not None and mode == 'random':
-            random.shuffle(tests)
 
         return tests
 

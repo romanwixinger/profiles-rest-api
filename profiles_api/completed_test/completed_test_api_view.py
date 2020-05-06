@@ -46,15 +46,11 @@ class CompletedTestView(APIView):
         except PermissionError:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        if completed_tests is not None and isinstance(completed_tests, QuerySet):
-            serializer = CompletedTestSerializer(completed_tests, many=True)
-            return Response(data=serializer.data, status=200)
+        if len(completed_tests) == 0:
+            return Response(status=204)
 
-        if completed_tests is not None:
-            serializer = CompletedTestSerializer(completed_tests)
-            return Response(data=serializer.data, status=200)
-
-        return Response(status=204)
+        serializer = CompletedTestSerializer(completed_tests, many=True)
+        return Response(data=serializer.data, status=200)
 
     def post(self, request):
         """Create a completed test"""

@@ -1,4 +1,5 @@
 import re
+import random
 from typing import List, Set
 
 from profiles_api.answer.answer_model import Answer
@@ -79,11 +80,12 @@ class AnswerService:
         if user_id is None or user_id == '':
             raise Exception("The class method search_answers must only be used with a user_id.")
 
-        start = query_params_dict['start'] if 'start' in query_params_dict else None
-        number = query_params_dict['number'] if 'number' in query_params_dict else None
         question_id = query_params_dict['question_id'] if 'question_id' in query_params_dict else None
         topic_id = query_params_dict['topic_id'] if 'topic_id' in query_params_dict else None
         subtopic_id = query_params_dict['subtopic_id'] if 'subtopic_id' in query_params_dict else None
+        start = query_params_dict['start'] if 'start' in query_params_dict else None
+        number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         filter_dict = {'user_profile': user_id}
 
@@ -93,12 +95,15 @@ class AnswerService:
             filter_dict['question__topic'] = topic_id
         if subtopic_id is not None and question_id != '':
             filter_dict['question__subtopic'] = subtopic_id
-        answers = Answer.objects.filter(**filter_dict)
 
+        answers = list(Answer.objects.filter(**filter_dict))
+
+        if mode == 'random':
+            random.shuffle(answers)
         if start is not None:
-            answers = answers[min(abs(int(start)), answers.count()):]
+            answers = answers[min(abs(int(start)), len(answers)):]
         if number is not None:
-            answers = answers[:max(0, min(int(number), answers.count()))]
+            answers = answers[:max(0, min(int(number), len(answers)))]
 
         return answers
 
@@ -135,7 +140,7 @@ class AnswerService:
         return number_dict
 
     @classmethod
-    def difficulty_list(cls, question_id_list: [int], update: bool=False) -> [int]:
+    def difficulty_list(cls, question_id_list: [int], update: bool = False) -> [int]:
         """Takes a list of question ids and return a list of their difficulties"""
 
         difficulty_list = []
@@ -185,7 +190,7 @@ class AnswerService:
         return facility
 
     @classmethod
-    def set_difficulty(cls, question_id: int):
+    def set_difficulty(cls, question_id: int) -> int:
         """Retrieve the set difficulty of a question"""
 
         question = Question.objects.get(pk=question_id)
@@ -201,3 +206,6 @@ class AnswerService:
 
         for question in questions:
             question.difficulty = cls.difficulty(question_id=question.id)
+
+        return
+

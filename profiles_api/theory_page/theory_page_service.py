@@ -1,3 +1,5 @@
+import random
+
 from profiles_api.models import UserProfile
 from profiles_api.theory_page.theory_page_model import TheoryPage
 from profiles_api.subtopic.subtopic_service import SubtopicService
@@ -37,17 +39,26 @@ class TheoryPageService:
         if title is not None:
             filter_dict['title'] = title
 
-        theory_pages = TheoryPage.objects.filter(**filter_dict)
+        theory_pages = list(TheoryPage.objects.filter(**filter_dict))
 
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
+        if mode == 'random':
+            random.shuffle(theory_pages)
         if start is not None:
-            theory_pages = theory_pages[min(abs(int(start)), theory_pages.count()):]
+            theory_pages = theory_pages[min(abs(int(start)), len(theory_pages)):]
         if number is not None:
-            theory_pages = theory_pages[:max(0, min(int(number), theory_pages.count()))]
+            theory_pages = theory_pages[:max(0, min(int(number), len(theory_pages)))]
 
         return theory_pages
 
+    @classmethod
+    def get_theory_pages(cls, theory_page_id_list: [int]) -> [TheoryPage]:
+        """Returns a list with the requested theory_pages"""
 
+        theory_pages = TheoryPage.objects.filter(id__in=theory_page_id_list)
+        theory_pages_list = list(theory_pages)
 
+        return theory_pages_list

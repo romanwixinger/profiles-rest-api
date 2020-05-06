@@ -1,3 +1,5 @@
+import random
+
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.subtopic.subtopic_model import Subtopic
 
@@ -65,6 +67,7 @@ class CompletedTestService:
         completed_test_id = query_params_dict['id'] if 'id' in query_params_dict else None
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         if completed_test_id is not None:
             filter_dict['id'] = completed_test_id
@@ -73,13 +76,15 @@ class CompletedTestService:
             if completed_tests is None:
                 raise LookupError
 
-        completed_tests = CompletedTest.objects.filter(**filter_dict)
+        completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
 
+        if mode == 'random':
+            random.shuffle(completed_tests_list)
         if start is not None:
-            completed_tests = completed_tests[min(abs(int(start)), completed_tests.count()):]
+            completed_tests_list = completed_tests_list[min(abs(int(start)), len(completed_tests_list)):]
         if number is not None:
-            completed_tests = completed_tests[:max(0, min(int(number), completed_tests.count()))]
+            completed_tests_list = completed_tests_list[:max(0, min(int(number), len(completed_tests_list)))]
 
-        return completed_tests
+        return completed_tests_list
 
 

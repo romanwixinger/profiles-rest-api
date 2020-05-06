@@ -42,16 +42,16 @@ class SubtopicService:
         else:
             subtopics = Subtopic.objects.all()
 
-        subtopics_list = list(subtopics)
+        subtopics = list(subtopics)
 
+        if mode == 'random':
+            random.shuffle(subtopics)
         if start is not None:
-            subtopics_list = subtopics_list[min(abs(int(start)), len(subtopics_list)):]
+            subtopics = subtopics[min(abs(int(start)), len(subtopics)):]
         if number is not None:
-            subtopics_list = subtopics_list[:max(0, min(int(number), len(subtopics_list)))]
-        if mode is not None and mode == 'random':
-            random.shuffle(subtopics_list)
+            subtopics = subtopics[:max(0, min(int(number), len(subtopics)))]
 
-        return subtopics_list
+        return subtopics
 
     @classmethod
     def subtopic_statistics(cls, user: UserProfile) -> dict:

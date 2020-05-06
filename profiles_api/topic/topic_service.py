@@ -15,14 +15,12 @@ class TopicService:
 
         topics = list(Topic.objects.all())
 
+        if mode == 'random':
+            random.shuffle(topics)
         if start is not None:
             topics = topics[min(abs(int(start)), len(topics)):]
-
         if number is not None:
             topics = topics[:max(0, min(int(number), len(topics)))]
-
-        if mode is not None and mode == 'random':
-            random.shuffle(topics)
 
         return topics
 

@@ -94,15 +94,17 @@ class RecommendedTestView(APIView):
                 status=status.HTTP_204_NO_CONTENT
             )
 
-        if start is not None:
-            tests = tests[min(abs(int(start)), tests.count()):]
-        if number is not None:
-            tests = tests[:max(0, min(int(number), tests.count()))]
+        tests_list = list(tests)
 
-        if tests.count() == 0:
+        if start is not None:
+            tests_list = tests_list[min(abs(int(start)), len(tests_list)):]
+        if number is not None:
+            tests_list = tests_list[:max(0, min(int(number), len(tests_list)))]
+
+        if len(tests_list) == 0:
             return Response(status=204)
 
-        serializer = TestSerializer(tests, many=True)
+        serializer = TestSerializer(tests_list, many=True)
         return Response(data=serializer.data, status=200)
 
     def post(self, request):

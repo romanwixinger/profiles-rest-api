@@ -37,7 +37,7 @@ class AnswerView(APIView):
         query_params_dict['user_id'] = self.request.user.id
         answers = AnswerService.search_answers(query_params_dict)
 
-        if answers.count() > 0:
+        if len(answers) > 0:
             serializer = AnswerSerializer(answers, many=True)
             return Response(data=serializer.data, status=200)
 

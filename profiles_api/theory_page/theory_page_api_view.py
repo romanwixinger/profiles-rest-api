@@ -34,7 +34,7 @@ class TheoryPageView(APIView):
         query_params_dict = self.request.query_params.dict()
         theory_pages = TheoryPageService.search_theory_pages(query_params_dict)
 
-        if theory_pages.count() == 0:
+        if len(theory_pages) == 0:
             return Response(status=204)
 
         serializer = TheoryPageSerializer(theory_pages, many=True)
@@ -82,22 +82,23 @@ class RecommendedTheoryPageView(APIView):
     def get(self, request):
         """Get recommended theory pages"""
 
-        theory_pages_id = TheoryPageService.recommended_theory_pages(request.user)
-        theory_pages = TheoryPage.objects.filter(id__in=theory_pages_id)
-        if theory_pages is None:
+        theory_page_id_list = TheoryPageService.recommended_theory_pages(request.user)
+        theory_pages_list = TheoryPageService.get_theory_pages(theory_page_id_list)
+
+        if len(theory_pages_list) == 0:
             Response(status=204)
 
         start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)
 
         if start is not None:
-            theory_pages = theory_pages[min(abs(int(start)), theory_pages.count()):]
+            theory_pages_list = theory_pages_list[min(abs(int(start)), len(theory_pages_list)):]
         if number is not None:
-            theory_pages = theory_pages[:max(0, min(int(number), theory_pages.count()))]
+            theory_pages_list = theory_pages_list[:max(0, min(int(number), len(theory_pages_list)))]
 
-        if theory_pages.count() == 0:
+        if len(theory_pages_list) == 0:
             return Response(status=204)
 
-        serializer = TheoryPageSerializer(theory_pages, many=True)
+        serializer = TheoryPageSerializer(theory_pages_list, many=True)
         return Response(data=serializer.data, status=200)
 
