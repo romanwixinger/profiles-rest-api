@@ -24,7 +24,7 @@
     {
         "name": "Brüche addieren", 
         "html": "<h1> Brüche addieren </h1>",
-        "topic": 1
+        "topic": "Brüche"
    }
     ```
     The fields 'name' and 'topic' are required, they can contain up to 255 characters. The field 'html' is not required 

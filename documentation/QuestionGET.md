@@ -56,7 +56,8 @@
               "hint": "",
               "imageSrc": "",
               "user_profile": 1,
-              "validation_type": "standardValidation"
+              "validation_type": "standardValidation",
+              "set_difficulty": 2
          }
     ]
     ```
@@ -80,7 +81,7 @@
     headers =  {'Authorization': 'token ' + token}
     question_get = requests.get(url=base_url + "custom-question/", 
                             headers=headers, 
-                            params={"number": 2}
+                            params={"number": 1}
                             )
     print(question_get.json())
      ``` 
@@ -98,7 +99,8 @@
               'appendix': '', 
               'hint': '', 'imageSrc': '', 
               'user_profile': 1, 
-              'validation_type': 'standardValidation'
+              'validation_type': 'standardValidation',
+              'set_difficulty': 2
             }
      ]
      ```

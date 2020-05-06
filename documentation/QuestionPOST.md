@@ -32,7 +32,8 @@
             "appendix": "mL",
             "hint": "Addiere die beiden Zähler.",
             "imageSrc": "http://...",
-            "validation_type": "standardValidation"
+            "validation_type": "standardValidation",
+            "set_difficulty": 2
      }
      ```
     
@@ -59,7 +60,8 @@
         "hint": "",
         "imageSrc": "",
         "user_profile": 1,
-        "validation_type": "standardValidation"
+        "validation_type": "standardValidation",
+        "set_difficulty": 2
     }
     ```
     
