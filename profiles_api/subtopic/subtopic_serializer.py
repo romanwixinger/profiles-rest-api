@@ -1,7 +1,5 @@
 from rest_framework import serializers
 
-from django.db import models
-
 from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.topic.topic_model import Topic
 

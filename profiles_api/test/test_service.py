@@ -1,3 +1,5 @@
+import random
+
 from profiles_api.models import UserProfile
 from profiles_api.test.test_model import Test
 from profiles_api.subtopic.subtopic_model import Subtopic
@@ -63,6 +65,9 @@ class TestService:
 
         test_id = query_params_dict['id'] if 'id' in query_params_dict else None
         title = query_params_dict['title'] if 'title' in query_params_dict else None
+        start = query_params_dict['start'] if 'start' in query_params_dict else None
+        number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         filter_dict = {}
         if test_id is not None and ((test_id is str and test_id.isdigit()) or test_id is int):
@@ -70,15 +75,14 @@ class TestService:
         if title is not None:
             filter_dict['title'] = title
 
-        tests = Test.objects.filter(**filter_dict)
-
-        start = query_params_dict['start'] if 'start' in query_params_dict else None
-        number = query_params_dict['number'] if 'number' in query_params_dict else None
+        tests = list(Test.objects.filter(**filter_dict))
 
         if start is not None:
-            tests = tests[min(abs(int(start)), tests.count()):]
+            tests = tests[min(abs(int(start)), len(tests)):]
         if number is not None:
-            tests = tests[:max(0, min(int(number), tests.count()))]
+            tests = tests[:max(0, min(int(number), len(tests)))]
+        if mode is not None and mode == 'random':
+            random.shuffle(tests)
 
         return tests
 

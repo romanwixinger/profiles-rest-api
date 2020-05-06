@@ -34,7 +34,7 @@ class TestView(APIView):
         query_params_dict = self.request.query_params.dict()
         tests = TestService.search_tests(query_params_dict)
 
-        if tests.count() == 0:
+        if len(tests) == 0:
             return Response(status=204)
 
         serializer = TestSerializer(tests, many=True)

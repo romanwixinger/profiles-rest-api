@@ -1,3 +1,5 @@
+import random
+
 from profiles_api.models import UserProfile
 from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.completed_test.completed_test_model import CompletedTest
@@ -29,6 +31,7 @@ class SubtopicService:
         topic_id = query_params_dict['topic_id'] if 'topic_id' in query_params_dict else None
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         if topic is not None:
             filter_dict = {'topic__name': topic}
@@ -39,13 +42,16 @@ class SubtopicService:
         else:
             subtopics = Subtopic.objects.all()
 
+        subtopics_list = list(subtopics)
+
         if start is not None:
-            subtopics = subtopics[min(abs(int(start)), subtopics.count()):]
-
+            subtopics_list = subtopics_list[min(abs(int(start)), len(subtopics_list)):]
         if number is not None:
-            subtopics = subtopics[:max(0, min(int(number), subtopics.count()))]
+            subtopics_list = subtopics_list[:max(0, min(int(number), len(subtopics_list)))]
+        if mode is not None and mode == 'random':
+            random.shuffle(subtopics_list)
 
-        return subtopics
+        return subtopics_list
 
     @classmethod
     def subtopic_statistics(cls, user: UserProfile) -> dict:
@@ -127,4 +133,4 @@ class SubtopicService:
             else:
                 raise LookupError("The subtopic with id " + str(subtopic_id) + " does not exist.")
 
-        return subtopic_list
+        return list(subtopic_list)

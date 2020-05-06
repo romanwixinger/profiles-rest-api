@@ -1,6 +1,6 @@
-from profiles_api.topic.topic_model import Topic
-
 import random
+
+from profiles_api.topic.topic_model import Topic
 
 
 class TopicService:
@@ -22,7 +22,6 @@ class TopicService:
             topics = topics[:max(0, min(int(number), len(topics)))]
 
         if mode is not None and mode == 'random':
-            topics = list(topics)
             random.shuffle(topics)
 
         return topics

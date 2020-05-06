@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
-
 from profiles_api import permissions
-from profiles_api.topic.topic_serializer import TopicSerializer, TopicDeserializer
+
 from profiles_api.topic.topic_model import Topic
+
+from profiles_api.topic.topic_serializer import TopicSerializer, TopicDeserializer
 from profiles_api.topic.topic_service import TopicService
 
 

@@ -1,3 +1,5 @@
+import random
+
 from profiles_api.question.question_model import Question
 from profiles_api.models import UserProfile
 from profiles_api.answer.answer_service import AnswerService
@@ -17,6 +19,7 @@ class QuestionService:
         subtopic_id = query_params_dict['subtopic_id'] if 'subtopic_id' in query_params_dict else None
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         filter_dict = {}
         if topic is not None:
@@ -29,12 +32,16 @@ class QuestionService:
             filter_dict['subtopic__id'] = subtopic_id
         questions = Question.objects.filter(**filter_dict)
 
-        if start is not None:
-            questions = questions[min(abs(int(start)), questions.count()):]
-        if number is not None:
-            questions = questions[:max(0, min(int(number), questions.count()))]
+        questions_list = list(questions)
 
-        return questions
+        if start is not None:
+            questions_list = questions_list[min(abs(int(start)), len(questions_list)):]
+        if number is not None:
+            questions_list = questions[:max(0, min(int(number), len(questions_list)))]
+        if mode is not None and mode == 'random':
+            random.shuffle(questions_list)
+
+        return questions_list
 
     @classmethod
     def get_questions(cls, question_id_list: [int]) -> [Question]:

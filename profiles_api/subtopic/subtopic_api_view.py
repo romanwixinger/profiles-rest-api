@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
 from profiles_api import permissions
 
-from profiles_api.subtopic.subtopic_serializer import SubtopicSerializer, SubtopicDeserializer
 from profiles_api.subtopic.subtopic_model import Subtopic
+
+from profiles_api.subtopic.subtopic_serializer import SubtopicSerializer, SubtopicDeserializer
 from profiles_api.subtopic.subtopic_service import SubtopicService
 
 
@@ -59,7 +59,7 @@ class CustomSubtopicView(APIView):
         query_params_dict = self.request.query_params.dict()
         subtopics = SubtopicService.search_subtopics(query_params_dict)
 
-        if subtopics.count() > 0:
+        if len(subtopics) > 0:
             serializer = SubtopicSerializer(subtopics, many=True)
             return Response(data=serializer.data, status=200)
         else:
