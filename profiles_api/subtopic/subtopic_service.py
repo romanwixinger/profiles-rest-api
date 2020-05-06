@@ -22,7 +22,7 @@ class SubtopicService:
         return sorted_subtopics[:number]
 
     @classmethod
-    def get_subtopics(cls, query_params_dict: dict) -> [Subtopic]:
+    def search_subtopics(cls, query_params_dict: dict) -> [Subtopic]:
         """Get subtopics according to query parameters stored in a dict"""
 
         topic = query_params_dict['topic'] if 'topic' in query_params_dict else None

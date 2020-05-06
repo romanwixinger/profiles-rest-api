@@ -57,7 +57,7 @@ class CustomSubtopicView(APIView):
         """Retrieve only certain subtopics"""
 
         query_params_dict = self.request.query_params.dict()
-        subtopics = SubtopicService.get_subtopics(query_params_dict)
+        subtopics = SubtopicService.search_subtopics(query_params_dict)
 
         if subtopics.count() > 0:
             serializer = SubtopicSerializer(subtopics, many=True)
