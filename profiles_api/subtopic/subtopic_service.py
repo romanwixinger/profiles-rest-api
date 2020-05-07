@@ -11,7 +11,7 @@ from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelS
 class SubtopicService:
 
     @classmethod
-    def recommended_subtopics(cls, user: UserProfile, number: int = 2) -> [int]:
+    def recommended_subtopics(cls, user: UserProfile, number: int = 100) -> [int]:
         """Evaluates all answers of the user and recommends subtopics accordingly. The subtopics are sorted according
         to the strongness of the recommendation."""
 

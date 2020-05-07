@@ -11,7 +11,7 @@ class TheoryPageService:
     def recommended_theory_pages(cls, user: UserProfile, number: int = 2) -> [int]:
         """"Evaluates all completed tests of the user and recommends theory pages accordingly"""
 
-        recommended_subtopics = SubtopicService.recommended_subtopics(user, number=5*number)
+        recommended_subtopics = SubtopicService.recommended_subtopics(user, number=10*number)
         if recommended_subtopics is None:
             return []
 
@@ -23,6 +23,8 @@ class TheoryPageService:
                 continue
             for theory_page in theory_pages:
                 recommended_theory_pages.append(theory_page.id)
+            if len(recommended_theory_pages) >= number:
+                break
 
         return recommended_theory_pages[:number]
 
