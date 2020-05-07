@@ -60,6 +60,7 @@ print("\n" + 30 * "*" + " Login " + 30 * "*" + "\n")
 credentials =  {'username': 'email@email.com', 'password': 'PW'}
 login_post = requests.post(url=base_url + "login/", json=credentials)
 token = login_post.json()['token']
+print("Status code: ", login_post.status_code)
 print(login_post.json())
 
 
@@ -76,6 +77,7 @@ topic_post = requests.post(url=base_url + "custom-topic/",
                            headers=headers)
 topic_id = topic_post.json()['id']
 
+print("Status code: ", topic_post.status_code)
 print(topic_post.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -84,6 +86,7 @@ print("\n" + 10 * "*" + "\n")
 topic_get = requests.get(url=base_url + "custom-topic/", 
                          headers=headers, 
                          params = {'number': 1})
+print("Status code: ", topic_get.status_code)
 print(topic_get.json())
 
 
@@ -99,7 +102,7 @@ subtopic_post = requests.post(url=base_url + "custom-subtopic/",
                               headers=headers,
                               json=subtopic)
 subtopic_id = subtopic_post.json()['id']
-
+print("Status code: ", subtopic_post.status_code)
 print(subtopic_post.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -109,6 +112,7 @@ subtopic_get = requests.get(url=base_url + "custom-subtopic/",
                             headers=headers, 
                             params={'topic_id': topic_id, 'number': 1}
                             )
+print("Status code: ", subtopic_get.status_code)
 print(subtopic_get.json())
 
 
@@ -132,6 +136,7 @@ question_post = requests.post(url=base_url + "custom-question/",
                               json=question)
 question_id = question_post.json()['id']
 
+print("Status code: ", question_post.status_code)
 print(question_post.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -141,6 +146,7 @@ question_get = requests.get(url=base_url + "custom-question/",
                             headers=headers, 
                             params={"number": 1}
                             )
+print("Status code: ", question_get.status_code)
 print(question_get.json())
 
 
@@ -155,6 +161,7 @@ answer =  {"question": question_id, "duration": 5.5, "answers": "5/2", "skipped"
 answer_post = requests.post(url=base_url + "custom-answer/", 
                             headers=headers,
                             json=answer)
+print("Status code: ", answer_post.status_code)
 print(answer_post.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -162,6 +169,7 @@ print("\n" + 10 * "*" + "\n")
 answer_get = requests.get(url=base_url + "custom-answer/", 
                           headers=headers,
                           params={'number': 1})
+print("Status code: ", answer_get.status_code)
 print(answer_get.json())
 
 
@@ -180,6 +188,7 @@ test_post = requests.post(url=base_url + "custom-test/",
                           headers=headers,
                           json=test
                           )
+print("Status code: ", test_post.status_code)
 print(test_post.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -187,6 +196,7 @@ test_get = requests.get(url=base_url + "custom-test/",
                           headers=headers,
                           params={'number': 1}
                           )
+print("Status code: ", test_get.status_code)
 print(test_get.json())
 
 
@@ -218,6 +228,7 @@ completed_test_post = requests.post(url=base_url + "custom-completed-test/",
                                     headers=headers,
                                     json=completed_test
                                     )
+print("Status code: ", completed_test_post.status_code)
 print(completed_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -225,6 +236,7 @@ completed_test_get = requests.get(url=base_url + "custom-completed-test/",
                                     headers=headers,
                                     params = {'number': 1}
                                     )
+print("Status code: ", completed_test_get.status_code)
 print(completed_test_get.json())
 
 
@@ -242,12 +254,14 @@ theory_page = {
 theory_page_post = requests.post(url=base_url + "custom-theory-page/", 
                                  headers=headers,
                                  json=theory_page)
+print("Status code: ", theory_page_post.status_code)
 print(theory_page_post.json())
 print("\n" + 10 * "*" + "\n")
 
 theory_page_get = requests.get(url=base_url + "custom-theory-page/", 
                                  headers=headers,
                                  params = {'number': 1})
+print("Status code: ", theory_page_get.status_code)
 print(theory_page_get.json())
 
 
@@ -259,6 +273,7 @@ print("\n" + 30 * "*" + " RecommendedTheoryPage " + 30 * "*" + "\n")
 # RecommendedTheoryPage GET 
 recommended_theory_page_get = requests.get(url=base_url + "recommended-theory-page/", 
                                headers=headers)
+print("Status code: ", recommended_theory_page_get.status_code)
 print(recommended_theory_page_get.json())
 
 
@@ -272,6 +287,7 @@ recommended_test_get = requests.get(url=base_url + "recommended-test/",
                                     headers=headers,
                                     params={'number': 1}
                                     )
+print("Status code: ", recommended_test_get.status_code)
 print(recommended_test_get.json())
 print("\n" + 10 * "*" + "\n")
 
@@ -280,6 +296,7 @@ recommended_test_post = requests.post(url=base_url + "recommended-test/",
                                     headers=headers,
                                     params={'number': 5, 'length': 1}
                                     )
+print("Status code: ", recommended_test_post.status_code)
 print(recommended_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
