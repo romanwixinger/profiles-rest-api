@@ -11,22 +11,13 @@ class TheoryPageService:
     def recommended_theory_pages(cls, user: UserProfile, number: int = 2) -> [int]:
         """"Evaluates all completed tests of the user and recommends theory pages accordingly"""
 
-        recommended_subtopics = SubtopicService.recommended_subtopics(user, number=10*number)
+        recommended_subtopics = SubtopicService.recommended_subtopics(user)
         if recommended_subtopics is None:
             return []
 
-        recommended_theory_pages = []  # contains ids
-        for recommended_subtopic in recommended_subtopics:
-            filter_dict = {'subtopic': recommended_subtopic}
-            theory_pages = TheoryPage.objects.filter(**filter_dict)
-            if theory_pages is None:
-                continue
-            for theory_page in theory_pages:
-                recommended_theory_pages.append(theory_page.id)
-            if len(recommended_theory_pages) >= number:
-                break
-
-        return recommended_theory_pages[:number]
+        recommended_theory_pages = cls.search_theory_pages_with_subtopic(subtopic_id_list=recommended_subtopics,
+                                                                         number=number)
+        return recommended_theory_pages
 
     @classmethod
     def search_theory_pages(cls, query_params_dict: dict) -> [TheoryPage]:
@@ -64,3 +55,21 @@ class TheoryPageService:
         theory_pages_list = list(theory_pages)
 
         return theory_pages_list
+
+    @classmethod
+    def search_theory_pages_with_subtopic(cls, subtopic_id_list: [int], number: int) -> [int]:
+        """Retrieve number-many theory pages that cover certain subtopics"""
+
+        theory_page_id_list = []
+
+        for subtopic_id in subtopic_id_list:
+            filter_dict = {'subtopic': subtopic_id}
+            theory_pages = TheoryPage.objects.filter(**filter_dict)
+            if theory_pages is None:
+                continue
+            for theory_page in theory_pages:
+                theory_page_id_list.append(theory_page.id)
+            if len(theory_page_id_list) >= number:
+                break
+
+        return theory_page_id_list[:number]
