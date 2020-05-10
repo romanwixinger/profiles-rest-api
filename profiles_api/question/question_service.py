@@ -49,16 +49,8 @@ class QuestionService:
     def get_questions(cls, question_id_list: [int]) -> [Question]:
         """Returns a list with the requested questions"""
 
-        question_list = []
-
-        for question_id in question_id_list:
-            filter_dict = {'id': question_id}
-            question = Question.objects.filter(**filter_dict)[0] \
-                if Question.objects.filter(**filter_dict).count() > 0 else None
-            if question is not None:
-                question_list.append(question)
-            else:
-                raise LookupError("The question with id " + str(question_id) + " does not exist.")
+        questions = Question.objects.filter(id__in=question_id_list)
+        question_list = list(questions)
 
         return question_list
 
@@ -71,32 +63,47 @@ class QuestionService:
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
 
+        subtopics = sorted_subtopics[:min(number, len(sorted_subtopics))]
         recommended_questions = []
 
-        for subtopic_id in sorted_subtopics[:min(number, len(sorted_subtopics))]:
+        for subtopic_id in subtopics:
 
-            new_questions = cls.questions_of_level(subtopic_id=subtopic_id, difficulty=level_dict[subtopic_id],
-                                                   number=length)
-            if len(new_questions) < length:
-                for level in [level for level in [1, 2, 3, 4, 5] if level != level_dict[subtopic_id]]:
-                    new_questions += cls.questions_of_level(subtopic_id=subtopic_id, difficulty=level, number=length)
+            difficulty = level_dict[subtopic_id]
 
-            recommended_questions += new_questions[:min(number, len(new_questions))]
+            considered_questions = cls.questions_of_level(subtopic_id=subtopic_id, difficulty=difficulty,
+                                                   number=2*length)
+            answered_questions = AnswerService.search_answers_id(query_params_dict={
+                'subtopic_id': subtopic_id,
+                'difficulty': difficulty,
+                'user_id': user.id
+            })
+
+            considered_questions = [question for question in considered_questions if question not in answered_questions]
+
+            if len(considered_questions) < length:
+                for level in [level for level in [1, 2, 3, 4, 5] if level != difficulty]:
+                    considered_questions += cls.questions_of_level(subtopic_id=subtopic_id, difficulty=level, number=length)
+
+            recommended_questions += considered_questions[:min(number, len(considered_questions))]
 
         return recommended_questions
 
     @classmethod
-    def questions_of_level(cls, subtopic_id: int, difficulty: int, number: int) -> [int]:
+    def questions_of_level(cls, subtopic_id: int, difficulty: int, number: int = -1) -> [int]:
         """Get a number of question ids of a subtopic of a certain level of difficulty"""
 
         filter_dict = {'subtopic__id': subtopic_id, 'difficulty': difficulty}
+        questions = Question.objects.filter(**filter_dict).values_list('id', flat=True)
 
-        questions = Question.objects.filter(**filter_dict)
-        questions = questions[:max(0, min(int(number), questions.count()))]
+        question_list = list(questions)
 
-        questions_of_level = [question.id for question in questions]
+        if number == -1:
+            return question_list
 
-        return questions_of_level
+        return question_list[:max(0, min(int(number), questions.count()))]
+
+
+
 
 
 

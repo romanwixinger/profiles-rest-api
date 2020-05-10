@@ -87,4 +87,11 @@ class CompletedTestService:
 
         return completed_tests_list
 
+    @classmethod
+    def get_completed_tests(cls, completed_test_id_list: int):
+        """Returns a list with the requested completed tests"""
 
+        completed_tests = CompletedTest.objects.filter(id__in=completed_test_id_list)
+        completed_test_list = list(completed_tests)
+
+        return completed_test_list

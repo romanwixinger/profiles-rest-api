@@ -76,6 +76,15 @@ class AnswerService:
     def search_answers(cls, query_params_dict: dict) -> [Answer]:
         """Get the answers of a user according to query parameters stored in a dict"""
 
+        answer_id_list = cls.search_answers_id(query_params_dict)
+        answers = cls.get_answers(answer_id_list)
+
+        return answers
+
+    @classmethod
+    def search_answers_id(cls, query_params_dict: dict) -> [int]:
+        """Get the answers of a user according to query parameters stored in a dict"""
+
         user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
         if user_id is None or user_id == '':
             raise Exception("The class method search_answers must only be used with a user_id.")
@@ -86,6 +95,7 @@ class AnswerService:
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
         mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
+        difficulty = query_params_dict['difficulty'] if 'difficulty' in query_params_dict else None
 
         filter_dict = {'user_profile': user_id}
 
@@ -95,17 +105,28 @@ class AnswerService:
             filter_dict['question__topic'] = topic_id
         if subtopic_id is not None and question_id != '':
             filter_dict['question__subtopic'] = subtopic_id
+        if difficulty is not None and difficulty != '':
+            filter_dict['question__difficulty'] = difficulty
 
-        answers = list(Answer.objects.filter(**filter_dict))
+        answer_id_list = list(Answer.objects.filter(**filter_dict).values_list('id', flat=True))
 
         if mode == 'random':
-            random.shuffle(answers)
+            random.shuffle(answer_id_list)
         if start is not None:
-            answers = answers[min(abs(int(start)), len(answers)):]
+            answer_id_list = answer_id_list[min(abs(int(start)), len(answer_id_list)):]
         if number is not None:
-            answers = answers[:max(0, min(int(number), len(answers)))]
+            answer_id_list = answer_id_list[:max(0, min(int(number), len(answer_id_list)))]
 
-        return answers
+        return answer_id_list
+
+    @classmethod
+    def get_answers(cls, answer_id_list: int):
+        """Returns a list with the requested answers"""
+
+        answers = Answer.objects.filter(id__in=answer_id_list)
+        answer_list = list(answers)
+
+        return answer_list
 
     @classmethod
     def get_all_answers(cls, question_id: int, query_params_dict: dict) -> [Answer]:

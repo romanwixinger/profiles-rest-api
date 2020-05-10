@@ -47,17 +47,10 @@ class TestService:
     def get_tests(cls, test_id_list: [int]) -> [Test]:
         """Gets specific tests"""
 
-        tests = []
+        tests = Test.objects.filter(id__in=test_id_list)
+        test_list = list(tests)
 
-        for test_id in test_id_list:
-            filter_dict = {'id': test_id}
-            test = Test.objects.get(**filter_dict)[0] if Test.objects.get(**filter_dict).count() > 0 else None
-            if test is None:
-                raise LookupError
-            else:
-                tests.append(test)
-
-        return tests
+        return test_list
 
     @classmethod
     def search_tests(cls, query_params_dict: dict) -> list:

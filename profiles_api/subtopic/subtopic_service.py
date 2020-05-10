@@ -122,15 +122,7 @@ class SubtopicService:
     def get_subtopics(cls, subtopic_id_list: [int]) -> [Subtopic]:
         """Returns a list with the requested subtopics"""
 
-        subtopic_list = []
+        subtopics = Subtopic.objects.filter(id__in=subtopic_id_list)
+        subtopic_list = list(subtopics)
 
-        for subtopic_id in subtopic_id_list:
-            filter_dict = {'id': subtopic_id}
-            subtopic = Subtopic.objects.filter(**filter_dict)[0] \
-                if Subtopic.objects.filter(**filter_dict).count() > 0 else None
-            if subtopic is not None:
-                subtopic_list.append(subtopic)
-            else:
-                raise LookupError("The subtopic with id " + str(subtopic_id) + " does not exist.")
-
-        return list(subtopic_list)
+        return subtopic_list

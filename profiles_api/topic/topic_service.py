@@ -28,15 +28,8 @@ class TopicService:
     def get_topics(cls, topic_id_list: [int]) -> [Topic]:
         """Returns a list with the requested topics"""
 
-        topic_list = []
-
-        for topic_id in topic_id_list:
-            filter_dict = {'id': topic_id}
-            topic = Topic.objects.filter(**filter_dict)[0] \
-                if Topic.objects.filter(**filter_dict).count() > 0 else None
-            if topic is not None:
-                topic_list.append(topic)
-            else:
-                raise LookupError("The topic with id " + str(topic_id) + " does not exist.")
+        topics = Topic.objects.filter(id__in=topic_id_list)
+        topic_list = list(topics)
 
         return topic_list
+
