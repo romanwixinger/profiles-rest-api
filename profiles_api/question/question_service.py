@@ -20,6 +20,7 @@ class QuestionService:
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
         mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
+        difficulty =  query_params_dict['difficulty'] if 'difficulty' in query_params_dict else None
 
         filter_dict = {}
         if topic is not None:
@@ -30,6 +31,8 @@ class QuestionService:
             filter_dict['subtopic__name'] = subtopic
         if subtopic_id is not None:
             filter_dict['subtopic__id'] = subtopic_id
+        if difficulty is not None:
+            filter_dict['difficulty'] = difficulty
 
         questions = list(Question.objects.filter(**filter_dict))
 
