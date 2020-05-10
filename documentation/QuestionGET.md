@@ -32,10 +32,12 @@
     Specify the subtopic of the question by its id: <br>
     `subtopic_id=[integer]`
     
+    Specify the difficulty of the question. Allowed difficulties are in [1,2,3,4,5]: <br>
+    `difficulty=[integer]`
+    
     Set the parameter to 'random' to shuffle the questions randomly. <br> 
     `mode = [string]`
-  
-  
+
 * **Data Params**
 
     An authorization header has to be provided. The key is 'token' 
