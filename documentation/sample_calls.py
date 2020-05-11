@@ -117,10 +117,9 @@ print(subtopic_get.json())
 
 
 
-
 """Question"""
 
-print("\n" + 30 * "*" + " Subtopic " + 30 * "*" + "\n")
+print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 
 # Question POST
 question = {
@@ -144,7 +143,7 @@ print("\n" + 10 * "*" + "\n")
 # Question GET
 question_get = requests.get(url=base_url + "custom-question/", 
                             headers=headers, 
-                            params={"number": 1}
+                            params={"number": 1, "question": "$\\\\frac{1}{2} + \\\\frac{100}{2}$"}
                             )
 print("Status code: ", question_get.status_code)
 print(question_get.json())
