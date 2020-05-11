@@ -185,9 +185,9 @@ class AnswerService:
         facility = cls.facility(question_id=question_id)
         set_difficulty = cls.set_difficulty(question_id=question_id)
 
-        fac_difficulty = int(5.5 - facility * 5)
+        fac_difficulty = int(6 - facility * 5)
 
-        difficulty = int(set_difficulty + fac_difficulty + 0.5)
+        difficulty = int(0.5 * set_difficulty + 0.5 * fac_difficulty + 0.5)
         difficulty = max(1, min(5, difficulty))
 
         return difficulty
