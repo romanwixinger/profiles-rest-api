@@ -1,3 +1,5 @@
+import random
+
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.subtopic.subtopic_model import Subtopic
 
@@ -6,7 +8,7 @@ class CompletedTestService:
     """Service class for completed tests"""
 
     @classmethod
-    def get_recommended_completed_tests(completed_test: CompletedTest, number: int = 2):
+    def get_recommended_subtopics(cls, completed_test: CompletedTest, number: int = 2) -> [Subtopic]:
         """Evaluates answers and recommends subtopics accordingly"""
 
         subtopic_weight = 2
@@ -43,9 +45,6 @@ class CompletedTestService:
         ratio_list = [subtopic_dict[x]["ratio"] for x in subtopic_list]
         sorted_subtopics = [subtopic for _, subtopic in sorted(zip(ratio_list, subtopic_list))]
 
-        print(subtopic_dict)
-        print(sorted_subtopics)
-
         for subtopic_id in sorted_subtopics[:number]:
             filter_dict = {'id': subtopic_id}
             subtopic = Subtopic.objects.filter(**filter_dict)[0]
@@ -56,7 +55,7 @@ class CompletedTestService:
         return
 
     @classmethod
-    def get_completed_tests(cls, query_params_dict: dict) -> list:
+    def search_completed_tests(cls, query_params_dict: dict) -> [CompletedTest]:
         """Get the completed tests of a user according to query parameters stored in a dict"""
 
         user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
@@ -66,6 +65,9 @@ class CompletedTestService:
         filter_dict = {'user_profile': user_id}
 
         completed_test_id = query_params_dict['id'] if 'id' in query_params_dict else None
+        start = query_params_dict['start'] if 'start' in query_params_dict else None
+        number = query_params_dict['number'] if 'number' in query_params_dict else None
+        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         if completed_test_id is not None:
             filter_dict['id'] = completed_test_id
@@ -74,8 +76,22 @@ class CompletedTestService:
             if completed_tests is None:
                 raise LookupError
 
-        completed_tests = CompletedTest.objects.filter(**filter_dict)
+        completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
 
-        return completed_tests
+        if mode == 'random':
+            random.shuffle(completed_tests_list)
+        if start is not None:
+            completed_tests_list = completed_tests_list[min(abs(int(start)), len(completed_tests_list)):]
+        if number is not None:
+            completed_tests_list = completed_tests_list[:max(0, min(int(number), len(completed_tests_list)))]
 
+        return completed_tests_list
 
+    @classmethod
+    def get_completed_tests(cls, completed_test_id_list: int):
+        """Returns a list with the requested completed tests"""
+
+        completed_tests = CompletedTest.objects.filter(id__in=completed_test_id_list)
+        completed_test_list = list(completed_tests)
+
+        return completed_test_list

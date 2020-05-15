@@ -3,11 +3,12 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
 from profiles_api import permissions
 
-from profiles_api.topic.topic_serializer import TopicSerializer, TopicDeserializer
 from profiles_api.topic.topic_model import Topic
+
+from profiles_api.topic.topic_serializer import TopicSerializer, TopicDeserializer
+from profiles_api.topic.topic_service import TopicService
 
 
 class TopicViewSet(viewsets.ModelViewSet):
@@ -31,18 +32,11 @@ class TopicView(APIView):
 
     def get(self, request):
         """Retrieve only certain topics"""
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
 
-        topics = Topic.objects.all()
+        query_params_dict = self.request.query_params.dict()
+        topics = TopicService.search_topics(query_params_dict)
 
-        if start is not None:
-            topics = topics[min(abs(int(start)), topics.count()):]
-
-        if number is not None:
-            topics = topics[:max(0, min(int(number), topics.count()))]
-
-        if topics.count() > 0:
+        if len(topics) > 0:
             serializer = TopicSerializer(topics, many=True)
             return Response(data=serializer.data, status=200)
         else:

@@ -25,7 +25,10 @@
        
       Specify the topic of the subtopic by its id: <br>
       `topic_id=[integer]`
-        
+
+      Set the parameter to 'random' to shuffle the subtopics randomly. Otherwise, the subtopics are 
+      ordered by their id. <br> 
+      `mode = [string]`
   
 * **Data Params**
 

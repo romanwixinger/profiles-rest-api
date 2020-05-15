@@ -19,6 +19,10 @@
                       
     Specify the maximum number of recommended theory pages to be retrieved:  <br>
     `number=[integer]`
+    
+    Set the parameter to 'random' to shuffle the recommended theory pages randomly. Otherwise, the theory pages are 
+    ordered by their id. <br> 
+    `mode = [string]`
         
 * **Data Params**
 

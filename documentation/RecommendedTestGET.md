@@ -19,6 +19,10 @@
                     
     Specify the maximum number of recommended tests to be retrieved:  <br>
     `number=[integer]`
+    
+    Set the parameter to 'random' to shuffle the recommended tests randomly. Otherwise the tests are ordered by 
+     their id. <br> 
+    `mode = [string]`
          
   
 * **Data Params**

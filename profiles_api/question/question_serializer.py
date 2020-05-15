@@ -24,6 +24,10 @@ class QuestionDeserializer(serializers.Serializer):
     appendix = serializers.CharField(max_length=1024, required=False, allow_blank=False)
     hint = serializers.CharField(max_length=1024, required=False, allow_blank=False)
     imageSrc = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+    set_difficulty = serializers.ChoiceField([(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)],
+                                             default=0,
+                                             required=False,
+                                             allow_blank=False)
 
     def validate(self, data):
         """Validate if topic and subtopic are given"""
@@ -91,7 +95,9 @@ class QuestionDeserializer(serializers.Serializer):
             topic=topic,
             subtopic=subtopic,
             question=validated_data['question'],
-            correctAnswers=validated_data['correctAnswers']
+            correctAnswers=validated_data['correctAnswers'],
+            difficulty=validated_data['set_difficulty'],
+            set_difficulty=validated_data['set_difficulty'],
         )[0]
 
         dependencies = validated_data['dependencies'] if 'dependencies' in validated_data else None
@@ -140,5 +146,5 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ('id', 'created_on', 'topic', 'subtopic', 'dependencies',
                   'question', 'correctAnswers', 'appendix', 'hint', 'imageSrc',
-                  'user_profile', 'validation_type')
+                  'user_profile', 'validation_type', 'difficulty', 'set_difficulty')
         extra_kwargs = {'user_profile': {'read_only': True}, 'appendix': {'required': False}}

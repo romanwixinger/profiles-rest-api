@@ -56,7 +56,10 @@ class QuestionView(APIView):
         """Retrieve only certain questions"""
 
         query_params_dict = self.request.query_params.dict()
-        questions = QuestionService.get_questions(query_params_dict)
+        questions = QuestionService.search_questions(query_params_dict)
+
+        if len(questions) == 0:
+            return Response(status=204)
 
         serializer = QuestionSerializer(questions, many=True)
         return Response(data=serializer.data, status=200)

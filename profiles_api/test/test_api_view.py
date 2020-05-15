@@ -32,9 +32,9 @@ class TestView(APIView):
         """Retrieves selected tests"""
 
         query_params_dict = self.request.query_params.dict()
-        tests = TestService.get_tests(query_params_dict)
+        tests = TestService.search_tests(query_params_dict)
 
-        if tests.count() == 0:
+        if len(tests) == 0:
             return Response(status=204)
 
         serializer = TestSerializer(tests, many=True)
@@ -50,7 +50,13 @@ class TestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            test = deserializer.create(validated_data)
+            try:
+                test = deserializer.create(validated_data)
+            except LookupError:
+                return Response(
+                    deserializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if test is None:
                 return Response(
@@ -75,24 +81,49 @@ class RecommendedTestView(APIView):
     def get(self, request):
         """Retrieves recommended tests"""
 
-        tests_id = TestService.get_recommended_tests(request.user)
-        tests = Test.objects.filter(id__in=tests_id) if tests_id != [] else None
+        start = self.request.query_params.get('start', None)
+        number = self.request.query_params.get('number', None)
+
+        nr = int(number) if number is not None else 1
+        nr += int(start) if start is not None else 0
+
+        test_ids = TestService.recommended_tests(request.user, number=nr)
+        tests = Test.objects.filter(id__in=test_ids) if test_ids != [] else None
         if tests is None:
             return Response(
                 status=status.HTTP_204_NO_CONTENT
             )
 
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
+        tests_list = list(tests)
 
         if start is not None:
-            tests = tests[min(abs(int(start)), tests.count()):]
+            tests_list = tests_list[min(abs(int(start)), len(tests_list)):]
         if number is not None:
-            tests = tests[:max(0, min(int(number), tests.count()))]
+            tests_list = tests_list[:max(0, min(int(number), len(tests_list)))]
 
-        if tests.count() == 0:
+        if len(tests_list) == 0:
             return Response(status=204)
 
-        serializer = TestSerializer(tests, many=True)
+        serializer = TestSerializer(tests_list, many=True)
         return Response(data=serializer.data, status=200)
+
+    def post(self, request):
+        """"Create a recommended test"""
+
+        number = self.request.query_params.get('number', None)
+        number = int(number) if number is not None else 2
+        length = self.request.query_params.get('length', None)
+        length = int(length) if length is not None else 10
+
+        title = "Persönliche Übungen"
+        html = ""
+
+        test = TestService.create_recommended_test(user=self.request.user, number=number, length=length,
+                                                   title=title, html=html)
+
+        serializer = TestSerializer(test)
+        return Response(data=serializer.data, status=201)
+
+
+
 

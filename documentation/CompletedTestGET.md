@@ -16,6 +16,15 @@
                     
     Specify the id of the completed test: <br>
     `id=[integer]`
+    
+    Specify the index of the first completed tests to be retrieved: <br>
+    `start=[integer]`
+                  
+    Specify the maximum number of completed tests to be retrieved:  <br>
+    `number=[integer]`
+    
+    Set the parameter to 'random' to shuffle the completed tests randomly. <br> 
+    `mode = [string]`
   
   
 * **Data Params**

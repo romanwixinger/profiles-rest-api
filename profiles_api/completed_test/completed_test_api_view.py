@@ -37,7 +37,7 @@ class CompletedTestView(APIView):
             return Response(status=status.HTTP_403_FORBIDDEN)
         query_params_dict['user_id'] = self.request.user.id
         try:
-            completed_tests = CompletedTestService.get_completed_tests(query_params_dict)
+            completed_tests = CompletedTestService.search_completed_tests(query_params_dict)
         except LookupError:
             return Response(
                 {"id": "The completed test with this id does not exist."},
@@ -46,15 +46,11 @@ class CompletedTestView(APIView):
         except PermissionError:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        if completed_tests is not None and isinstance(completed_tests, QuerySet):
-            serializer = CompletedTestSerializer(completed_tests, many=True)
-            return Response(data=serializer.data, status=200)
+        if len(completed_tests) == 0:
+            return Response(status=204)
 
-        if completed_tests is not None:
-            serializer = CompletedTestSerializer(completed_tests)
-            return Response(data=serializer.data, status=200)
-
-        return Response(status=204)
+        serializer = CompletedTestSerializer(completed_tests, many=True)
+        return Response(data=serializer.data, status=200)
 
     def post(self, request):
         """Create a completed test"""
@@ -80,7 +76,7 @@ class CompletedTestView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
-            CompletedTestService.get_recommended_completed_tests(completed_test)
+            CompletedTestService.get_recommended_subtopics(completed_test)
 
             completed_test.save()
 

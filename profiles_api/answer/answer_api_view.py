@@ -35,9 +35,9 @@ class AnswerView(APIView):
         if 'user_id' in query_params_dict:
             return Response(status=status.HTTP_403_FORBIDDEN)
         query_params_dict['user_id'] = self.request.user.id
-        answers = AnswerService.get_answers(query_params_dict)
+        answers = AnswerService.search_answers(query_params_dict)
 
-        if answers.count() > 0:
+        if len(answers) > 0:
             serializer = AnswerSerializer(answers, many=True)
             return Response(data=serializer.data, status=200)
 
