@@ -8,7 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.theory_page.theory_page_serializer import TheoryPageSerializer, TheoryPageDeserializer
 from profiles_api.theory_page.theory_page_model import TheoryPage
-from profiles_api.theory_page.theory_page_service import get_recommended_theory_pages
+from profiles_api.theory_page.theory_page_service import TheoryPageService
 
 
 class TheoryPageViewSet(viewsets.ModelViewSet):
@@ -31,29 +31,10 @@ class TheoryPageView(APIView):
     def get(self, request):
         """Get certain theory pages"""
 
-        _ = get_recommended_theory_pages(request.user)
+        query_params_dict = self.request.query_params.dict()
+        theory_pages = TheoryPageService.search_theory_pages(query_params_dict)
 
-        theory_page_id = self.request.query_params.get('id', None)
-        title = self.request.query_params.get('title', None)
-
-        filter_dict = {}
-        if theory_page_id is not None and theory_page_id.isdigit():
-            print("true")
-            filter_dict['id'] = int(theory_page_id)
-        if title is not None:
-            filter_dict['title'] = title
-
-        theory_pages = TheoryPage.objects.filter(**filter_dict)
-
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        if start is not None:
-            theory_pages = theory_pages[min(abs(int(start)), theory_pages.count()):]
-        if number is not None:
-            theory_pages = theory_pages[:max(0, min(int(number), theory_pages.count()))]
-
-        if theory_pages.count() == 0:
+        if len(theory_pages) == 0:
             return Response(status=204)
 
         serializer = TheoryPageSerializer(theory_pages, many=True)
@@ -101,24 +82,23 @@ class RecommendedTheoryPageView(APIView):
     def get(self, request):
         """Get recommended theory pages"""
 
-        theory_pages_id = get_recommended_theory_pages(request.user)
-        theory_pages = TheoryPage.objects.filter(id__in=theory_pages_id)
-        if theory_pages is None:
-            return Response(
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        theory_page_id_list = TheoryPageService.recommended_theory_pages(request.user)
+        theory_pages_list = TheoryPageService.get_theory_pages(theory_page_id_list)
+
+        if len(theory_pages_list) == 0:
+            Response(status=204)
 
         start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)
 
         if start is not None:
-            theory_pages = theory_pages[min(abs(int(start)), theory_pages.count()):]
+            theory_pages_list = theory_pages_list[min(abs(int(start)), len(theory_pages_list)):]
         if number is not None:
-            theory_pages = theory_pages[:max(0, min(int(number), theory_pages.count()))]
+            theory_pages_list = theory_pages_list[:max(0, min(int(number), len(theory_pages_list)))]
 
-        if theory_pages.count() == 0:
+        if len(theory_pages_list) == 0:
             return Response(status=204)
 
-        serializer = TheoryPageSerializer(theory_pages, many=True)
+        serializer = TheoryPageSerializer(theory_pages_list, many=True)
         return Response(data=serializer.data, status=200)
 

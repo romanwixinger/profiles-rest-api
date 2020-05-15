@@ -8,7 +8,7 @@ from profiles_api import permissions
 
 from profiles_api.test.test_serializer import TestSerializer, TestDeserializer
 from profiles_api.test.test_model import Test
-from profiles_api.test.test_service import get_recommended_tests
+from profiles_api.test.test_service import TestService
 
 
 class TestViewSet(viewsets.ModelViewSet):
@@ -31,27 +31,10 @@ class TestView(APIView):
     def get(self, request):
         """Retrieves selected tests"""
 
-        test_id = self.request.query_params.get('id', None)
-        title = self.request.query_params.get('title', None)
+        query_params_dict = self.request.query_params.dict()
+        tests = TestService.search_tests(query_params_dict)
 
-        filter_dict = {}
-        if test_id is not None and test_id.isdigit():
-            print("true")
-            filter_dict['id'] = int(test_id)
-        if title is not None:
-            filter_dict['title'] = title
-
-        tests = Test.objects.filter(**filter_dict)
-
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        if start is not None:
-            tests = tests[min(abs(int(start)), tests.count()):]
-        if number is not None:
-            tests = tests[:max(0, min(int(number), tests.count()))]
-
-        if tests.count() == 0:
+        if len(tests) == 0:
             return Response(status=204)
 
         serializer = TestSerializer(tests, many=True)
@@ -67,7 +50,13 @@ class TestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
-            test = deserializer.create(validated_data)
+            try:
+                test = deserializer.create(validated_data)
+            except LookupError:
+                return Response(
+                    deserializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
 
             if test is None:
                 return Response(
@@ -92,24 +81,49 @@ class RecommendedTestView(APIView):
     def get(self, request):
         """Retrieves recommended tests"""
 
-        tests_id = get_recommended_tests(request.user)
-        tests = Test.objects.filter(id__in=tests_id)
-        if tests is None:
-            return Response(
-                status=status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
-
         start = self.request.query_params.get('start', None)
         number = self.request.query_params.get('number', None)
 
-        if start is not None:
-            tests = tests[min(abs(int(start)), tests.count()):]
-        if number is not None:
-            tests = tests[:max(0, min(int(number), tests.count()))]
+        nr = int(number) if number is not None else 1
+        nr += int(start) if start is not None else 0
 
-        if tests.count() == 0:
+        test_ids = TestService.recommended_tests(request.user, number=nr)
+        tests = Test.objects.filter(id__in=test_ids) if test_ids != [] else None
+        if tests is None:
+            return Response(
+                status=status.HTTP_204_NO_CONTENT
+            )
+
+        tests_list = list(tests)
+
+        if start is not None:
+            tests_list = tests_list[min(abs(int(start)), len(tests_list)):]
+        if number is not None:
+            tests_list = tests_list[:max(0, min(int(number), len(tests_list)))]
+
+        if len(tests_list) == 0:
             return Response(status=204)
 
-        serializer = TestSerializer(tests, many=True)
+        serializer = TestSerializer(tests_list, many=True)
         return Response(data=serializer.data, status=200)
+
+    def post(self, request):
+        """"Create a recommended test"""
+
+        number = self.request.query_params.get('number', None)
+        number = int(number) if number is not None else 2
+        length = self.request.query_params.get('length', None)
+        length = int(length) if length is not None else 10
+
+        title = "Persönliche Übungen"
+        html = ""
+
+        test = TestService.create_recommended_test(user=self.request.user, number=number, length=length,
+                                                   title=title, html=html)
+
+        serializer = TestSerializer(test)
+        return Response(data=serializer.data, status=201)
+
+
+
 

@@ -1,16 +1,15 @@
 from rest_framework import serializers
 
 from profiles_api.test.test_model import Test
-from profiles_api.question.question_model import Question
-from profiles_api.models import UserProfile
+from profiles_api.test.test_service import TestService
 
 
 class TestDeserializer(serializers.Serializer):
     """Deserializes tests"""
 
-    questions = serializers.CharField(max_length=1024)
-    title = serializers.CharField(max_length=255)
-    html = serializers.CharField(max_length=1024, required=False)
+    questions = serializers.CharField(max_length=1024, required=True)
+    title = serializers.CharField(max_length=255, required=True)
+    html = serializers.CharField(max_length=8191, required=False)
 
     def validate(self, data):
         """Validate the data"""
@@ -29,27 +28,12 @@ class TestDeserializer(serializers.Serializer):
     def create(self, validated_data):
         """Create a new test"""
 
+        user_id = validated_data['user_id']
         html = validated_data['html'] if 'html' in validated_data else ""
-        filter_dict = {'id': validated_data['user_id']}
-        user = UserProfile.objects.filter(**filter_dict)[0]
+        title = validated_data['title']
+        question_id_list = [int(question_id) for question_id in validated_data['questions'].split(';')]
 
-        test = Test(
-            user_profile=user,
-            title=validated_data['title'],
-            html=html
-        )
-
-        test.save()
-
-        question_list = validated_data['questions'].split(';')
-
-        for question_str in question_list:
-            filter_dict = {'id': int(question_str)}
-            question = Question.objects.filter(**filter_dict)[0]
-            if question is None:
-                return None
-            else:
-                test.questions.add(question)
+        test = TestService.create_test(user_id=user_id, question_id_list=question_id_list, title=title, html=html)
 
         return test
 

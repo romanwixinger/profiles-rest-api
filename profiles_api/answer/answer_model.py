@@ -16,9 +16,9 @@ class Answer(models.Model):
     answers = models.CharField(max_length=1024, blank=True)
 
     # Fields set after correction
-    correct = models.BooleanField(blank=True, null=True)
-    skipped = models.BooleanField(blank=True, null=True)
-    comment = models.CharField(max_length=1024, blank=True, null=True)
+    correct = models.BooleanField(blank=True, default=False)
+    skipped = models.BooleanField(blank=True, default=False)
+    comment = models.CharField(max_length=1024, blank=True, default="")
 
     def __str__(self):
         """Return the model as a string"""

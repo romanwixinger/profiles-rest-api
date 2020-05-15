@@ -32,12 +32,15 @@
             "appendix": "mL",
             "hint": "Addiere die beiden Zähler.",
             "imageSrc": "http://...",
-            "validation_type": "standardValidation"
+            "validation_type": "standardValidation",
+            "set_difficulty": 2
      }
      ```
     
-    The fields 'topic', 'subtopic', 'question', 'correctAnswers' and 'validation_type' are strictly required. The fields
-    'dependencies', 'appendix', 'hint' and 'imageSrc' are optional but must not be left blank. 
+    The fields 'topic', 'subtopic', 'question' and 'correctAnswers' are strictly required. The fields
+    'dependencies', 'appendix', 'hint' and 'imageSrc' are optional but must not be left blank. The field 
+    'validation_type' is optional, must not be left blank and defaults to 'standardValidation.' Other valid values for 
+    this field are 'standardValidation', 'singleFraction' and 'multipleString'. 
     
     
 * **Success Response:**
@@ -57,7 +60,8 @@
         "hint": "",
         "imageSrc": "",
         "user_profile": 1,
-        "validation_type": "standardValidation"
+        "validation_type": "standardValidation",
+        "set_difficulty": 2
     }
     ```
     

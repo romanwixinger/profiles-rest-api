@@ -10,12 +10,12 @@ from profiles_api.test.test_model import Test
 class TheoryPageDeserializer(serializers.Serializer):
     """Deserializes theory pages"""
 
-    subtopic = serializers.CharField(max_length=255, required=False)
-    subtopic_id = serializers.IntegerField(required=False)
-    title = serializers.CharField(max_length=255, required=True)
-    html = serializers.CharField(max_length=1024, required=False)
-    test = serializers.CharField(max_length=255, required=False)
-    test_id = serializers.IntegerField(required=False)
+    subtopic = serializers.CharField(max_length=255, required=False, allow_blank=False)
+    subtopic_id = serializers.IntegerField(required=False, allow_null=False)
+    title = serializers.CharField(max_length=255, required=True, allow_blank=False)
+    html = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+    test = serializers.CharField(max_length=255, required=False, allow_blank=False)
+    test_id = serializers.IntegerField(required=False, allow_null=False)
 
     def validate(self, data):
         """Validate theory page"""

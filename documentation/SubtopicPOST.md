@@ -24,10 +24,11 @@
     {
         "name": "Brüche addieren", 
         "html": "<h1> Brüche addieren </h1>",
-        "topic": 1
+        "topic": "Brüche"
    }
     ```
-    All the fields are required but 'html' can have an empty string as value.
+    The fields 'name' and 'topic' are required, they can contain up to 255 characters. The field 'html' is not required 
+    but must no be left empty. This field can contain up to 8192 characters. 
     
     
 * **Success Response:**

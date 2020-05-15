@@ -30,31 +30,14 @@ class AnswerView(APIView):
 
     def get(self, request):
         """Get certain answers of the user"""
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-        question_id = self.request.query_params.get('question_id', None)
-        topic_id = self.request.query_params.get('topic_id', None)
-        subtopic_id = self.request.query_params.get('subtopic_id', None)
-        user_id = self.request.user.id
 
-        if user_id is None or user_id == '':
-            return Response(data='User not defined', status=400)
+        query_params_dict = self.request.query_params.dict()
+        if 'user_id' in query_params_dict:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        query_params_dict['user_id'] = self.request.user.id
+        answers = AnswerService.search_answers(query_params_dict)
 
-        filter_dict = dict()
-        if question_id is not None and question_id != '':
-            filter_dict['question__id'] = question_id
-        if topic_id is not None and question_id != '':
-            filter_dict['question__topic'] = topic_id
-        if subtopic_id is not None and question_id != '':
-            filter_dict['question__subtopic'] = subtopic_id
-        answers = Answer.objects.filter(**filter_dict)
-
-        if start is not None:
-            answers =answers[min(abs(int(start)), answers.count()):]
-        if number is not None:
-            answers = answers[:max(0, min(int(number), answers.count()))]
-
-        if answers.count() > 0:
+        if len(answers) > 0:
             serializer = AnswerSerializer(answers, many=True)
             return Response(data=serializer.data, status=200)
 

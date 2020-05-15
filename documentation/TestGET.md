@@ -25,6 +25,10 @@
     
     Specify the test by its id: <br>
     `title=[string]`
+    
+    Set the parameter to 'random' to shuffle the tests randomly. Otherwise, the tests are 
+    ordered by their id. <br> 
+    `mode = [string]`
   
 * **Data Params**
 

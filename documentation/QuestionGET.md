@@ -31,8 +31,16 @@
                       
     Specify the subtopic of the question by its id: <br>
     `subtopic_id=[integer]`
-  
-  
+    
+    Specify the difficulty of the question. Allowed difficulties are in [1,2,3,4,5]: <br>
+    `difficulty=[integer]`
+    
+    Specify the question, namely the text of the question: <br>
+    `question=[string]`
+    
+    Set the parameter to 'random' to shuffle the questions randomly. <br> 
+    `mode = [string]`
+
 * **Data Params**
 
     An authorization header has to be provided. The key is 'token' 
@@ -56,7 +64,8 @@
               "hint": "",
               "imageSrc": "",
               "user_profile": 1,
-              "validation_type": "standardValidation"
+              "validation_type": "standardValidation",
+              "set_difficulty": 2
          }
     ]
     ```
@@ -80,7 +89,7 @@
     headers =  {'Authorization': 'token ' + token}
     question_get = requests.get(url=base_url + "custom-question/", 
                             headers=headers, 
-                            params={"number": 2}
+                            params={"number": 1}
                             )
     print(question_get.json())
      ``` 
@@ -98,7 +107,8 @@
               'appendix': '', 
               'hint': '', 'imageSrc': '', 
               'user_profile': 1, 
-              'validation_type': 'standardValidation'
+              'validation_type': 'standardValidation',
+              'set_difficulty': 2
             }
      ]
      ```
