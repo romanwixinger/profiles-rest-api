@@ -125,9 +125,11 @@ print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 question = {
         "topic": topic_id,
         "subtopic": subtopic_id,
-        "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
-        "correctAnswers": "$\\\\frac{15}{7}}$",
+        "question": "$\\\\frac{2}{7} + \\\\frac{2}{7}$",
+        "correctAnswers": "$\\\\frac{4}{7}}$",
         "validation_type": "standardValidation",
+        "dependencies": "Masseinheiten",
+        "dependencies_id": "13;14",
         "set_difficulty": 2
     }
 question_post = requests.post(url=base_url + "custom-question/",

@@ -26,19 +26,20 @@
     {
             "topic": 12, 
             "subtopic": 13,
-            "dependencies": “1;3;8”,
+            "dependencies": "Brüche addieren",
+            "dependencies_id": "1;3;8",
             "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
             "correctAnswers": "$\\\\frac{15}{7}}$",
             "appendix": "mL",
             "hint": "Addiere die beiden Zähler.",
             "imageSrc": "http://...",
-            "validation_type": "standardValidation",
+            "validation_type": "singleFraction",
             "set_difficulty": 2
      }
      ```
     
     The fields 'topic', 'subtopic', 'question' and 'correctAnswers' are strictly required. The fields
-    'dependencies', 'appendix', 'hint' and 'imageSrc' are optional but must not be left blank. The field 
+    'dependencies', 'dependencies_id', appendix', 'hint' and 'imageSrc' are optional but must not be left blank. The field 
     'validation_type' is optional, must not be left blank and defaults to 'standardValidation.' Other valid values for 
     this field are 'standardValidation', 'singleFraction' and 'multipleString'. 
     
@@ -53,14 +54,14 @@
         "created_on": "2020-04-17T18:25:44.169382Z",
         "topic": 22,
         "subtopic": 46,
-        "dependencies": [],
+        "dependencies": [1, 3, 8, 9],
         "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
         "correctAnswers": "$\\\\frac{15}{7}}$",
         "appendix": "",
         "hint": "",
         "imageSrc": "",
         "user_profile": 1,
-        "validation_type": "standardValidation",
+        "validation_type": "singleFraction",
         "set_difficulty": 2
     }
     ```
@@ -114,13 +115,13 @@
           'created_on': '2020-04-17T18:56:11.262467Z', 
           'topic': 22, 
           'subtopic': 47, 
-          'dependencies': [], 
+          'dependencies': [1, 3, 8, 9], 
           'question': '$\\\\frac{3}{7} + \\\\frac{12}{7}$', 
           'correctAnswers': '$\\\\frac{15}{7}}$', 
           'appendix': '', 
           'hint': '', 
           'imageSrc': '', 'user_profile': 6, 
-          'validation_type': 'standardValidation'
+          'validation_type': 'singleFraction'
       }
      ```
     

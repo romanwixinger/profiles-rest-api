@@ -13,6 +13,7 @@ class QuestionDeserializer(serializers.Serializer):
     subtopic = serializers.CharField(max_length=255, required=False, allow_blank=False)
     subtopic_id = serializers.IntegerField(required=False, allow_null=False)
     dependencies = serializers.CharField(max_length=255, required=False, allow_blank=False)
+    dependencies_id = serializers.CharField(max_length=255, required=False, allow_blank=False)
     question = serializers.CharField(max_length=1024, required=True, allow_blank=False)
     correctAnswers = serializers.CharField(max_length=1024, required=True, allow_blank=False)
     validation_type = serializers.ChoiceField([('standardValidation', ''),
@@ -118,7 +119,7 @@ class QuestionDeserializer(serializers.Serializer):
                     pass
 
         if dependencies_id is not None and dependencies_id != "":
-            dependencies_string = dependencies_id.split(',')
+            dependencies_string = dependencies_id.split(';')
             for dependency_string in dependencies_string:
                 filter_dict = {'id': dependency_string}
                 try:
