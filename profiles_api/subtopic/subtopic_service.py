@@ -28,11 +28,9 @@ class SubtopicService:
         if set(level_dict.keys()) != set(number_dict.keys()):
             raise KeyError("The level_dict and the number_dict must have the same subtopics as keys.")
 
-        weighted_level_list = []
-        for subtopic_id in level_dict.keys():
-            weighted_level_list.append(level_dict[subtopic_id] * number_dict[subtopic_id])
-
+        weighted_level_list = [level_dict[subtopic_id] * number_dict[subtopic_id] for subtopic_id in level_dict.keys()]
         sorted_subtopics = [subtopic for _, subtopic in sorted(zip(weighted_level_list, level_dict.keys()))]
+
         return sorted_subtopics
 
     @classmethod

@@ -13,18 +13,9 @@ class SubtopicDeserializer(serializers.Serializer):
 
     def create(self, validated_data):
 
-        if validated_data['topic'] == '':
-            serializers.ValidationError("Topic not defined.")
-            return None
-
-        user_id = validated_data['user_id']
-
-        if user_id is None or user_id == '':
-            return serializers.ValidationError("User not defined.")
-
         topic = Topic.objects.get_or_create(
             name=validated_data['topic'],
-            user_profile_id=user_id
+            user_profile_id=validated_data['user_id']
         )[0]
 
         if 'html' in validated_data:
@@ -32,14 +23,14 @@ class SubtopicDeserializer(serializers.Serializer):
                 topic=topic,
                 name=validated_data['name'],
                 html=validated_data['html'],
-                user_profile_id=user_id
+                user_profile_id=validated_data['user_id']
             )[0]
 
         else:
             subtopic = Subtopic.objects.get_or_create(
                 topic=topic,
                 name=validated_data['name'],
-                user_profile_id=user_id
+                user_profile_id=validated_data['user_id']
             )[0]
 
         return subtopic

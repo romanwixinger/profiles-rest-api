@@ -22,31 +22,6 @@ class SubtopicViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user"""
         serializer.save(user_profile=self.request.user)
 
-    def get_queryset(self):
-        """Retrieve only subtopic with certain topic"""
-        topic = self.request.query_params.get('topic', None)
-        topic_id = self.request.query_params.get('topic_id', None)
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        """Return subtopics"""
-        if topic is not None:
-            filter_dict = {'topic__name': topic}
-            subtopics = Subtopic.objects.filter(**filter_dict)
-        elif topic_id is not None:
-            filter_dict = {'topic__id': topic_id}
-            subtopics = Subtopic.objects.filter(**filter_dict)
-        else:
-            subtopics = Subtopic.objects.all()
-
-        if start is not None:
-            subtopics = subtopics[min(abs(int(start)), subtopics.count()):]
-
-        if number is not None:
-            subtopics = subtopics[:max(0, min(int(number), subtopics.count()))]
-
-        return subtopics
-
 
 class CustomSubtopicView(APIView):
     """Custom view for Subtopic"""
