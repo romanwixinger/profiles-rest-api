@@ -42,7 +42,7 @@ class QuestionService:
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
 
-        subtopics = sorted_subtopics[:min(number, len(sorted_subtopics))]
+        subtopics = sorted_subtopics[:number]
         recommended_questions = []
 
         for subtopic_id in subtopics:
@@ -50,7 +50,7 @@ class QuestionService:
             difficulty = level_dict[subtopic_id]
 
             considered_questions = cls.questions_of_level(subtopic_id=subtopic_id, difficulty=difficulty,
-                                                   number=2*length)
+                                                          number=2*length)
             answered_questions = AnswerService.search_answers_id(query_params_dict={
                 'subtopic_id': subtopic_id,
                 'difficulty': difficulty,
