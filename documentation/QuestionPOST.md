@@ -39,6 +39,7 @@
     
     The fields 'question' and 'correctAnswers' are strictly required. The fields 'subtopic', 'subtopic_id'
     'dependencies', 'dependencies_id', appendix', 'hint' and 'imageSrc' are optional but must not be left blank. The 
+    subtopic has to be specified by using one of the possible fields. The 
     field 'validation_type' is optional, must not be left blank and defaults to 'standardValidation.' Other valid values 
     for this field are 'standardValidation', 'singleFraction' and 'multipleString'. The topic is deduced from the 
     subtopic.
