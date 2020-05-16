@@ -48,11 +48,9 @@ class TopicView(APIView):
         deserializer = self.deserializer_class(data=request.data)
 
         if deserializer.is_valid():
-            user = self.request.user
-            topic_name = deserializer.validated_data['name']
             topic = Topic.objects.get_or_create(
-                name=topic_name,
-                user_profile_id=user.id
+                name=deserializer.validated_data['name'],
+                user_profile_id= self.request.user.id
             )[0]
 
             serializer = TopicSerializer(topic)
