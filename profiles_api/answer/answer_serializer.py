@@ -40,8 +40,7 @@ class AnswerDeserializer(serializers.Serializer):
     def create(self, validated_data):
         """Creates an answer"""
 
-        filter_dict = {'id': validated_data['user_id']}
-        user_profile = UserProfile.objects.filter(**filter_dict)[0]
+        user = UserProfile.objects.filter(**{'id': validated_data['user_id']})[0]
 
         filter_dict = {'id': validated_data['question']}
         question = Question.objects.filter(**filter_dict)[0] \
@@ -53,7 +52,7 @@ class AnswerDeserializer(serializers.Serializer):
                                                      'comment'] if key in validated_data}
         answer = Answer(
             question=question,
-            user_profile=user_profile,
+            user_profile=user,
             **args
         )
         answer.duration = validated_data['duration'] if 'duration' in validated_data else 0

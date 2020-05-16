@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.db.models.query import QuerySet
 
 from profiles_api import permissions
 
@@ -77,7 +76,6 @@ class CompletedTestView(APIView):
                 )
 
             CompletedTestService.get_recommended_subtopics(completed_test)
-
             completed_test.save()
 
             serializer = CompletedTestSerializer(completed_test)
