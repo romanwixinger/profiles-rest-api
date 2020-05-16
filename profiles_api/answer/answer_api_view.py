@@ -47,9 +47,6 @@ class AnswerView(APIView):
         """Create a new answer"""
 
         user = self.request.user
-        if user is None or user.id == '':
-            return Response(data='User not defined', status=400)
-
         deserializer = AnswerDeserializer(data=request.data)
 
         if deserializer.is_valid():
@@ -62,7 +59,6 @@ class AnswerView(APIView):
                 return Response(data={"question": "The question for this answer does not exist."}, status=400)
 
             AnswerService.perform_correction(answer)
-
             answer.save()
 
             serializer = AnswerSerializer(answer)

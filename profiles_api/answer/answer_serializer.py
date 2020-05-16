@@ -30,7 +30,7 @@ class AnswerDeserializer(serializers.Serializer):
     def validate(self, data):
         """Validates the data: Checks whether an answer was given or the question was skipped"""
 
-        if 'answers' in data and data['answers'] != '':
+        if 'answers' in data:
             return data
         if 'skipped' in data and data['skipped']:
             return data
@@ -49,22 +49,14 @@ class AnswerDeserializer(serializers.Serializer):
         if question is None:
             raise ValueError("The question for this answer does not exist.")
 
+        args = {key: validated_data[key] for key in ['answers', 'skipped', 'correct',
+                                                     'comment'] if key in validated_data}
         answer = Answer(
             question=question,
-            user_profile=user_profile
+            user_profile=user_profile,
+            **args
         )
-        if 'duration' in validated_data:
-            answer.duration = validated_data['duration']
-        else:
-            answer.duration = 0
-        if 'answers' in validated_data and validated_data['answers'] != '':
-            answer.answers = validated_data['answers']
-        if 'skipped' in validated_data:
-            answer.skipped = validated_data['skipped']
-        if 'correct' in validated_data:
-            answer.correct = validated_data['correct']
-        if 'comment' in validated_data and validated_data['comment'] != '':
-            answer.comment = validated_data['comment']
+        answer.duration = validated_data['duration'] if 'duration' in validated_data else 0
 
         return answer
 

@@ -44,10 +44,6 @@ class QuestionView(APIView):
         """Create a new question. Additionally a new topic and subtopic is created if necessary"""
 
         user = self.request.user
-
-        if user is None or user.id == '':
-            return Response(data='User not defined', status=400)
-
         deserializer = QuestionDeserializer(data=request.data)
 
         if deserializer.is_valid():
