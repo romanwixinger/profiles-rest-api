@@ -27,12 +27,20 @@ class SubtopicDeserializer(serializers.Serializer):
             user_profile_id=user_id
         )[0]
 
-        subtopic = Subtopic.objects.get_or_create(
-            topic=topic,
-            name=validated_data['name'],
-            html=validated_data['html'],
-            user_profile_id=user_id
-        )[0]
+        if 'html' in validated_data:
+            subtopic = Subtopic.objects.get_or_create(
+                topic=topic,
+                name=validated_data['name'],
+                html=validated_data['html'],
+                user_profile_id=user_id
+            )[0]
+
+        else:
+            subtopic = Subtopic.objects.get_or_create(
+                topic=topic,
+                name=validated_data['name'],
+                user_profile_id=user_id
+            )[0]
 
         return subtopic
 
