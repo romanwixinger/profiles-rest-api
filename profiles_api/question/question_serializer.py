@@ -31,10 +31,7 @@ class QuestionDeserializer(serializers.Serializer):
     def validate(self, data):
         """Validate if topic and subtopic are given"""
 
-        subtopic_name = data['subtopic'] if ('subtopic' in data and data['subtopic'] != '') else None
-        subtopic_id = data['subtopic_id'] if ('subtopic_id' in data and data['subtopic_id'] != '') else None
-
-        if subtopic_name is None and subtopic_id is None:
+        if 'subtopic' not in data and 'subtopic_id' not in data:
             raise serializers.ValidationError("Subtopic must be defined.")
 
         return data
