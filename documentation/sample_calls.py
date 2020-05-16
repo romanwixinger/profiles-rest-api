@@ -123,7 +123,6 @@ print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 
 # Question POST
 question = {
-        "topic": topic_id,
         "subtopic": subtopic_id,
         "question": "$\\\\frac{2}{7} + \\\\frac{2}{7}$",
         "correctAnswers": "$\\\\frac{4}{7}}$",

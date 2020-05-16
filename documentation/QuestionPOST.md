@@ -24,7 +24,6 @@
     
     ```json
     {
-            "topic": 12, 
             "subtopic": 13,
             "dependencies": "Brüche addieren",
             "dependencies_id": "1;3;8",
@@ -38,10 +37,11 @@
      }
      ```
     
-    The fields 'topic', 'subtopic', 'question' and 'correctAnswers' are strictly required. The fields
-    'dependencies', 'dependencies_id', appendix', 'hint' and 'imageSrc' are optional but must not be left blank. The field 
-    'validation_type' is optional, must not be left blank and defaults to 'standardValidation.' Other valid values for 
-    this field are 'standardValidation', 'singleFraction' and 'multipleString'. 
+    The fields 'question' and 'correctAnswers' are strictly required. The fields 'subtopic', 'subtopic_id'
+    'dependencies', 'dependencies_id', appendix', 'hint' and 'imageSrc' are optional but must not be left blank. The 
+    field 'validation_type' is optional, must not be left blank and defaults to 'standardValidation.' Other valid values 
+    for this field are 'standardValidation', 'singleFraction' and 'multipleString'. The topic is deduced from the 
+    subtopic.
     
     
 * **Success Response:**

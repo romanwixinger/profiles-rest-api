@@ -8,8 +8,6 @@ from profiles_api.subtopic.subtopic_model import Subtopic
 class QuestionDeserializer(serializers.Serializer):
     """Deserializes questions"""
 
-    topic = serializers.CharField(max_length=255, required=False, allow_blank=False)
-    topic_id = serializers.IntegerField(required=False, allow_null=False)
     subtopic = serializers.CharField(max_length=255, required=False, allow_blank=False)
     subtopic_id = serializers.IntegerField(required=False, allow_null=False)
     dependencies = serializers.CharField(max_length=255, required=False, allow_blank=False)
@@ -33,13 +31,9 @@ class QuestionDeserializer(serializers.Serializer):
     def validate(self, data):
         """Validate if topic and subtopic are given"""
 
-        topic_name = data['topic'] if ('topic' in data and data['topic'] != '') else None
-        topic_id = data['topic_id'] if ('topic_id' in data and data['topic_id'] != '') else None
         subtopic_name = data['subtopic'] if ('subtopic' in data and data['subtopic'] != '') else None
         subtopic_id = data['subtopic_id'] if ('subtopic_id' in data and data['subtopic_id'] != '') else None
 
-        if topic_name is None and topic_id is None:
-            raise serializers.ValidationError("Topic must be defined.")
         if subtopic_name is None and subtopic_id is None:
             raise serializers.ValidationError("Subtopic must be defined.")
 
@@ -48,47 +42,32 @@ class QuestionDeserializer(serializers.Serializer):
     def create(self, validated_data):
         """Create a new question from the validated data"""
 
-        topic_name = validated_data['topic'] if 'topic' in validated_data else None
-        topic_id = validated_data['topic_id'] if 'topic_id' in validated_data else None
+        # topic_name = validated_data['topic'] if 'topic' in validated_data else None
+        # topic_id = validated_data['topic_id'] if 'topic_id' in validated_data else None
         subtopic_name = validated_data['subtopic'] if 'subtopic' in validated_data else None
         subtopic_id = validated_data['subtopic_id'] if 'subtopic_id' in validated_data else None
         user_id = validated_data['user_id']
 
+        filter_dict = {}
+        subtopic = None
+        topic = None
+
         if subtopic_id is not None:
-            filter_dict = {'id': subtopic_id}
-            subtopic = Subtopic.objects.filter(**filter_dict)[0]
+            filter_dict['id'] = subtopic_id
+        if subtopic_name is not None:
+            filter_dict['name'] = subtopic_name
+        if filter_dict != {}:
+            subtopic = Subtopic.objects.filter(**filter_dict)[0] \
+                if Subtopic.objects.filter(**filter_dict).count() > 0 else None
+
             filter_dict = {'name': subtopic.topic.name}
             if Topic.objects.filter(**filter_dict).count() > 0:
                 topic = Topic.objects.filter(**filter_dict)[0]
             else:
-                topic = Topic.objects.get_or_create(
-                    name=subtopic.topic.name,
-                    user_profile_id=user_id
-                )
+                raise ValueError("The topic of this subtopic does not exist.")
 
-        elif topic_id is not None:
-            filter_dict = {'id': topic_id}
-            topic = Topic.objects.filter(**filter_dict)[0]
-            subtopic = Subtopic.objects.get_or_create(
-                name=subtopic_name,
-                topic=topic,
-                user_profile_id=user_id
-            )[0]
-
-        else:
-            filter_dict = {'name': topic_name}
-            if Topic.objects.filter(**filter_dict).count() > 0:
-                topic = Topic.objects.filter(**filter_dict)[0]
-            else:
-                topic = Topic.objects.get_or_create(
-                    name=topic_name,
-                    user_profile_id=user_id
-                )
-            subtopic = Subtopic.objects.get_or_create(
-                name=subtopic_name,
-                topic=topic,
-                user_profile_id=user_id
-            )[0]
+        if subtopic is None:
+            raise ValueError("The subtopic is not defined.")
 
         # Create questions
         question = Question.objects.get_or_create(
