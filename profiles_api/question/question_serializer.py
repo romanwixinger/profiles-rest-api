@@ -42,8 +42,6 @@ class QuestionDeserializer(serializers.Serializer):
     def create(self, validated_data):
         """Create a new question from the validated data"""
 
-        # topic_name = validated_data['topic'] if 'topic' in validated_data else None
-        # topic_id = validated_data['topic_id'] if 'topic_id' in validated_data else None
         subtopic_name = validated_data['subtopic'] if 'subtopic' in validated_data else None
         subtopic_id = validated_data['subtopic_id'] if 'subtopic_id' in validated_data else None
         user_id = validated_data['user_id']
