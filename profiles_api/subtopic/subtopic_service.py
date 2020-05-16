@@ -1,6 +1,5 @@
 from profiles_api.models import UserProfile
 from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.completed_test.completed_test_model import CompletedTest
 
 from profiles_api.topic.topic_service import TopicService
 from profiles_api.answer.answer_service import AnswerService
@@ -23,6 +22,20 @@ class SubtopicService:
         return sorted_subtopics[:number]
 
     @classmethod
+    def sorted_subtopics(cls, level_dict: dict, number_dict: dict):
+        """Get a sorted list of subtopic ids: The earlier a subtopic appears, the more necessary it is to practice."""
+
+        if set(level_dict.keys()) != set(number_dict.keys()):
+            raise KeyError("The level_dict and the number_dict must have the same subtopics as keys.")
+
+        weighted_level_list = []
+        for subtopic_id in level_dict.keys():
+            weighted_level_list.append(level_dict[subtopic_id] * number_dict[subtopic_id])
+
+        sorted_subtopics = [subtopic for _, subtopic in sorted(zip(weighted_level_list, level_dict.keys()))]
+        return sorted_subtopics
+
+    @classmethod
     def search_subtopics(cls, query_params_dict: dict) -> [Subtopic]:
         """Get subtopics according to query parameters stored in a dict"""
 
@@ -37,75 +50,14 @@ class SubtopicService:
         return subtopics
 
     @classmethod
-    def subtopic_statistics(cls, user: UserProfile) -> dict:
-        """Return a dict with subtopics as key and dict with statistics as value."""
+    def get_subtopics(cls, subtopic_id_list: [int]) -> [Subtopic]:
+        """Returns a list with the requested subtopics"""
 
-        subtopic_weight = 1
-        dependency_weight = 1
-
-        filter_dict = {'user_profile': user.id}
-        completed_tests = CompletedTest.objects.filter(**filter_dict)
-        if completed_tests is None:
-            return None
-
-        # Create a dict with subtopics as key and dict with relevant information as value.
-        subtopic_dict = {}
-
-        answers = AnswerService.search_answers(query_params_dict={'user_id': user.id})
-
-        for answer in answers:
-            if answer.question.subtopic_id not in subtopic_dict:
-                subtopic_dict[answer.question.subtopic_id] = {"correct": 0, "incorrect": 0}
-
-            if answer.correct:
-                subtopic_dict[answer.question.subtopic_id]["correct"] += subtopic_weight
-            else:
-                subtopic_dict[answer.question.subtopic_id]["incorrect"] += subtopic_weight
-
-            if answer.question.dependencies is None or answer.question.dependencies == []:
-                continue
-            for dependency in answer.question.dependencies.all():
-                if dependency.id not in subtopic_dict:
-                    subtopic_dict[dependency.id] = {"correct": 0, "incorrect": 0}
-
-                if answer.correct:
-                    subtopic_dict[dependency.id]["correct"] += dependency_weight
-                else:
-                    subtopic_dict[dependency.id]["incorrect"] += dependency_weight
-
-        for key in subtopic_dict.keys():
-            subtopic_dict[key]["total"] = subtopic_dict[key]["correct"] + subtopic_dict[key]["incorrect"]
-            subtopic_dict[key]["ratio"] = subtopic_dict[key]["correct"] / (subtopic_dict[key]["correct"] + subtopic_dict[key]["incorrect"])
-
-        return subtopic_dict
+        subtopics = Subtopic.objects.filter(id__in=subtopic_id_list)
+        return list(subtopics)
 
     @classmethod
     def subtopic_id_list(cls) -> [int]:
         """Get a list with all subtopic ids"""
 
-        subtopic_id_list = [subtopic.id for subtopic in Subtopic.objects.all()]
-        return subtopic_id_list
-
-    @classmethod
-    def sorted_subtopics(cls, level_dict: dict, number_dict: dict):
-        """Get a sorted list of subtopic ids: The earlier a subtopic appears, the more necessary it is to practice."""
-
-        if set(level_dict.keys()) != set(number_dict.keys()):
-            raise KeyError("The level_dict and the number_dict must have the same subtopics as keys.")
-
-        weighted_level_list = []
-        for subtopic_id in level_dict.keys():
-            weighted_level_list.append(level_dict[subtopic_id] * number_dict[subtopic_id])
-
-        sorted_subtopics = [subtopic for _, subtopic in sorted(zip(weighted_level_list, level_dict.keys()))]
-
-        return sorted_subtopics
-
-    @classmethod
-    def get_subtopics(cls, subtopic_id_list: [int]) -> [Subtopic]:
-        """Returns a list with the requested subtopics"""
-
-        subtopics = Subtopic.objects.filter(id__in=subtopic_id_list)
-        subtopic_list = list(subtopics)
-
-        return subtopic_list
+        return [subtopic.id for subtopic in Subtopic.objects.all()]
