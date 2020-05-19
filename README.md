@@ -27,7 +27,7 @@ response.
 * Test: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TestPOST.md) and 
          [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TestGET.md) tests.
          
-* RecommendedTest: [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestGET.md) recommended tests.
+* RecommendedTest: [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestGET.md) and [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestPOST.md) recommended tests.
                   
 * CompletedTest: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestPOST.md) and 
                   [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestGET.md) completed tests.
