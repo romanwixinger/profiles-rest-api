@@ -1,6 +1,6 @@
 # Profiles REST API
 
-Code for the first Nasci learning tool backend based on the Profiles REST API course code.
+Code for the first Nasci learning tool backend based on the Profiles REST API course code. A deployed instance of the REST API is running on [AWS](http://ec2-18-217-207-137.us-east-2.compute.amazonaws.com/api/).
 
 ## REST-API documentation
 
