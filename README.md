@@ -2,6 +2,30 @@
 
 Code for the first Nasci learning tool backend based on the Profiles REST API course code.
 
+## Installation
+
+To run a local instance of the REST API you first install the requirements in your console. 
+
+   ```
+   pip install -r requirements.txt
+   ``` 
+   
+Then you have to make the migrations with the following commands.
+
+   ```python
+   python manage.py makemigrations
+   python manage.py migrate
+   ``` 
+ 
+Now you are ready to launch the local instance. 
+
+   ```python
+   python manage.py runserver
+   ``` 
+
+Depending on the configurations of your IDE you have to specify the host. Normally you get a message with this 
+[link](http://127.0.0.1:8000/api) to see the running instance. 
+
 ## REST-API documentation
 
 In the following, all possible requests to the API are listed with links to their documentation. The requests are 
