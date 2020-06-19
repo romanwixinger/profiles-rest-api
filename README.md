@@ -1,6 +1,7 @@
 # Profiles REST API
 
-Code for the first Nasci learning tool backend based on the Profiles REST API course code.
+Code for the first Nasci learning tool backend based on the Profiles REST API course code. A running instance of the 
+ REST API can be found [here](https://us-east-2.console.aws.amazon.com/console/home?region=us-east-2). 
 
 ## Installation
 
@@ -25,6 +26,17 @@ Now you are ready to launch the local instance.
 
 Depending on the configurations of your IDE you have to specify the host. Normally you get a message with this 
 [link](http://127.0.0.1:8000/api) to see the running instance. 
+
+To get access to the full capability of the REST API, you have to get an Authorization token with the following steps. 
+Then open [this link](http://127.0.0.1:8000/api) in the browser and navigate to the
+[profile view](http://127.0.0.1:8000/api/profile/). Create a user profile and navigate to the 
+[login view](http://127.0.0.1:8000/api/login/). Type in your credentials and get an authorization token. Add the [ModHeader](https://chrome.google.com/webstore/detail/modheader/idgpnmonknjnojddfkpgkljpfnnfcklj?hl=eng) 
+Chrome extension to Chrome and create a new header. Select _Authorization_ and insert the token in the form 
+_token mymocktoken_ in the field. Activate the request header and you should have access to all the functionality. 
+
+To add learning materials to the REST API, you can use the Github repository [romanwixinger/database-initializer](https://github.com/romanwixinger/database-initializer) 
+or you create your own learning materials and send them with HTTP POST requests. 
+
 
 ## REST-API documentation
 
