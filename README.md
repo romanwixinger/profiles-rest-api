@@ -41,7 +41,9 @@ or you create your own learning materials and send them with HTTP POST requests.
 ## REST-API documentation
 
 In the following, all possible requests to the API are listed with links to their documentation. The requests are 
-grouped according to their underlying model and arranged after increasing complexity. 
+grouped according to their underlying model and arranged after increasing complexity. Note that the views below are custom views which do not correspond directly to the 
+views shown in [here](https://us-east-2.console.aws.amazon.com/console/home?region=us-east-2) when opened in the browser. The custom views have an additional _/custom-_ part 
+in the url.
 
 * UserProfile: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/UserProfilePOST.md) and 
 [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/UserProfileGET.md) user profiles. 
