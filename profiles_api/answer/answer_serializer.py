@@ -13,7 +13,7 @@ class AnswerSerializer(serializers.ModelSerializer):
         model = Answer
         fields = ('id', 'user_profile', 'created_on', 'question',
                   'duration', 'answers', 'correct', 'skipped', 'comment')
-        extra_kwargs = {'user_profile': {'read_only': True}, 'correct': {'required': False}}
+        extra_kwargs = {'user_profile': {'read_only': True}, 'correct': {'required': False}, 'duration': {'required': False}}
 
 
 class AnswerDeserializer(serializers.Serializer):
@@ -48,15 +48,12 @@ class AnswerDeserializer(serializers.Serializer):
         if question is None:
             raise ValueError("The question for this answer does not exist.")
 
-        args = {key: validated_data[key] for key in ['answers', 'skipped', 'correct',
-                                                     'comment'] if key in validated_data}
-        answer = Answer(
-            question=question,
-            user_profile=user,
-            **args
-        )
-        answer.duration = validated_data['duration'] if 'duration' in validated_data else 0
+        args = {'question': question, 'user_profile': user}
+        if 'answers' in validated_data:
+            args['answers'] = validated_data['answers']
+        opt_args = {key: validated_data[key] for key in ['skipped', 'correct', 'comment'] if key in validated_data}
 
+        answer = Answer.objects.get_or_create(**args, defaults=opt_args)[0]
         return answer
 
 
