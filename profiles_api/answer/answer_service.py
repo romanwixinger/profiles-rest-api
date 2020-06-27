@@ -49,10 +49,10 @@ class AnswerService:
 
     @classmethod
     def __compare_answers(cls, user_answers: List[str], correct_answers: List[str]) -> Set[int]:
-        wrong_answer_list = Set[int]
+        wrong_answer_list: Set[int] = set()
         for i in range(len(user_answers)):
             if user_answers[i] != correct_answers[i]:
-                wrong_answer_list.append(i + 1)
+                wrong_answer_list.add(i + 1)
         return wrong_answer_list
 
     @classmethod
