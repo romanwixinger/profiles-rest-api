@@ -20,7 +20,7 @@ class AnswerService:
         if not validation_type or validation_type == 'standardValidation':
             return cls.__standard_validation(answer)
 
-        if validation_type == 'multipleString':
+        if validation_type == 'multipleStrings':
             answer = cls.__multiple_string_validation(answer)
             return answer
 
