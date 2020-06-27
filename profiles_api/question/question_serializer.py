@@ -70,6 +70,7 @@ class QuestionDeserializer(serializers.Serializer):
         for (key, field) in zip(['dependencies', 'dependencies_id'], ['name', 'id']):
             if key not in validated_data:
                 continue
+
             for dependency_string in validated_data[key].split(';'):
                 try:
                     dependency = Subtopic.objects.filter(**{field: dependency_string})[0]
