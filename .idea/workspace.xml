@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2abbe20c-7c40-4e47-b4ec-8f1b24ed4225" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/documentation/RecommendedSubtopicGET.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/question/question_serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/question/question_serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/subtopic/subtopic_api_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/subtopic/subtopic_api_view.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation/SubtopicGET.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/SubtopicGET.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation/sample_calls.py" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/sample_calls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,46 +38,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/urls.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
-              <folding>
-                <element signature="e#0#37#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_serializer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="49" column="36" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
+            <state relative-caret-position="425">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -86,9 +50,45 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/documentation/SubtopicGET.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="204">
+                <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/documentation/RecommendedSubtopicGET.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="309">
+                <caret line="56" selection-start-line="56" selection-end-line="56" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/documentation/RecommendedTestGET.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="204">
+                <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/answer/test_answer_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
+            <state relative-caret-position="102">
               <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
@@ -97,10 +97,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/question/question_serializer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
+            <state relative-caret-position="1326">
               <caret line="82" selection-start-line="82" selection-end-line="82" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
@@ -112,7 +112,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
+            <state relative-caret-position="765">
               <caret line="50" column="43" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="43" />
               <folding>
                 <element signature="e#0#43#0" expanded="true" />
@@ -140,7 +140,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-134">
+            <state>
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -197,7 +197,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/documentation/TestPOST.md" />
         <option value="$PROJECT_DIR$/profiles_api/theory_page/theory_page_model.py" />
         <option value="$PROJECT_DIR$/Pipfile" />
         <option value="$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_model.py" />
@@ -219,7 +218,6 @@
         <option value="$PROJECT_DIR$/documentation/AnswerGET.md" />
         <option value="$PROJECT_DIR$/documentation/RecommendedTestGET.md" />
         <option value="$PROJECT_DIR$/documentation/RecommendedTheoryPageGET.md" />
-        <option value="$PROJECT_DIR$/documentation/SubtopicGET.md" />
         <option value="$PROJECT_DIR$/documentation/TestGET.md" />
         <option value="$PROJECT_DIR$/documentation/TheoryPageGET.md" />
         <option value="$PROJECT_DIR$/documentation/Topic.md" />
@@ -246,8 +244,10 @@
         <option value="$PROJECT_DIR$/profiles_api/answer/answer_serializer.py" />
         <option value="$PROJECT_DIR$/profiles_api/answer/answer_model.py" />
         <option value="$PROJECT_DIR$/profiles_api/urls.py" />
-        <option value="$PROJECT_DIR$/profiles_api/subtopic/subtopic_api_view.py" />
         <option value="$PROJECT_DIR$/profiles_api/question/question_serializer.py" />
+        <option value="$PROJECT_DIR$/profiles_api/subtopic/subtopic_api_view.py" />
+        <option value="$PROJECT_DIR$/documentation/SubtopicGET.md" />
+        <option value="$PROJECT_DIR$/documentation/RecommendedSubtopicGET.md" />
       </list>
     </option>
   </component>
@@ -265,12 +265,18 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
               <item name="profiles-rest-api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
+              <item name="profiles-rest-api" type="462c0819:PsiDirectoryNode" />
+              <item name="documentation" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
@@ -307,7 +313,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -316,7 +321,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.PYTHON_MODULE" value="Pipenv (profiles-rest-api)" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/documentation" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -337,12 +342,12 @@
     <option name="isSearchForTextOccurrences" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\roman\Courses\profiles-rest-api\profiles_api" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\roman\Courses\profiles-rest-api\documentation" />
       <recent name="C:\Users\roman\Courses\profiles-rest-api\profiles_api\topic" />
-      <recent name="C:\Users\roman\Courses\profiles-rest-api\profiles_api" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\roman\Courses\profiles-rest-api\profiles_api" />
     </key>
   </component>
@@ -547,11 +552,12 @@
       <workItem from="1589656822357" duration="11647000" />
       <workItem from="1589727005287" duration="78000" />
       <workItem from="1592596607063" duration="1503000" />
+      <workItem from="1593279059134" duration="416000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="341824000" />
+    <option name="totallyTimeSpent" value="342559000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -564,9 +570,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20274915" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -594,10 +599,10 @@
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="SciView" order="6" />
-      <window_info anchor="right" id="Database" order="7" sideWeight="0.45892859" visible="true" weight="0.29209623" />
+      <window_info anchor="right" id="Database" order="7" sideWeight="0.45714286" visible="true" weight="0.055670105" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
-      <window_info anchor="right" x="0" y="0" width="328" height="773" id="Documentation" order="10" sideWeight="0.5410714" side_tool="true" visible="true" weight="0.29209623" />
+      <window_info anchor="right" x="0" y="0" width="328" height="773" id="Documentation" order="10" sideWeight="0.54285717" side_tool="true" visible="true" weight="0.055670105" />
       <window_info anchor="right" id="make" order="11" />
     </layout>
     <layout-to-restore>
@@ -641,24 +646,6 @@
     <SUITE FILE_PATH="coverage/profiles_rest_api$manage.coverage" NAME="manage Coverage Results" MODIFIED="1584195148816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/documentation/SubtopicGET.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="476">
-            <caret line="28" column="95" selection-start-line="28" selection-start-column="95" selection-end-line="28" selection-end-column="95" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/documentation/TestPOST.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/documentation/TestGET.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -711,16 +698,6 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/documentation/RecommendedTestGET.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="408">
-            <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
-          </first_editor>
           <second_editor />
         </state>
       </provider>
@@ -1020,6 +997,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_serializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/answer/test_answer_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/question/question_serializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1326">
+          <caret line="82" selection-start-line="82" selection-end-line="82" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="50" column="43" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/apps.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1034,80 +1071,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
+        <state>
           <folding>
             <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/answer/test_answer_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="49" column="36" selection-start-line="49" selection-start-column="36" selection-end-line="49" selection-end-column="36" />
+        <state relative-caret-position="425">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
-          <caret line="50" column="43" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/documentation/RecommendedTestGET.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="204">
+            <caret line="24" column="21" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/subtopic/subtopic_serializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/documentation/SubtopicGET.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="204">
+            <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/question/question_serializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="82" selection-start-line="82" selection-end-line="82" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/documentation/RecommendedSubtopicGET.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="309">
+            <caret line="56" selection-start-line="56" selection-end-line="56" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

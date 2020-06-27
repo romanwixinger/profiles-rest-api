@@ -11,9 +11,9 @@ import requests
 
 
 base_url = 'http://127.0.0.1:8000/api/'
-email = 'email@email.com'
-name = 'Name'
-password = 'PW'
+email = 'Schueler1@email.com'
+name = 'Schueler 1'
+password = 'Schueler 1'
 
 
 """User profile"""
@@ -48,8 +48,6 @@ user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
 
 print("Status code: ", user_profile_get.status_code)
 print(user_profile_get.json())
-
-
 
 
 """Login"""
@@ -123,7 +121,7 @@ print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 
 # Question POST
 question = {
-        "subtopic": subtopic_id,
+        "subtopic_id": subtopic_id,
         "question": "$\\\\frac{2}{7} + \\\\frac{2}{7}$",
         "correctAnswers": "$\\\\frac{4}{7}}$",
         "validation_type": "standardValidation",
@@ -299,6 +297,24 @@ recommended_test_post = requests.post(url=base_url + "recommended-test/",
 print("Status code: ", recommended_test_post.status_code)
 print(recommended_test_post.json())
 print("\n" + 10 * "*" + "\n")
+
+
+
+"""RecommendedTest"""
+
+print("\n" + 30 * "*" + " RecommendedSubtopic " + 30 * "*" + "\n")
+
+# RecommendedSubtopic GET
+recommended_subtopic_get = requests.get(url=base_url + "recommended-subtopic/",
+                                    headers=headers,
+                                    params={'number': 1}
+                                    )
+print("Status code: ", recommended_subtopic_get.status_code)
+print(recommended_subtopic_get.json())
+print("\n" + 10 * "*" + "\n")
+
+
+
 
 
 
