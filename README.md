@@ -67,8 +67,9 @@ response.
          
 * RecommendedTest: [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestGET.md) recommended tests.
                   
-* CompletedTest: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestPOST.md) and 
-                  [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestGET.md) completed tests.
+* CompletedTest: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestPOST.md),
+                 [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestGET.md) and
+                 [PATCH](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestPATCH.md) completed tests.
 
 * TheoryPage: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TheoryPagePOST.md) and 
               [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TheoryPageGET.md) theory pages. 
