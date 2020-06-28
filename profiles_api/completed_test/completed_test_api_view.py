@@ -96,7 +96,6 @@ class CompletedTestView(APIView):
         """Handle a partial update of a completed test and adding answers"""
 
         pk = self.kwargs.get('pk')
-        print(pk)
 
         deserializer = CompletedTestPatchDeserializer(data=request.data)
         if not deserializer.is_valid():
@@ -108,8 +107,13 @@ class CompletedTestView(APIView):
         validated_data = deserializer.validated_data
         validated_data['user_id'] = self.request.user.id
 
-        print(pk)
-        completed_test = CompletedTestService.get_completed_tests([pk])[0]
+        completed_test = CompletedTestService.get_completed_tests([pk])
+        if len(completed_test) == 0:
+            return Response(
+                {'id': 'The completed test with this id does not exist or does not belong to this user.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
         completed_test = deserializer.update(instance=completed_test,
                                              validated_data=deserializer.validated_data)
         completed_test.save()
