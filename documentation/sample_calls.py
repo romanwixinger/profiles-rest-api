@@ -207,13 +207,13 @@ print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 completed_test = {
     "answers": 
                 [{
-                        "question": 31,
+                        "question": 408,
                         "duration": "21.00",
                         "answers": "1/3",
                         "skipped": False
                 },
                 {
-                        "question": 32,
+                        "question": 409,
                         "duration": "24.00",
                         "answers": "1/2",
                         "skipped": False
@@ -230,6 +230,7 @@ print("Status code: ", completed_test_post.status_code)
 print(completed_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
+# CompletedTest GET
 completed_test_get = requests.get(url=base_url + "custom-completed-test/",
                                     headers=headers,
                                     params = {'number': 1}
@@ -237,6 +238,22 @@ completed_test_get = requests.get(url=base_url + "custom-completed-test/",
 print("Status code: ", completed_test_get.status_code)
 print(completed_test_get.json())
 
+# CompletedTest Patch
+completed_test_patch = completed_test = {
+    "answers": 
+                [{
+                        "question": 410,
+                        "duration": "21.00",
+                        "answers": "1/3",
+                        "skipped": False
+                }],
+    "state": "New questions answered."
+}
+completed_test_patch = requests.patch(url=base_url + "custom-completed-test/124/",
+                                    headers=headers,
+                                    json=completed_test_patch
+                                    )
+print("Status code: ", completed_test_patch.status_code)
 
 """TheoryPage"""
 

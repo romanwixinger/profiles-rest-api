@@ -64,11 +64,9 @@ class CompletedTestService:
 
         filter_dict = {'user_profile': user_id}
 
-        if 'completed_test_id' in query_params_dict:
+        if 'id' in query_params_dict:
             filter_dict['id'] = query_params_dict['id']
-            completed_tests = [CompletedTest.objects.filter(**filter_dict)[0]] \
-                if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
-            if completed_tests is None:
+            if CompletedTest.objects.filter(**filter_dict).count() == 0:
                 raise LookupError
 
         completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
@@ -77,7 +75,7 @@ class CompletedTestService:
         return completed_tests_list
 
     @classmethod
-    def get_completed_tests(cls, completed_test_id_list: int):
+    def get_completed_tests(cls, completed_test_id_list: [int]) -> [CompletedTest]:
         """Returns a list with the requested completed tests"""
 
         completed_tests = CompletedTest.objects.filter(id__in=completed_test_id_list)
