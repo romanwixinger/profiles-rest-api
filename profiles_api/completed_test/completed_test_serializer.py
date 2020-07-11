@@ -90,3 +90,59 @@ class CompletedTestSerializer(serializers.ModelSerializer):
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
+class CompletedTestPatchDeserializer(serializers.Serializer):
+    """Deserializes parts of completed tests"""
+
+    answers = serializers.JSONField(required=False, allow_null=False)
+    state = serializers.CharField(max_length=255, required=False, allow_null=False)
+    duration = serializers.DecimalField(max_digits=8, decimal_places=2, default=0, required=False)  # in seconds
+    comment = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+
+    def validate(self, data):
+        """Validates the completed test: Checks if the answers are valid"""
+
+        if 'answers' in data:
+            answers_list = data['answers']
+
+            for answer_item in answers_list:
+                answer_deserializer = AnswerDeserializer(data=answer_item)
+                if not answer_deserializer.is_valid():
+                    raise serializers.ValidationError('Invalid answers given.')
+        return data
+
+    def update(self, instance, validated_data):
+        """Update an instance of a completed test"""
+
+        if 'state' in validated_data:
+            instance.state = validated_data['state']
+        if 'duration' in validated_data:
+            instance.duration = validated_data['duration']
+        if 'comment' in validated_data:
+            instance.state = validated_data['comment']
+
+        if 'answers' in validated_data:
+            answers_list = validated_data['answers']
+
+            for answer_item in answers_list:
+                answer_deserializer = AnswerDeserializer(data=answer_item)
+                if not answer_deserializer.is_valid():
+                    return None
+
+                answer_validated_data = answer_deserializer.validated_data
+                answer_validated_data['user_id'] = validated_data['user_id']
+
+                try:
+                    answer = answer_deserializer.create(answer_validated_data)
+                except ValueError:
+                    raise ValueError("The question for this answer does not exist.")
+
+                if answer is None:
+                    return None
+
+                AnswerService.perform_correction(answer)
+                answer.save()
+
+                instance.answers.add(answer)
+
+        instance.save()
+        return instance
