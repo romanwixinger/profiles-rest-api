@@ -1,6 +1,6 @@
 **Create recommended tests**
 ----
-  This is a request for creating a personal test.
+  This is a request for creating a test that is personalised. 
   
 * **URL**
 
@@ -25,6 +25,7 @@
 
     An authorization header has to be provided. The key is 'token' 
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
+    The questions are selected by the REST API and are not sent in the request's body. 
     
 * **Success Response:**
 

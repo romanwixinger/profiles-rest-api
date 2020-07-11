@@ -37,7 +37,6 @@ _token mymocktoken_ in the field. Activate the request header and you should hav
 To add learning materials to the REST API, you can use the Github repository [romanwixinger/database-initializer](https://github.com/romanwixinger/database-initializer) 
 or you create your own learning materials and send them with HTTP POST requests. 
 
-
 ## REST-API documentation
 
 In the following, all possible requests to the API are listed with links to their documentation. The requests are 
@@ -65,7 +64,7 @@ response.
 * Test: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TestPOST.md) and 
          [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TestGET.md) tests.
          
-* RecommendedTest: [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestGET.md) recommended tests.
+* RecommendedTest: [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestGET.md) and [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/RecommendedTestPOST.md) recommended tests.
                   
 * CompletedTest: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestPOST.md),
                  [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestGET.md) and
