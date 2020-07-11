@@ -13,7 +13,7 @@ from profiles_api.completed_test import completed_test_api_view
 from profiles_api.theory_page import theory_page_api_view
 
 
-router = DefaultRouter()
+router = DefaultRouter(trailing_slash=False)
 router.register('hello-viewset', views.HelloViewSet, base_name='hello-viewset')
 router.register('profile', views.UserProfileViewSet)
 router.register('feed', views.UserProfileFeedViewSet)
