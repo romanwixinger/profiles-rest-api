@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-test/
+  custom-test
 
 * **Method:**
 
@@ -73,7 +73,7 @@
    base_url = 'http://127.0.0.1:8000/api/'
    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
    headers =  {'Authorization': 'token ' + token}
-   test_get = requests.get(url=base_url + "custom-test/",
+   test_get = requests.get(url=base_url + "custom-test",
                              headers=headers,
                              params={'number': 1}
                              )

@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-completed-test/
+  custom-completed-test
 
 * **Method:**
 
@@ -124,7 +124,7 @@
       "state": "First question answered",
       "duration": "12.00"
       }
-  completed_test_post = requests.post(url=base_url + "custom-completed-test/",
+  completed_test_post = requests.post(url=base_url + "custom-completed-test",
                                     headers=headers,
                                     json=completed_test
                                     )

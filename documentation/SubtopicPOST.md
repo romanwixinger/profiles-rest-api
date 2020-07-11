@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-subtopic/
+  custom-subtopic
 
 * **Method:**
 
@@ -72,7 +72,7 @@
     headers =  {'Authorization': 'token ' + token}
     subtopic = {"name": "Brüche addieren", "html": "<h1> Brüche addieren </h1>", 
                 "topic": 1}
-    subtopic_post = requests.post(url=base_url + "custom-subtopic/", 
+    subtopic_post = requests.post(url=base_url + "custom-subtopic", 
                                   headers=headers,
                                   json=subtopic)
      ``` 

@@ -4,7 +4,7 @@
   
 * **URL**
 
-  recommended-theory-page/
+  recommended-theory-page
 
 * **Method:**
 
@@ -65,7 +65,7 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    recommended_theory_page_get = requests.get(url=base_url + "recommended-theory-page/", 
+    recommended_theory_page_get = requests.get(url=base_url + "recommended-theory-page", 
                                      headers=headers)
     print(recommended_theory_page_get.json())
      ``` 

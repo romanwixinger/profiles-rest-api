@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-question/
+  custom-question
 
 * **Method:**
 
@@ -24,7 +24,7 @@
     
     ```json
     {
-            "subtopic": 13,
+            "subtopic_id": 13,
             "dependencies": "Brüche addieren",
             "dependencies_id": "1;3;8",
             "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
@@ -97,13 +97,12 @@
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
     question = {
-            "topic": 12,
-            "subtopic": 13,
+            "subtopic_id": 13,
             "question": "$\\\\frac{3}{7} + \\\\frac{12}{7}$",
             "correctAnswers": "$\\\\frac{15}{7}}$",
             "validation_type": "standardValidation"
             }
-    question_post = requests.post(url=base_url + "custom-question/",
+    question_post = requests.post(url=base_url + "custom-question",
                                   headers=headers,
                                   json=question)
     print(question_post.json())

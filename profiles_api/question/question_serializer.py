@@ -45,7 +45,6 @@ class QuestionDeserializer(serializers.Serializer):
 
         filter_dict = {}
         subtopic = None
-        topic = None
 
         if subtopic_id is not None:
             filter_dict['id'] = subtopic_id
@@ -54,15 +53,10 @@ class QuestionDeserializer(serializers.Serializer):
         if filter_dict != {}:
             subtopic = Subtopic.objects.filter(**filter_dict)[0] \
                 if Subtopic.objects.filter(**filter_dict).count() > 0 else None
-
-            filter_dict = {'name': subtopic.topic.name}
-            if Topic.objects.filter(**filter_dict).count() > 0:
-                topic = Topic.objects.filter(**filter_dict)[0]
-            else:
-                raise ValueError("The topic of this subtopic does not exist.")
-
         if subtopic is None:
             raise ValueError("The subtopic is not defined.")
+
+        topic = Topic.objects.filter(**{'name': subtopic.topic.name})[0]
 
         # Create questions
         question = Question.objects.get_or_create(

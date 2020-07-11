@@ -4,7 +4,7 @@
   
 * **URL**
 
-  recommended-test/
+  recommended-test
 
 * **Method:**
 
@@ -69,7 +69,7 @@
    base_url = 'http://127.0.0.1:8000/api/'
    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
    headers =  {'Authorization': 'token ' + token}
-   recommended_test_get = requests.get(url=base_url + "recommended-test/",
+   recommended_test_get = requests.get(url=base_url + "recommended-test",
                              headers=headers,
                              params={'number': 1}
                              )

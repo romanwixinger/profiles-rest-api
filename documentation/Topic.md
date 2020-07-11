@@ -3,7 +3,7 @@
   This is a simple for for creating and retrieving topics. 
 * **URL**
 
-  custom-topic/
+  custom-topic
 
 * **Method:**
 
@@ -63,7 +63,7 @@
     topic = {'name': 'Division of fractions'}
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    topic_post = requests.post(url=base_url + "custom-topic/", 
+    topic_post = requests.post(url=base_url + "custom-topic", 
                                json=topic, 
                                headers=headers)
      ``` 

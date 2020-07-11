@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-test/
+  custom-test
 
 * **Method:**
 
@@ -87,7 +87,7 @@
          "title": "Brüche subtrahieren",
          "html": "<h1> Brüche subtrahieren </h1>"
     }
-   test_post = requests.post(url=base_url + "custom-test/",
+   test_post = requests.post(url=base_url + "custom-test",
                           headers=headers,
                           json=test)
   print(test_post.json())

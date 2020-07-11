@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-answer/
+  custom-answer
 
 * **Method:**
 
@@ -63,7 +63,7 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    answer_get = requests.get(url=base_url + "custom-answer/", 
+    answer_get = requests.get(url=base_url + "custom-answer", 
                               headers=headers,
                               params={'number': 1})
     print(answer_get.json())

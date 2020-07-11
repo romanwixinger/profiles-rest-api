@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-theory-page/
+  custom-theory-page
 
 * **Method:**
 
@@ -63,7 +63,7 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    theory_page_get = requests.get(url=base_url + "custom-theory-page/", 
+    theory_page_get = requests.get(url=base_url + "custom-theory-page", 
                                      headers=headers)
     print(theory_page_get.json())
      ``` 

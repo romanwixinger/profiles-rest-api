@@ -4,7 +4,7 @@
 
 * **URL**
 
-  profile/
+  profile
 
 * **Method:**
 
@@ -44,7 +44,7 @@
     import requests
     base_url = 'http://127.0.0.1:8000/api/'
     user_profile = {'email': 'email@email.com','name': 'Name', 'password': 'PW'}
-    user_profile_post = requests.post(url=base_url + "profile/", json=user_profile)
+    user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
     print(user_profile_post.json())
     ```
     

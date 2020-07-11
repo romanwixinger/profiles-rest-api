@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-completed-test/
+  custom-completed-test
 
 * **Method:**
 
@@ -74,7 +74,7 @@
    base_url = 'http://127.0.0.1:8000/api/'
    token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
    headers =  {'Authorization': 'token ' + token}
-   completed_test_get = requests.get(url=base_url + "custom-completed-test/",
+   completed_test_get = requests.get(url=base_url + "custom-completed-test",
                                       headers=headers
                                       )
    print(completed_test_get.json())

@@ -11,7 +11,7 @@ import requests
 
 
 base_url = 'http://127.0.0.1:8000/api/'
-email = 'email@email.com'
+email = 'email@gmail.com'
 name = 'Name'
 password = 'PW'
 
@@ -22,12 +22,13 @@ print("\n" + 30 * "*" + " User profile " + 30 * "*" + "\n")
 
 # User profile POST
 user_profile = {'email': email, 'name': name, 'password': password}
-user_profile_post = requests.post(url=base_url + "profile/", json=user_profile)
+user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
 
 if user_profile_post.status_code == 201: 
-    user_id = [user for user in user_profile_post.json()][0]['id']
+    print(user_profile_post.json())
+    user_id = user_profile_post.json()['id']
 else: 
-    user_profile_get = requests.get(url=base_url + "profile/", params={'search': email})
+    user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
     user_id = [user for user in user_profile_get.json()][0]['id']
     
 print("Status code: ", user_profile_post.status_code)
@@ -36,7 +37,7 @@ print("\n" + 10 * "*" + "\n")
 
 
 # User profile GET
-user_profile_get = requests.get(url=base_url + "profile/")
+user_profile_get = requests.get(url=base_url + "profile")
 
 print("Status code: ", user_profile_get.status_code)
 print(user_profile_get.json())
@@ -58,7 +59,7 @@ print("\n" + 30 * "*" + " Login " + 30 * "*" + "\n")
 
 # Create token with POST
 credentials =  {'username': 'email@email.com', 'password': 'PW'}
-login_post = requests.post(url=base_url + "login/", json=credentials)
+login_post = requests.post(url=base_url + "login", json=credentials)
 token = login_post.json()['token']
 print("Status code: ", login_post.status_code)
 print(login_post.json())
@@ -72,7 +73,7 @@ print("\n" + 30 * "*" + " Topic " + 30 * "*" + "\n")
 # Topic POST
 topic = {'name': 'Division of fractions'}
 headers =  {'Authorization': 'token ' + token}
-topic_post = requests.post(url=base_url + "custom-topic/", 
+topic_post = requests.post(url=base_url + "custom-topic", 
                            json=topic, 
                            headers=headers)
 topic_id = topic_post.json()['id']
@@ -83,7 +84,7 @@ print("\n" + 10 * "*" + "\n")
 
 
 # Topic GET
-topic_get = requests.get(url=base_url + "custom-topic/", 
+topic_get = requests.get(url=base_url + "custom-topic", 
                          headers=headers, 
                          params = {'number': 1})
 print("Status code: ", topic_get.status_code)
@@ -98,7 +99,7 @@ print("\n" + 30 * "*" + " Subtopic " + 30 * "*" + "\n")
 # Subtopic POST
 subtopic = {"name": "Brüche addieren", "html": "<h1> Brüche addieren </h1>", 
             "topic": 'Division of fractions'}
-subtopic_post = requests.post(url=base_url + "custom-subtopic/", 
+subtopic_post = requests.post(url=base_url + "custom-subtopic", 
                               headers=headers,
                               json=subtopic)
 subtopic_id = subtopic_post.json()['id']
@@ -108,7 +109,7 @@ print("\n" + 10 * "*" + "\n")
 
 
 # Subtopic GET
-subtopic_get = requests.get(url=base_url + "custom-subtopic/", 
+subtopic_get = requests.get(url=base_url + "custom-subtopic", 
                             headers=headers, 
                             params={'topic_id': topic_id, 'number': 1}
                             )
@@ -123,15 +124,14 @@ print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 
 # Question POST
 question = {
-        "subtopic": subtopic_id,
+        "subtopic_id": subtopic_id,
         "question": "$\\\\frac{2}{7} + \\\\frac{2}{7}$",
         "correctAnswers": "$\\\\frac{4}{7}}$",
         "validation_type": "standardValidation",
-        "dependencies": "Masseinheiten",
         "dependencies_id": "13;14",
         "set_difficulty": 2
     }
-question_post = requests.post(url=base_url + "custom-question/",
+question_post = requests.post(url=base_url + "custom-question",
                               headers=headers,
                               json=question)
 question_id = question_post.json()['id']
@@ -142,7 +142,7 @@ print("\n" + 10 * "*" + "\n")
 
 
 # Question GET
-question_get = requests.get(url=base_url + "custom-question/", 
+question_get = requests.get(url=base_url + "custom-question", 
                             headers=headers, 
                             params={"number": 1, "question": "$\\\\frac{1}{2} + \\\\frac{100}{2}$"}
                             )
@@ -158,7 +158,7 @@ print("\n" + 30 * "*" + " Answer " + 30 * "*" + "\n")
 # Answer POST
 answer =  {"question": question_id, "duration": 5.5, "answers": "5/2", "skipped": False, 
            "comment": "I am not sure about the answer."}
-answer_post = requests.post(url=base_url + "custom-answer/", 
+answer_post = requests.post(url=base_url + "custom-answer", 
                             headers=headers,
                             json=answer)
 print("Status code: ", answer_post.status_code)
@@ -166,7 +166,7 @@ print(answer_post.json())
 print("\n" + 10 * "*" + "\n")
 
 # Answer GET
-answer_get = requests.get(url=base_url + "custom-answer/", 
+answer_get = requests.get(url=base_url + "custom-answer", 
                           headers=headers,
                           params={'number': 1})
 print("Status code: ", answer_get.status_code)
@@ -184,7 +184,7 @@ test =  {
             "title": "Brüche addieren",
             "html": "<h1> Brüche addieren </h1>"
         }
-test_post = requests.post(url=base_url + "custom-test/",
+test_post = requests.post(url=base_url + "custom-test",
                           headers=headers,
                           json=test
                           )
@@ -192,7 +192,7 @@ print("Status code: ", test_post.status_code)
 print(test_post.json())
 print("\n" + 10 * "*" + "\n")
 
-test_get = requests.get(url=base_url + "custom-test/",
+test_get = requests.get(url=base_url + "custom-test",
                           headers=headers,
                           params={'number': 1}
                           )
@@ -209,13 +209,13 @@ print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 completed_test = {
     "answers": 
                 [{
-                        "question": 31,
+                        "question": 408,
                         "duration": "21.00",
                         "answers": "1/3",
                         "skipped": False
                 },
                 {
-                        "question": 32,
+                        "question": 409,
                         "duration": "24.00",
                         "answers": "1/2",
                         "skipped": False
@@ -224,7 +224,7 @@ completed_test = {
     "duration": "12.00",
     "test": 8
 }
-completed_test_post = requests.post(url=base_url + "custom-completed-test/",
+completed_test_post = requests.post(url=base_url + "custom-completed-test",
                                     headers=headers,
                                     json=completed_test
                                     )
@@ -232,7 +232,7 @@ print("Status code: ", completed_test_post.status_code)
 print(completed_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
-completed_test_get = requests.get(url=base_url + "custom-completed-test/",
+completed_test_get = requests.get(url=base_url + "custom-completed-test",
                                     headers=headers,
                                     params = {'number': 1}
                                     )
@@ -251,14 +251,14 @@ theory_page = {
         "html": "<h1> Folgen </h1>",
         "test": "Brüche subtrahieren"
 }
-theory_page_post = requests.post(url=base_url + "custom-theory-page/", 
+theory_page_post = requests.post(url=base_url + "custom-theory-page", 
                                  headers=headers,
                                  json=theory_page)
 print("Status code: ", theory_page_post.status_code)
 print(theory_page_post.json())
 print("\n" + 10 * "*" + "\n")
 
-theory_page_get = requests.get(url=base_url + "custom-theory-page/", 
+theory_page_get = requests.get(url=base_url + "custom-theory-page", 
                                  headers=headers,
                                  params = {'number': 1})
 print("Status code: ", theory_page_get.status_code)
@@ -271,7 +271,7 @@ print(theory_page_get.json())
 print("\n" + 30 * "*" + " RecommendedTheoryPage " + 30 * "*" + "\n")
 
 # RecommendedTheoryPage GET 
-recommended_theory_page_get = requests.get(url=base_url + "recommended-theory-page/", 
+recommended_theory_page_get = requests.get(url=base_url + "recommended-theory-page", 
                                headers=headers)
 print("Status code: ", recommended_theory_page_get.status_code)
 print(recommended_theory_page_get.json())
@@ -283,7 +283,7 @@ print(recommended_theory_page_get.json())
 print("\n" + 30 * "*" + " RecommendedTest " + 30 * "*" + "\n")
 
 # RecommendedTest GET
-recommended_test_get = requests.get(url=base_url + "recommended-test/",
+recommended_test_get = requests.get(url=base_url + "recommended-test",
                                     headers=headers,
                                     params={'number': 1}
                                     )
@@ -292,7 +292,7 @@ print(recommended_test_get.json())
 print("\n" + 10 * "*" + "\n")
 
 # RecommendedTest POST
-recommended_test_post = requests.post(url=base_url + "recommended-test/",
+recommended_test_post = requests.post(url=base_url + "recommended-test",
                                     headers=headers,
                                     params={'number': 5, 'length': 1}
                                     )

@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-subtopic/
+  custom-subtopic
 
 * **Method:**
 
@@ -76,7 +76,7 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    subtopic_get = requests.get(url=base_url + "custom-subtopic/", 
+    subtopic_get = requests.get(url=base_url + "custom-subtopic", 
                             headers=headers, 
                             params={'topic_id': 12}
                             )

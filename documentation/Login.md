@@ -4,7 +4,7 @@
 
 * **URL**
 
-  login/
+  login
 
 * **Method:**
   
@@ -44,7 +44,7 @@
     import requests
     base_url = 'http://127.0.0.1:8000/api/'
     credentials =  {'username': 'email@email.com', 'password': 'PW'}
-    login_post = requests.post(url=base_url + "login/", json=credentials)
+    login_post = requests.post(url=base_url + "login", json=credentials)
     print(login_post.json())
     ```
     

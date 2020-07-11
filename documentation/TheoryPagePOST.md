@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-theory-page/
+  custom-theory-page
 
 * **Method:**
 
@@ -95,7 +95,7 @@
         "html": "<h1> Folgen </h1>",
         "test": "Brüche subtrahieren"
     }
-    theory_page_post = requests.post(url=base_url + "custom-theory-page/", 
+    theory_page_post = requests.post(url=base_url + "custom-theory-page", 
                                  headers=headers,
                                  json=theory_page)
     print(theory_page_post.json())

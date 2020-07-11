@@ -4,7 +4,7 @@
   
 * **URL**
 
-  custom-question/
+  custom-question
 
 * **Method:**
 
@@ -87,7 +87,7 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    question_get = requests.get(url=base_url + "custom-question/", 
+    question_get = requests.get(url=base_url + "custom-question", 
                             headers=headers, 
                             params={"number": 1}
                             )

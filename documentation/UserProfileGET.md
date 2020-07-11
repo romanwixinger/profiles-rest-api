@@ -4,8 +4,8 @@
 
 * **URL**
 
-  profile/ <br>
-  profile/id/
+  profile <br>
+  profile/id
 
 * **Method:**
 
@@ -35,7 +35,7 @@
     ```python
     import requests
     base_url = 'http://127.0.0.1:8000/api/'
-    user_profile_get = requests.get(url=base_url + "profile/")
+    user_profile_get = requests.get(url=base_url + "profile")
     print(user_profile_get.json())
     ```
     
