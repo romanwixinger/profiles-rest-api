@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from profiles_api.models import UserProfile
 from profiles_api.theory_page.theory_page_model import TheoryPage
-from profiles_api.topic.topic_model import Topic
 from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.test.test_model import Test
 
@@ -19,9 +18,6 @@ class TheoryPageDeserializer(serializers.Serializer):
 
     def validate(self, data):
         """Validate theory page"""
-
-        if 'topic' not in data and 'topic_id' not in data:
-            serializers.ValidationError("Topic is not defined.")
 
         if 'subtopic' not in data and 'subtopic_id' not in data:
             serializers.ValidationError("Subtopic is not defined.")
@@ -68,7 +64,6 @@ class TheoryPageDeserializer(serializers.Serializer):
             html=html,
             test=test
         )
-
         theory_page.save()
 
         return theory_page

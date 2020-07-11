@@ -55,3 +55,22 @@ class CustomSubtopicView(APIView):
 
         return Response(deserializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class RecommendedSubtopicView(APIView):
+    """Custom view for getting recommended subtopics"""
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
+
+    def get(self, request):
+        """Retrieve recommended subtopics"""
+
+        query_params_dict = self.request.query_params.dict()
+        args = {'number': int(query_params_dict['number'])} if 'number' in query_params_dict else {}
+        subtopic_id_list = SubtopicService.recommended_subtopics(user=self.request.user, **args)
+        subtopics = SubtopicService.get_subtopics(subtopic_id_list)
+
+        if len(subtopics) > 0:
+            serializer = SubtopicSerializer(subtopics, many=True)
+            return Response(data=serializer.data, status=200)
+        else:
+            return Response(status=204)

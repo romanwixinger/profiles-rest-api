@@ -5,6 +5,8 @@ from typing import List, Set
 from profiles_api.answer.answer_model import Answer
 from profiles_api.question.question_model import Question
 
+from profiles_api.topic.topic_service import TopicService
+
 
 class AnswerService:
 
@@ -18,7 +20,7 @@ class AnswerService:
         if not validation_type or validation_type == 'standardValidation':
             return cls.__standard_validation(answer)
 
-        if validation_type == 'multipleString':
+        if validation_type == 'multipleStrings':
             answer = cls.__multiple_string_validation(answer)
             return answer
 
@@ -47,10 +49,10 @@ class AnswerService:
 
     @classmethod
     def __compare_answers(cls, user_answers: List[str], correct_answers: List[str]) -> Set[int]:
-        wrong_answer_list = Set[int]
+        wrong_answer_list: Set[int] = set()
         for i in range(len(user_answers)):
             if user_answers[i] != correct_answers[i]:
-                wrong_answer_list.append(i + 1)
+                wrong_answer_list.add(i + 1)
         return wrong_answer_list
 
     @classmethod
@@ -85,37 +87,17 @@ class AnswerService:
     def search_answers_id(cls, query_params_dict: dict) -> [int]:
         """Get the answers of a user according to query parameters stored in a dict"""
 
-        user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
-        if user_id is None or user_id == '':
+        if 'user_id' not in query_params_dict or query_params_dict['user_id'] == '':
             raise Exception("The class method search_answers must only be used with a user_id.")
 
-        question_id = query_params_dict['question_id'] if 'question_id' in query_params_dict else None
-        topic_id = query_params_dict['topic_id'] if 'topic_id' in query_params_dict else None
-        subtopic_id = query_params_dict['subtopic_id'] if 'subtopic_id' in query_params_dict else None
-        start = query_params_dict['start'] if 'start' in query_params_dict else None
-        number = query_params_dict['number'] if 'number' in query_params_dict else None
-        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
-        difficulty = query_params_dict['difficulty'] if 'difficulty' in query_params_dict else None
+        filter_args = {'user_id': 'user_profile', 'question_id': 'question__id', 'topic_id': 'question__topic',
+                       'subtopic_id': 'question__subtopic', 'difficulty': 'question__difficulty'}
 
-        filter_dict = {'user_profile': user_id}
-
-        if question_id is not None and question_id != '':
-            filter_dict['question__id'] = question_id
-        if topic_id is not None and question_id != '':
-            filter_dict['question__topic'] = topic_id
-        if subtopic_id is not None and question_id != '':
-            filter_dict['question__subtopic'] = subtopic_id
-        if difficulty is not None and difficulty != '':
-            filter_dict['question__difficulty'] = difficulty
+        filter_dict = {filter_args[key]: query_params_dict[key] for key in filter_args.keys()
+                       if key in query_params_dict}
 
         answer_id_list = list(Answer.objects.filter(**filter_dict).values_list('id', flat=True))
-
-        if mode == 'random':
-            random.shuffle(answer_id_list)
-        if start is not None:
-            answer_id_list = answer_id_list[min(abs(int(start)), len(answer_id_list)):]
-        if number is not None:
-            answer_id_list = answer_id_list[:max(0, min(int(number), len(answer_id_list)))]
+        answer_id_list = TopicService.select_items(items=answer_id_list, query_params_dict=query_params_dict)
 
         return answer_id_list
 
@@ -124,20 +106,17 @@ class AnswerService:
         """Returns a list with the requested answers"""
 
         answers = Answer.objects.filter(id__in=answer_id_list)
-        answer_list = list(answers)
-
-        return answer_list
+        return list(answers)
 
     @classmethod
     def get_all_answers(cls, question_id: int, query_params_dict: dict) -> [Answer]:
         """Get the answers of all user to a specific question"""
 
-        filter_dict = {'question__id': question_id}
-        answers = Answer.objects.filter(**filter_dict)
+        answers = Answer.objects.filter(**{'question__id': question_id})
 
         number = query_params_dict['number'] if 'number' in query_params_dict else None
         if number is not None:
-            answers = answers[:max(0, min(int(number), answers.count()))]
+            answers = answers[:number]
 
         return answers
 
@@ -167,11 +146,10 @@ class AnswerService:
         difficulty_list = []
 
         for question_id in question_id_list:
-
             question = Question.objects.get(pk=question_id)
+
             if update:
-                difficulty = cls.difficulty(question_id)
-                question.difficulty = difficulty
+                question.difficulty = cls.difficulty(question_id)
             else:
                 difficulty = question.difficulty
             difficulty_list.append(difficulty)

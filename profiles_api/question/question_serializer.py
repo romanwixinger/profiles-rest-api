@@ -39,77 +39,44 @@ class QuestionDeserializer(serializers.Serializer):
     def create(self, validated_data):
         """Create a new question from the validated data"""
 
-        subtopic_name = validated_data['subtopic'] if 'subtopic' in validated_data else None
-        subtopic_id = validated_data['subtopic_id'] if 'subtopic_id' in validated_data else None
-        user_id = validated_data['user_id']
-
         filter_dict = {}
-        subtopic = None
-        topic = None
+        if 'subtopic_id' in validated_data:
+            filter_dict['id'] = validated_data['subtopic_id']
+        if 'subtopic' in validated_data:
+            filter_dict['name'] = validated_data['subtopic']
 
-        if subtopic_id is not None:
-            filter_dict['id'] = subtopic_id
-        if subtopic_name is not None:
-            filter_dict['name'] = subtopic_name
-        if filter_dict != {}:
-            subtopic = Subtopic.objects.filter(**filter_dict)[0] \
-                if Subtopic.objects.filter(**filter_dict).count() > 0 else None
-
-            filter_dict = {'name': subtopic.topic.name}
-            if Topic.objects.filter(**filter_dict).count() > 0:
-                topic = Topic.objects.filter(**filter_dict)[0]
-            else:
-                raise ValueError("The topic of this subtopic does not exist.")
-
-        if subtopic is None:
+        subtopics = Subtopic.objects.filter(**filter_dict)
+        if subtopics.count() > 0:
+            subtopic = subtopics[0]
+        else:
             raise ValueError("The subtopic is not defined.")
 
-        # Create questions
+        topics = Topic.objects.filter(**{'name': subtopic.topic.name})
+        if topics.count() > 0:
+            topic = topics[0]
+        else:
+            raise ValueError("The topic of this subtopic does not exist.")
+
+        args = {key: validated_data[key] for key in ['question', 'correctAnswers', 'difficulty', 'validation_type',
+                                                     'appendix', 'hint', 'imageSrc'] if key in validated_data}
         question = Question.objects.get_or_create(
-            user_profile_id=user_id,
+            user_profile_id=validated_data['user_id'],
             topic=topic,
             subtopic=subtopic,
-            question=validated_data['question'],
-            correctAnswers=validated_data['correctAnswers'],
-            difficulty=validated_data['set_difficulty'],
             set_difficulty=validated_data['set_difficulty'],
+            **args
         )[0]
 
-        dependencies = validated_data['dependencies'] if 'dependencies' in validated_data else None
-        dependencies_id = validated_data['dependencies_id'] if 'dependencies_id' in validated_data else None
-        validation_type = validated_data['validation_type'] if 'validation_type' in validated_data else None
-        appendix = validated_data['appendix'] if 'appendix' in validated_data else None
-        hint = validated_data['hint'] if 'hint' in validated_data else None
-        imageSrc = validated_data['imageSrc'] if 'imageSrc' in validated_data else None
+        for (key, field) in zip(['dependencies', 'dependencies_id'], ['name', 'id']):
+            if key not in validated_data:
+                continue
 
-        if dependencies is not None and dependencies != "":
-            dependencies_string = dependencies.split(';')
-            for dependency_string in dependencies_string:
-                filter_dict = {'name': dependency_string}
+            for dependency_string in validated_data[key].split(';'):
                 try:
-                    dependency = Subtopic.objects.filter(**filter_dict)[0]
+                    dependency = Subtopic.objects.filter(**{field: dependency_string})[0]
                     question.dependencies.add(dependency)
-                except:
+                except LookupError:
                     pass
-
-        if dependencies_id is not None and dependencies_id != "":
-            dependencies_string = dependencies_id.split(';')
-            for dependency_string in dependencies_string:
-                filter_dict = {'id': dependency_string}
-                try:
-                    dependency = Subtopic.objects.filter(**filter_dict)[0]
-                    question.dependencies.add(dependency)
-                except:
-                    pass
-
-        if validation_type is not None and validation_type != '':
-            question.validation_type = validation_type
-        if appendix is not None and appendix != '':
-            question.appendix = appendix
-        if hint is not None and hint != '':
-            question.hint = hint
-        if imageSrc is not None and imageSrc != '':
-            question.imageSrc = imageSrc
 
         return question
 

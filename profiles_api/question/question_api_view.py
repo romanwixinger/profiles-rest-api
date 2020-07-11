@@ -22,30 +22,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
         """Sets the user profile to the logged in user"""
         serializer.save(user_profile=self.request.user)
 
-    def get_queryset(self):
-        """Retrieve only selected questions depending on query parameters"""
-        user_id = self.request.query_params.get('user_id', None)
-        topic = self.request.query_params.get('topic', None)
-        subtopic = self.request.query_params.get('subtopic', None)
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        filter_dict = dict()
-        if user_id is not None:
-            filter_dict['user_profile__id'] = user_id
-        if topic is not None:
-            filter_dict['topic'] = topic
-        if subtopic is not None:
-            filter_dict['subtopic'] = subtopic
-        questions = Question.objects.filter(**filter_dict)
-
-        if start is not None:
-            questions = questions[min(abs(int(start)), questions.count()):]
-        if number is not None:
-            questions = questions[:max(0, min(int(number), questions.count()))]
-
-        return questions
-
 
 class QuestionView(APIView):
     """Custom view for Question"""
@@ -68,10 +44,6 @@ class QuestionView(APIView):
         """Create a new question. Additionally a new topic and subtopic is created if necessary"""
 
         user = self.request.user
-
-        if user is None or user.id == '':
-            return Response(data='User not defined', status=400)
-
         deserializer = QuestionDeserializer(data=request.data)
 
         if deserializer.is_valid():

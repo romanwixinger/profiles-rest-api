@@ -13,7 +13,7 @@ class AnswerSerializer(serializers.ModelSerializer):
         model = Answer
         fields = ('id', 'user_profile', 'created_on', 'question',
                   'duration', 'answers', 'correct', 'skipped', 'comment')
-        extra_kwargs = {'user_profile': {'read_only': True}, 'correct': {'required': False}}
+        extra_kwargs = {'user_profile': {'read_only': True}, 'correct': {'required': False}, 'duration': {'required': False}}
 
 
 class AnswerDeserializer(serializers.Serializer):
@@ -30,7 +30,7 @@ class AnswerDeserializer(serializers.Serializer):
     def validate(self, data):
         """Validates the data: Checks whether an answer was given or the question was skipped"""
 
-        if 'answers' in data and data['answers'] != '':
+        if 'answers' in data:
             return data
         if 'skipped' in data and data['skipped']:
             return data
@@ -40,8 +40,7 @@ class AnswerDeserializer(serializers.Serializer):
     def create(self, validated_data):
         """Creates an answer"""
 
-        filter_dict = {'id': validated_data['user_id']}
-        user_profile = UserProfile.objects.filter(**filter_dict)[0]
+        user = UserProfile.objects.filter(**{'id': validated_data['user_id']})[0]
 
         filter_dict = {'id': validated_data['question']}
         question = Question.objects.filter(**filter_dict)[0] \
@@ -49,23 +48,12 @@ class AnswerDeserializer(serializers.Serializer):
         if question is None:
             raise ValueError("The question for this answer does not exist.")
 
-        answer = Answer(
-            question=question,
-            user_profile=user_profile
-        )
-        if 'duration' in validated_data:
-            answer.duration = validated_data['duration']
-        else:
-            answer.duration = 0
-        if 'answers' in validated_data and validated_data['answers'] != '':
-            answer.answers = validated_data['answers']
-        if 'skipped' in validated_data:
-            answer.skipped = validated_data['skipped']
-        if 'correct' in validated_data:
-            answer.correct = validated_data['correct']
-        if 'comment' in validated_data and validated_data['comment'] != '':
-            answer.comment = validated_data['comment']
+        args = {'question': question, 'user_profile': user}
+        if 'answers' in validated_data:
+            args['answers'] = validated_data['answers']
+        opt_args = {key: validated_data[key] for key in ['skipped', 'correct', 'comment'] if key in validated_data}
 
+        answer = Answer.objects.get_or_create(**args, defaults=opt_args)[0]
         return answer
 
 

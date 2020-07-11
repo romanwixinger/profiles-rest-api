@@ -11,9 +11,9 @@ import requests
 
 
 base_url = 'http://127.0.0.1:8000/api/'
-email = 'email@email.com'
-name = 'Name'
-password = 'PW'
+email = 'Schueler1@email.com'
+name = 'Schueler 1'
+password = 'Schueler 1'
 
 
 """User profile"""
@@ -48,8 +48,6 @@ user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
 
 print("Status code: ", user_profile_get.status_code)
 print(user_profile_get.json())
-
-
 
 
 """Login"""
@@ -123,7 +121,7 @@ print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 
 # Question POST
 question = {
-        "subtopic": subtopic_id,
+        "subtopic_id": subtopic_id,
         "question": "$\\\\frac{2}{7} + \\\\frac{2}{7}$",
         "correctAnswers": "$\\\\frac{4}{7}}$",
         "validation_type": "standardValidation",
@@ -209,13 +207,13 @@ print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 completed_test = {
     "answers": 
                 [{
-                        "question": 31,
+                        "question": 408,
                         "duration": "21.00",
                         "answers": "1/3",
                         "skipped": False
                 },
                 {
-                        "question": 32,
+                        "question": 409,
                         "duration": "24.00",
                         "answers": "1/2",
                         "skipped": False
@@ -232,6 +230,7 @@ print("Status code: ", completed_test_post.status_code)
 print(completed_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
+# CompletedTest GET
 completed_test_get = requests.get(url=base_url + "custom-completed-test/",
                                     headers=headers,
                                     params = {'number': 1}
@@ -239,6 +238,22 @@ completed_test_get = requests.get(url=base_url + "custom-completed-test/",
 print("Status code: ", completed_test_get.status_code)
 print(completed_test_get.json())
 
+# CompletedTest Patch
+completed_test_patch = completed_test = {
+    "answers": 
+                [{
+                        "question": 410,
+                        "duration": "21.00",
+                        "answers": "1/3",
+                        "skipped": False
+                }],
+    "state": "New questions answered."
+}
+completed_test_patch = requests.patch(url=base_url + "custom-completed-test/124/",
+                                    headers=headers,
+                                    json=completed_test_patch
+                                    )
+print("Status code: ", completed_test_patch.status_code)
 
 """TheoryPage"""
 
@@ -299,6 +314,24 @@ recommended_test_post = requests.post(url=base_url + "recommended-test/",
 print("Status code: ", recommended_test_post.status_code)
 print(recommended_test_post.json())
 print("\n" + 10 * "*" + "\n")
+
+
+
+"""RecommendedTest"""
+
+print("\n" + 30 * "*" + " RecommendedSubtopic " + 30 * "*" + "\n")
+
+# RecommendedSubtopic GET
+recommended_subtopic_get = requests.get(url=base_url + "recommended-subtopic/",
+                                    headers=headers,
+                                    params={'number': 1}
+                                    )
+print("Status code: ", recommended_subtopic_get.status_code)
+print(recommended_subtopic_get.json())
+print("\n" + 10 * "*" + "\n")
+
+
+
 
 
 

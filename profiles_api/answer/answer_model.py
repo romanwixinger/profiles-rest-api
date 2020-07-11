@@ -12,7 +12,7 @@ class Answer(models.Model):
     )
     created_on = models.DateTimeField(auto_now_add=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    duration = models.DecimalField(max_digits=8, decimal_places=2, blank=True)  # in seconds
+    duration = models.DecimalField(max_digits=8, decimal_places=2, blank=True, default=0)  # in seconds
     answers = models.CharField(max_length=1024, blank=True)
 
     # Fields set after correction

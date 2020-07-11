@@ -1,7 +1,7 @@
-import random
-
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.subtopic.subtopic_model import Subtopic
+
+from profiles_api.topic.topic_service import TopicService
 
 
 class CompletedTestService:
@@ -64,34 +64,19 @@ class CompletedTestService:
 
         filter_dict = {'user_profile': user_id}
 
-        completed_test_id = query_params_dict['id'] if 'id' in query_params_dict else None
-        start = query_params_dict['start'] if 'start' in query_params_dict else None
-        number = query_params_dict['number'] if 'number' in query_params_dict else None
-        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
-
-        if completed_test_id is not None:
-            filter_dict['id'] = completed_test_id
-            completed_tests = [CompletedTest.objects.filter(**filter_dict)[0]] \
-                if CompletedTest.objects.filter(**filter_dict).count() > 0 else None
-            if completed_tests is None:
+        if 'id' in query_params_dict:
+            filter_dict['id'] = query_params_dict['id']
+            if CompletedTest.objects.filter(**filter_dict).count() == 0:
                 raise LookupError
 
         completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
-
-        if mode == 'random':
-            random.shuffle(completed_tests_list)
-        if start is not None:
-            completed_tests_list = completed_tests_list[min(abs(int(start)), len(completed_tests_list)):]
-        if number is not None:
-            completed_tests_list = completed_tests_list[:max(0, min(int(number), len(completed_tests_list)))]
+        completed_tests_list = TopicService.select_items(items=completed_tests_list, query_params_dict=query_params_dict)
 
         return completed_tests_list
 
     @classmethod
-    def get_completed_tests(cls, completed_test_id_list: int):
+    def get_completed_tests(cls, completed_test_id_list: [int]) -> [CompletedTest]:
         """Returns a list with the requested completed tests"""
 
         completed_tests = CompletedTest.objects.filter(id__in=completed_test_id_list)
-        completed_test_list = list(completed_tests)
-
-        return completed_test_list
+        return list(completed_tests)
