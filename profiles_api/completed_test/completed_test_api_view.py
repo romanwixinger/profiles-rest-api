@@ -114,7 +114,7 @@ class CompletedTestView(APIView):
                 status=status.HTTP_404_NOT_FOUND
             )
 
-        completed_test = deserializer.update(instance=completed_test,
+        completed_test = deserializer.update(instance=completed_test[0],
                                              validated_data=deserializer.validated_data)
         completed_test.save()
 

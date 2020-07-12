@@ -123,7 +123,7 @@ print("\n" + 30 * "*" + " Question " + 30 * "*" + "\n")
 # Question POST
 question = {
         "subtopic_id": subtopic_id,
-        "question": "$\\\\frac{2}{7} + \\\\frac{2}{7}$",
+        "question": "$\\\\frac{3}{7} + \\\\frac{2}{7}$",
         "correctAnswers": "$\\\\frac{4}{7}}$",
         "validation_type": "standardValidation",
         "dependencies_id": "13;14",
@@ -142,7 +142,7 @@ print("\n" + 10 * "*" + "\n")
 # Question GET
 question_get = requests.get(url=base_url + "custom-question", 
                             headers=headers, 
-                            params={"number": 1, "question": "$\\\\frac{1}{2} + \\\\frac{100}{2}$"}
+                            params={"number": 1, "question_id": 687}
                             )
 print("Status code: ", question_get.status_code)
 print(question_get.json())
@@ -207,13 +207,13 @@ print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 completed_test = {
     "answers": 
                 [{
-                        "question": 408,
+                        "question": 687,
                         "duration": "21.00",
                         "answers": "1/3",
                         "skipped": False
                 },
                 {
-                        "question": 409,
+                        "question": 687,
                         "duration": "24.00",
                         "answers": "1/2",
                         "skipped": False
@@ -230,27 +230,28 @@ print("Status code: ", completed_test_post.status_code)
 print(completed_test_post.json())
 print("\n" + 10 * "*" + "\n")
 
-completed_test_get = requests.get(url=base_url + "custom-completed-test",
+
 # CompletedTest GET
-completed_test_get = requests.get(url=base_url + "custom-completed-test/",
+completed_test_get = requests.get(url=base_url + "custom-completed-test",
                                     headers=headers,
-                                    params = {'number': 1}
-                                    )
+                                    params = {'number': 1})
+
 print("Status code: ", completed_test_get.status_code)
 print(completed_test_get.json())
+
 
 # CompletedTest Patch
 completed_test_patch = completed_test = {
     "answers": 
                 [{
-                        "question": 410,
+                        "question": 687,
                         "duration": "21.00",
                         "answers": "1/3",
                         "skipped": False
                 }],
     "state": "New questions answered."
 }
-completed_test_patch = requests.patch(url=base_url + "custom-completed-test/124/",
+completed_test_patch = requests.patch(url=base_url + "custom-completed-test/125",
                                     headers=headers,
                                     json=completed_test_patch
                                     )
@@ -323,7 +324,7 @@ print("\n" + 10 * "*" + "\n")
 print("\n" + 30 * "*" + " RecommendedSubtopic " + 30 * "*" + "\n")
 
 # RecommendedSubtopic GET
-recommended_subtopic_get = requests.get(url=base_url + "recommended-subtopic/",
+recommended_subtopic_get = requests.get(url=base_url + "recommended-subtopic",
                                     headers=headers,
                                     params={'number': 1}
                                     )

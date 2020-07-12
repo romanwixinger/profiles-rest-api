@@ -18,6 +18,8 @@
       <sourceFolder url="file://$MODULE_DIR$/profiles_api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/profiles_project" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/documentation" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/deploy" type="java-resource" />
+      <excludeFolder url="file://$MODULE_DIR$/.vagrant" />
     </content>
     <orderEntry type="jdk" jdkName="Pipenv (profiles-rest-api)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

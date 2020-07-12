@@ -53,7 +53,15 @@ class AnswerDeserializer(serializers.Serializer):
             args['answers'] = validated_data['answers']
         opt_args = {key: validated_data[key] for key in ['skipped', 'correct', 'comment'] if key in validated_data}
 
+        number = len(Answer.objects.filter(**args))
+        if number > 1:
+            raise LookupError
+        if number == 1:
+            Answer.objects.filter(**args).update(**args)
+            Answer.objects.filter(**args).update(**opt_args)
+
         answer = Answer.objects.get_or_create(**args, defaults=opt_args)[0]
+        
         return answer
 
 

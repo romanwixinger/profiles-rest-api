@@ -112,7 +112,7 @@ class CompletedTestPatchDeserializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         """Update an instance of a completed test"""
-
+        
         if 'state' in validated_data:
             instance.state = validated_data['state']
         if 'duration' in validated_data:
