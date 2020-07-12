@@ -35,11 +35,6 @@
     An authorization header has to be provided. The key is 'token' 
     and the value should be a string of the form "token 3e8XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX3481". 
     
-    The body should be a JSON object of the following form: <br>
-    `{"name": "Brüche addieren", "html": "<h1> Brüche addieren </h1>", "topic": 1}` <br>
-    All the fields are required but 'html' can have an empty string as value.
-    
-    
 * **Success Response:**
 
   * **Code:** 201 Created <br />

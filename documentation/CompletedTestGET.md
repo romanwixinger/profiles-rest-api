@@ -1,10 +1,14 @@
 **Retrieve completed test**
 ----
-  This is a simple for retrieving completed tests. 
+  This is a simple view for retrieving completed tests. 
   
 * **URL**
 
   custom-completed-test
+  
+  OR
+  
+  custom-completed-test/{id}
 
 * **Method:**
 
@@ -97,5 +101,3 @@
     
 * **Notes:**
 
-    This request is intended to be used with a corresponding HTTP PATCH request. However, this method is not 
-    released yet.

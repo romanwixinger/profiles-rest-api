@@ -30,6 +30,7 @@ urlpatterns = [
     path('hello-view', views.HelloApiView.as_view()),
     path('login', views.UserLoginApiView.as_view()),
     path('custom-subtopic', subtopic_api_view.CustomSubtopicView.as_view()),
+    path('recommended-subtopic/', subtopic_api_view.RecommendedSubtopicView.as_view()),
     path('custom-question', question_api_view.QuestionView.as_view()),
     path('custom-topic', topic_api_view.TopicView.as_view()),
     path('custom-answer', answer_api_view.AnswerView.as_view()),

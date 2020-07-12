@@ -1,6 +1,6 @@
-import random
-
 from profiles_api.models import UserProfile
+
+from profiles_api.topic.topic_service import TopicService
 from profiles_api.theory_page.theory_page_model import TheoryPage
 from profiles_api.subtopic.subtopic_service import SubtopicService
 
@@ -23,27 +23,14 @@ class TheoryPageService:
     def search_theory_pages(cls, query_params_dict: dict) -> [TheoryPage]:
         """Get theory pages according to query parameters stored in a dict"""
 
-        theory_page_id = query_params_dict['id'] if 'id' in query_params_dict else None
-        title = query_params_dict['title'] if 'title' in query_params_dict else None
-
         filter_dict = {}
-        if theory_page_id is not None and theory_page_id.isdigit():
-            filter_dict['id'] = int(theory_page_id)
-        if title is not None:
-            filter_dict['title'] = title
+        if 'id' in query_params_dict and query_params_dict['id'].isdigit():
+            filter_dict['id'] = int(query_params_dict['id'])
+        if 'title' in query_params_dict:
+            filter_dict['title'] = query_params_dict['title']
 
         theory_pages = list(TheoryPage.objects.filter(**filter_dict))
-
-        start = query_params_dict['start'] if 'start' in query_params_dict else None
-        number = query_params_dict['number'] if 'number' in query_params_dict else None
-        mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
-
-        if mode == 'random':
-            random.shuffle(theory_pages)
-        if start is not None:
-            theory_pages = theory_pages[min(abs(int(start)), len(theory_pages)):]
-        if number is not None:
-            theory_pages = theory_pages[:max(0, min(int(number), len(theory_pages)))]
+        theory_pages = TopicService.select_items(items=theory_pages, query_params_dict=query_params_dict)
 
         return theory_pages
 

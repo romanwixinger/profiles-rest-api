@@ -3,11 +3,11 @@ from rest_framework.response import Response
 from rest_framework import viewsets, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.db.models.query import QuerySet
 
 from profiles_api import permissions
 
 from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer, CompletedTestDeserializer
+from profiles_api.completed_test.completed_test_serializer import CompletedTestPatchDeserializer
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.completed_test.completed_test_service import CompletedTestService
 
@@ -29,10 +29,15 @@ class CompletedTestView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         """Get a completed test"""
 
         query_params_dict = self.request.query_params.dict()
+
+        pk = self.kwargs.get('pk')
+        if pk is not None:
+            query_params_dict['id'] = pk
+
         if 'user_id' in query_params_dict:
             return Response(status=status.HTTP_403_FORBIDDEN)
         query_params_dict['user_id'] = self.request.user.id
@@ -77,7 +82,6 @@ class CompletedTestView(APIView):
                 )
 
             CompletedTestService.get_recommended_subtopics(completed_test)
-
             completed_test.save()
 
             serializer = CompletedTestSerializer(completed_test)
@@ -87,4 +91,32 @@ class CompletedTestView(APIView):
             deserializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+    def patch(self, request, *args, **kwargs):
+        """Handle a partial update of a completed test and adding answers"""
+
+        pk = self.kwargs.get('pk')
+
+        deserializer = CompletedTestPatchDeserializer(data=request.data)
+        if not deserializer.is_valid():
+            return Response(
+                deserializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        validated_data = deserializer.validated_data
+        validated_data['user_id'] = self.request.user.id
+
+        completed_test = CompletedTestService.get_completed_tests([pk])
+        if len(completed_test) == 0:
+            return Response(
+                {'id': 'The completed test with this id does not exist or does not belong to this user.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        completed_test = deserializer.update(instance=completed_test,
+                                             validated_data=deserializer.validated_data)
+        completed_test.save()
+
+        return Response(status=200)
 

@@ -8,6 +8,8 @@ from profiles_api import permissions
 
 from profiles_api.theory_page.theory_page_serializer import TheoryPageSerializer, TheoryPageDeserializer
 from profiles_api.theory_page.theory_page_model import TheoryPage
+
+from profiles_api.topic.topic_service import TopicService
 from profiles_api.theory_page.theory_page_service import TheoryPageService
 
 
@@ -88,13 +90,7 @@ class RecommendedTheoryPageView(APIView):
         if len(theory_pages_list) == 0:
             Response(status=204)
 
-        start = self.request.query_params.get('start', None)
-        number = self.request.query_params.get('number', None)
-
-        if start is not None:
-            theory_pages_list = theory_pages_list[min(abs(int(start)), len(theory_pages_list)):]
-        if number is not None:
-            theory_pages_list = theory_pages_list[:max(0, min(int(number), len(theory_pages_list)))]
+        TopicService.select_items(items=theory_pages_list, query_params_dict=self.request.query_params.dict())
 
         if len(theory_pages_list) == 0:
             return Response(status=204)
