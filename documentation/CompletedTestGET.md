@@ -21,6 +21,9 @@
     Specify the id of the completed test: <br>
     `id=[integer]`
     
+    Specify the state of the completed test: <br>
+    `state=[string]`
+    
     Specify the index of the first completed tests to be retrieved: <br>
     `start=[integer]`
                   

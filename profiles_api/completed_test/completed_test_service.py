@@ -69,6 +69,9 @@ class CompletedTestService:
             if CompletedTest.objects.filter(**filter_dict).count() == 0:
                 raise LookupError
 
+        if 'state' in query_params_dict:
+            filter_dict['state'] = query_params_dict['state']
+
         completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
         completed_tests_list = TopicService.select_items(items=completed_tests_list, query_params_dict=query_params_dict)
 
