@@ -62,6 +62,22 @@ class AnswerDeserializer(serializers.Serializer):
         answer = Answer.objects.get_or_create(**args, defaults=opt_args)[0]
         return answer
 
+    def update(self, instance, validated_data):
+        """Update an answer"""
+
+        if 'answers' in validated_data:
+            instance.answers = validated_data['answers']
+        if 'duration' in validated_data:
+            instance.duration = validated_data['duration']
+        if 'correct' in validated_data:
+            instance.correct = validated_data['correct']
+        if 'skipped' in validated_data:
+            instance.skipped = validated_data['skipped']
+        if 'comment' in validated_data:
+            instance.comment = validated_data['comment']
+
+        return instance
+
 
 class AnswerPatchDeserializer(serializers.Serializer):
     """Deserializes answer patches"""

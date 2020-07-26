@@ -45,11 +45,11 @@ class CompletedTestDeserializer(serializers.Serializer):
 
         args = {key: validated_data[key] for key in ['state', 'duration', 'comment'] if key in validated_data}
 
-        completed_test = CompletedTest.objects.get_or_create(
+        completed_test = CompletedTest.objects.create(
             user_profile=user,
             test=test,
-            defaults=args
-        )[0]
+            **args
+        )
 
         if 'answers' in validated_data:
             answers_list = validated_data['answers']
@@ -63,9 +63,7 @@ class CompletedTestDeserializer(serializers.Serializer):
                 answer_validated_data['user_id'] = validated_data['user_id']
 
                 try:
-                    answer_query = completed_test.answers.filter(**{'question': answer_validated_data['question']})
-                    answer = answer_deserializer.update(answer_query[0], answer_validated_data) \
-                        if answer_query.count() > 0 else answer_deserializer.create(answer_validated_data)
+                    answer = answer_deserializer.create(answer_validated_data)
 
                 except ValueError:
                     raise ValueError("The question for this answer does not exist.")

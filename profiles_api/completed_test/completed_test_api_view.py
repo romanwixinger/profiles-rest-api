@@ -67,6 +67,7 @@ class CompletedTestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
+
             try:
                 completed_test = deserializer.create(validated_data)
             except ValueError:
