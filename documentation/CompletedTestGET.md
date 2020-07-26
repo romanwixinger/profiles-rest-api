@@ -42,6 +42,9 @@
     
 * **Success Response:**
 
+    Note that if the id of the completed-test is specified in the url, then the body of the response is a single javascript 
+    object. Otherwise, the body is empty or a list. 
+
   * **Code:** 200 OK <br />
     **Content:** 
     ```json

@@ -5,6 +5,11 @@
 * **URL**
 
   custom-answer
+  
+  OR
+  
+  custom-answer/<pk>
+  
 
 * **Method:**
 
@@ -42,10 +47,13 @@
     
 * **Success Response:**
 
+    Note that if the id of the answer is specified in the url, then the body of the response is a single javascript 
+    object. Otherwise, the body is empty or a list. 
+    
   * **Code:** 200 OK <br />
-    **Content:** `{"id": 107, "user_profile": 1, "created_on": "2020-04-16T20:24:12.371529Z", "question": 32, 
+    **Content:** `[{"id": 107, "user_profile": 1, "created_on": "2020-04-16T20:24:12.371529Z", "question": 32, 
     "duration": "12.50", "answers": "5/2", "correct": false, "skipped": false, 
-    "comment": "I am not sure about the answer."}`
+    "comment": "I am not sure about the answer."}]` 
     
  OR
  
