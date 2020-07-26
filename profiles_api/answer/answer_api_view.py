@@ -44,7 +44,10 @@ class AnswerView(APIView):
         answers = AnswerService.search_answers(query_params_dict)
 
         if len(answers) > 0:
-            serializer = AnswerSerializer(answers, many=True)
+            if pk is None:
+                serializer = AnswerSerializer(answers, many=True)
+            else:
+                serializer = AnswerSerializer(answers[0], many=False)
             return Response(data=serializer.data, status=200)
 
         return Response(status=204)
