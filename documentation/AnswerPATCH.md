@@ -1,19 +1,18 @@
-**Create answers**
+**Update answers**
 ----
-  This is a simple for creating answers. The corrected answer is send as answer. 
+  This is a simple for partially updating answers. 
   
 * **URL**
 
-  custom-answer
+  custom-answer/<pk>
 
 * **Method:**
 
-  `POST` 
+  `PATCH` 
   
 *  **URL Params**
 
     There are no query-parameters. 
-  
   
 * **Data Params**
 
@@ -24,18 +23,15 @@
     
     ```json
     {
-        "question": 1, 
         "duration": 12.5, 
         "answers": "5/2", 
+        "correct": true,
         "skipped": false, 
         "comment": "I am not sure about the answer."
     }
     ```
     
-    The field 'question' is strictly required, 'comment' and 'duration' are optional. The field 'answers' can only be 
-    left out if the field 'skipped' is set to true. The fields should not be left blank. A new answer is created if 
-    there is no other instance with the same user, question and answer. 
-    
+    All fields are optional, but must not be left blank. 
     
 * **Success Response:**
 
@@ -51,7 +47,7 @@
          "answers": "5/2", 
           "correct": false, 
          "skipped": false, 
-         "comment": "I am not sure about the answer."
+         "comment": "I am not sure about the answer.",
      }
     ```
  
@@ -73,28 +69,15 @@
     base_url = 'http://127.0.0.1:8000/api/'
     token = '3e8eXXXXXXXXXXXXXXXXXXXXXXXXXXX3481'
     headers =  {'Authorization': 'token ' + token}
-    answer =  {"question": 32, "duration": 5.5, "answers": "5/2", "skipped": False, 
-               "comment": "I am not sure about the answer."}
-    answer_post = requests.post(url=base_url + "custom-answer", 
+    answer =  {"duration": 20, "answers": "new answer"}
+    answer_patch = requests.post(url=base_url + "custom-answer/6400", 
                                 headers=headers,
                                 json=answer)
-    print(answer_post.json())
+    print(answer_patch.json())
      ``` 
      
-     This request should get a status 201 Created and print:
-     ```python
-     {
-          'id': 118,
-          'user_profile': 6, 
-          'created_on': '2020-04-16T20:54:39.944256Z', 
-          'question': 32, 
-          'duration': '5.50', 
-          'answers': '5/2', 
-          'correct': False, 
-          'skipped': False, 
-          'comment': 'I am not sure about the answer.'
-     }
-     ```
+     This request should get a status 200 OK.
+
     
 * **Notes:**
 

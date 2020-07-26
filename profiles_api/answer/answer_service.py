@@ -91,7 +91,7 @@ class AnswerService:
             raise Exception("The class method search_answers must only be used with a user_id.")
 
         filter_args = {'user_id': 'user_profile', 'question_id': 'question__id', 'topic_id': 'question__topic',
-                       'subtopic_id': 'question__subtopic', 'difficulty': 'question__difficulty'}
+                       'subtopic_id': 'question__subtopic', 'difficulty': 'question__difficulty', 'id': 'id'}
 
         filter_dict = {filter_args[key]: query_params_dict[key] for key in filter_args.keys()
                        if key in query_params_dict}
@@ -102,7 +102,7 @@ class AnswerService:
         return answer_id_list
 
     @classmethod
-    def get_answers(cls, answer_id_list: int):
+    def get_answers(cls, answer_id_list: [int]):
         """Returns a list with the requested answers"""
 
         answers = Answer.objects.filter(id__in=answer_id_list)

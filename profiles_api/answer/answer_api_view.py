@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from profiles_api import permissions
 
-from profiles_api.answer.answer_serializer import AnswerSerializer, AnswerDeserializer
+from profiles_api.answer.answer_serializer import AnswerSerializer, AnswerDeserializer, AnswerPatchDeserializer
 from profiles_api.answer.answer_model import Answer
 from profiles_api.answer.answer_service import AnswerService
 
@@ -28,13 +28,19 @@ class AnswerView(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated)
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         """Get certain answers of the user"""
 
         query_params_dict = self.request.query_params.dict()
+
+        pk = self.kwargs.get('pk')
+        if pk is not None:
+            query_params_dict['id'] = pk
+
         if 'user_id' in query_params_dict:
             return Response(status=status.HTTP_403_FORBIDDEN)
         query_params_dict['user_id'] = self.request.user.id
+
         answers = AnswerService.search_answers(query_params_dict)
 
         if len(answers) > 0:
@@ -66,3 +72,25 @@ class AnswerView(APIView):
 
         else:
             return Response(deserializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def patch(self, request, *args, **kwargs):
+        """Handle a partial update of an answer"""
+
+        deserializer = AnswerPatchDeserializer(data=request.data)
+        if not deserializer.is_valid():
+            return Response(
+                deserializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        answer = Answer.objects.filter(**{'user_profile': self.request.user.id, 'id': self.kwargs.get('pk')})
+
+        if len(answer) == 0:
+            return Response(
+                {'id': 'The answer with this id does not exist or does not belong to this user.'},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        answer = deserializer.update(instance=answer[0], validated_data=deserializer.validated_data)
+        answer.save()
+
+        return Response(status=200)
