@@ -64,7 +64,19 @@ class AnswerDeserializer(serializers.Serializer):
         
         return answer
 
+    def update(self, instance, validated_data):
+        """Update an answer"""
 
+        if 'answers' in validated_data:
+            instance.answers = validated_data['answers']
+        if 'duration' in validated_data:
+            instance.duration = validated_data['duration']
+        if 'skipped' in validated_data:
+            instance.skipped = validated_data['skipped']
+        if 'comment' in validated_data:
+            instance.comment = validated_data['comment']
+
+        return instance
 
 
 

@@ -34,21 +34,21 @@ class CompletedTestDeserializer(serializers.Serializer):
 
         user = UserProfile.objects.filter(**{'id': validated_data['user_id']})[0]
 
-        if 'test' in validated_data:
-            test_id = validated_data['test']
-            tests = TestService.search_tests(query_params_dict={'id': test_id})
+        test_id = validated_data['test']
+        tests = TestService.search_tests(query_params_dict={'id': test_id})
 
-            test = tests[0] if len(tests) > 0 else None
-            if test is None:
-                raise ValueError
+        test = tests[0] if len(tests) > 0 else None
+        if test is None:
+            raise ValueError
 
         validated_data['duration'] = 0 if 'duration' not in validated_data else 0
 
         args = {key: validated_data[key] for key in ['state', 'duration', 'comment'] if key in validated_data}
+
         completed_test = CompletedTest.objects.get_or_create(
             user_profile=user,
             test=test,
-            **args
+            defaults=args
         )[0]
 
         if 'answers' in validated_data:
@@ -63,7 +63,10 @@ class CompletedTestDeserializer(serializers.Serializer):
                 answer_validated_data['user_id'] = validated_data['user_id']
 
                 try:
-                    answer = answer_deserializer.create(answer_validated_data)
+                    answer_query = completed_test.answers.filter(**{'question': answer_validated_data['question']})
+                    answer = answer_deserializer.update(answer_query[0], answer_validated_data) \
+                        if answer_query.count() > 0 else answer_deserializer.create(answer_validated_data)
+
                 except ValueError:
                     raise ValueError("The question for this answer does not exist.")
 
@@ -132,7 +135,10 @@ class CompletedTestPatchDeserializer(serializers.Serializer):
                 answer_validated_data['user_id'] = validated_data['user_id']
 
                 try:
-                    answer = answer_deserializer.create(answer_validated_data)
+                    answer_query = instance.answers.filter(**{'question': answer_validated_data['question']})
+                    answer = answer_deserializer.update(answer_query[0], answer_validated_data) \
+                        if answer_query.count() > 0 else answer_deserializer.create(answer_validated_data)
+
                 except ValueError:
                     raise ValueError("The question for this answer does not exist.")
 
