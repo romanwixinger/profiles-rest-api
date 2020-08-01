@@ -1,10 +1,14 @@
+import datetime
+
 from profiles_api.question.question_model import Question
 from profiles_api.models import UserProfile
+from profiles_api.answer.answer_model import Answer
 
 from profiles_api.topic.topic_service import TopicService
 from profiles_api.answer.answer_service import AnswerService
 from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
 from profiles_api.subtopic.subtopic_service import SubtopicService
+
 
 
 class QuestionService:
@@ -80,6 +84,31 @@ class QuestionService:
             return question_list
 
         return question_list[:max(0, min(int(number), questions.count()))]
+
+    @classmethod
+    def update_facilities(cls, question_id_list: [int]):
+        """Update the facility of certain questions"""
+
+        for question_id in question_id_list:
+            question = Question.objects.get(pk=question_id)
+            if question.time_diff_facility() > 10*60:
+                cls.update_facility(question)
+
+    @classmethod
+    def update_facility(cls, question: Question):
+        """Update the facility of a certain question"""
+
+        correct = Answer.objects.filter(correct=True, question=question.id).count()
+        false = Answer.objects.filter(correct=False, question=question.id).count()
+
+        question.facility = correct/(correct + false) if correct + false > 0 else 0.5
+        question.difficulty_updated_on.now()
+
+        question.save()
+
+        return
+
+
 
 
 

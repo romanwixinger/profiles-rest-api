@@ -34,6 +34,9 @@ class QuestionView(APIView):
         query_params_dict = self.request.query_params.dict()
         questions = QuestionService.search_questions(query_params_dict)
 
+        question_id_list = [question.id for question in questions]
+        QuestionService.update_facilities(question_id_list)
+
         if len(questions) == 0:
             return Response(status=204)
 
