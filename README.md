@@ -58,8 +58,9 @@ response.
 * Question: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/QuestionPOST.md) and 
              [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/QuestionGET.md) questions.
  
-* Answer: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/AnswerPOST.md) and 
-           [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/AnswerGET.md) answers.
+* Answer: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/AnswerPOST.md), 
+            [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/AnswerGET.md) and 
+           [PATCH](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/AnswerPATCH.md) answers.
           
 * Test: [POST](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TestPOST.md) and 
          [GET](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/TestGET.md) tests.

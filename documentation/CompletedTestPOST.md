@@ -44,9 +44,10 @@
      }
     ```
     
-    Here 'answers' is not required, may be an empty list but must not be blank. This will be a useful feature when HTTP 
-    PATCH is released. The answers have to be given in the form specified in the POST method of Answer. The fields 
-    'state', 'duration' and 'test' are required and may not be blank. The field 'comment' is optional but may not be blank. 
+    Here 'answers' is not required, may be an empty list but must not be blank. The answers have to be given in the form 
+    specified in the POST method of Answer. The fields 'state', 'duration' and 'test' are required and may not be blank. 
+    The field 'comment' is optional but may not be blank. This request will create a completed-test even if a similar 
+    one already exist, so a user can solve the same test multiple times. 
  
     
 * **Success Response:**
@@ -149,5 +150,6 @@
     
 * **Notes:**
 
-    This request is intended to be used with a corresponding HTTP PATCH request. However, this method is not 
-    released yet.
+    This request is intended to be used with a corresponding 
+    [PATCH](https://github.com/romanwixinger/profiles-rest-api/blob/master/documentation/CompletedTestPATCH.md) 
+    request, which can be used to add answers to the completed-test and update the other fields. 

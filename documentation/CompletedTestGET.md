@@ -21,6 +21,9 @@
     Specify the id of the completed test: <br>
     `id=[integer]`
     
+    Specify the state of the completed test: <br>
+    `state=[string]`
+    
     Specify the index of the first completed tests to be retrieved: <br>
     `start=[integer]`
                   
@@ -38,6 +41,9 @@
  
     
 * **Success Response:**
+
+    Note that if the id of the completed-test is specified in the url, then the body of the response is a single javascript 
+    object. Otherwise, the body is empty or a list. 
 
   * **Code:** 200 OK <br />
     **Content:** 
