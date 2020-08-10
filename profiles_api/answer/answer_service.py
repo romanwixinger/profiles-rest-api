@@ -87,9 +87,6 @@ class AnswerService:
     def search_answers_id(cls, query_params_dict: dict) -> [int]:
         """Get the answers of a user according to query parameters stored in a dict"""
 
-        if 'user_id' not in query_params_dict or query_params_dict['user_id'] == '':
-            raise Exception("The class method search_answers must only be used with a user_id.")
-
         filter_args = {'user_id': 'user_profile', 'question_id': 'question__id', 'topic_id': 'question__topic',
                        'subtopic_id': 'question__subtopic', 'difficulty': 'question__difficulty', 'id': 'id'}
 
