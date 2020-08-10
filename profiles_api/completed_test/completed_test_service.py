@@ -58,11 +58,7 @@ class CompletedTestService:
     def search_completed_tests(cls, query_params_dict: dict) -> [CompletedTest]:
         """Get the completed tests of a user according to query parameters stored in a dict"""
 
-        user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
-        if user_id is None or user_id == '':
-            raise PermissionError
-
-        filter_dict = {'user_profile': user_id}
+        filter_dict = {'user_profile': query_params_dict['user_id']} if 'user_id' in query_params_dict else {}
 
         if 'id' in query_params_dict:
             filter_dict['id'] = query_params_dict['id']

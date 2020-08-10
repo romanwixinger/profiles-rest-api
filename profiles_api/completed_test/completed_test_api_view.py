@@ -40,7 +40,10 @@ class CompletedTestView(APIView):
 
         if 'user_id' in query_params_dict:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        query_params_dict['user_id'] = self.request.user.id
+
+        if not self.request.user.is_superuser:
+            print("Here")
+            query_params_dict['user_id'] = self.request.user.id
         try:
             completed_tests = CompletedTestService.search_completed_tests(query_params_dict)
         except LookupError:
