@@ -45,7 +45,7 @@ class CompletedTestView(APIView):
             print("Here")
             query_params_dict['user_id'] = self.request.user.id
         try:
-            completed_tests = CompletedTestService.search_completed_tests(query_params_dict)
+            completed_tests = CompletedTest.search_completed_tests(query_params_dict)
         except LookupError:
             return Response(
                 {"id": "The completed test with this id does not exist."},
