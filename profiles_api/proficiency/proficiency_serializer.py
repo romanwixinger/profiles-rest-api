@@ -4,7 +4,7 @@ from profiles_api.proficiency.proficiency_model import Proficiency
 
 
 class ProficiencySerializer(serializers.ModelSerializer):
-    """Serializes the proficiency"""
+    """Serializes the level"""
 
     class Meta:
         model = Proficiency

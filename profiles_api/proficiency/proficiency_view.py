@@ -6,6 +6,7 @@ from profiles_api import permissions
 
 from profiles_api.proficiency.proficiency_model import Proficiency
 from profiles_api.proficiency.proficiency_serializer import ProficiencySerializer
+from profiles_api.proficiency.proficiency_service import ProficiencyService
 
 
 class ProficiencyView(APIView):
@@ -16,10 +17,13 @@ class ProficiencyView(APIView):
     def get(self, request):
         """Retrieve only certain subtopics"""
 
-        #query_params_dict = self.request.query_params.dict()
-        #proficiencies = ProficiencyService.search_subtopics(query_params_dict)
+        query_params_dict = self.request.query_params.dict()
+        query_params_dict['user_profile'] = self.request.user.id
 
-        proficiencies = Proficiency.objects.all()
+        if 'update' in query_params_dict:
+            ProficiencyService.update(user_id=self.request.user.id)
+
+        proficiencies = Proficiency.search_proficiencies(query_params_dict)
 
         if len(proficiencies) > 0:
             serializer = ProficiencySerializer(proficiencies, many=True)

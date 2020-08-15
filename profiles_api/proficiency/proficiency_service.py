@@ -3,6 +3,10 @@ import scipy.special
 from scipy.stats import binom, norm
 from scipy.optimize import minimize
 
+from profiles_api.proficiency.proficiency_model import Proficiency
+from profiles_api.subtopic.subtopic_model import Subtopic
+from profiles_api.answer.answer_model import Answer
+
 from profiles_api.answer.answer_service import AnswerService
 
 
@@ -16,14 +20,14 @@ class ProficiencyService:
         level_dict = {}
 
         for subtopic_id in subtopic_id_list:
-            level = cls.proficiency(user_id=user_id, subtopic_id=subtopic_id)
+            level = cls.level(user_id=user_id, subtopic_id=subtopic_id)
             level_dict[subtopic_id] = level
 
         return level_dict
 
     @classmethod
-    def proficiency(cls, user_id: int, subtopic_id: int):
-        """Get the proficiency of a user in a specific subtopic. The knowledge level takes values between 1 to 5
+    def level(cls, user_id: int, subtopic_id: int):
+        """Get the level of a user in a specific subtopic. The knowledge level takes values between 1 to 5
         where 5 is the best level. If the user did not give any answers in this subtopic, the level is 0."""
 
         data = cls.__get_proficiency_data(user_id=user_id, subtopic_id=subtopic_id)
@@ -32,6 +36,24 @@ class ProficiencyService:
 
         level = cls.__proficiency_estimation(data)
         return level
+
+    @classmethod
+    def update(cls, user_id: int):
+        """Update the proficiencies of the user"""
+
+        subtopic_id_list = [obj['id'] for obj in list(Subtopic.objects.values('id'))]
+
+        for subtopic_id in subtopic_id_list:
+            subtopic = Subtopic.objects.get(pk=subtopic_id)
+            level = cls.level(user_id, subtopic_id)
+            number_of_answers = len(AnswerService.search_answers_id({'user_id': user_id, 'subtopic_id': subtopic_id}))
+            proficiency = Proficiency.objects.get_or_create(
+                user_profile_id=user_id,
+                subtopic=subtopic,
+                defaults={'level': level, 'number_of_answers': number_of_answers})
+            proficiency[0].level = level
+
+        return
 
     @classmethod
     def __get_proficiency_data(cls, user_id: int, subtopic_id: int) -> np.array:
