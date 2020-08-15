@@ -11,6 +11,7 @@ from profiles_api.answer import answer_api_view
 from profiles_api.test import test_api_view
 from profiles_api.completed_test import completed_test_api_view
 from profiles_api.theory_page import theory_page_api_view
+from profiles_api.proficiency import proficiency_view
 
 
 router = DefaultRouter(trailing_slash=False)
@@ -40,6 +41,7 @@ urlpatterns = [
     path('custom-completed-test', completed_test_api_view.CompletedTestView.as_view()),
     path('custom-completed-test/<int:pk>', completed_test_api_view.CompletedTestView.as_view()),
     path('custom-theory-page', theory_page_api_view.TheoryPageView.as_view()),
+    path('custom-proficiency', proficiency_view.ProficiencyView.as_view()),
     path('recommended-theory-page', theory_page_api_view.RecommendedTheoryPageView.as_view()),
     path('', include(router.urls))
 ]
