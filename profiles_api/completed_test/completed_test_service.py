@@ -1,7 +1,7 @@
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.subtopic.subtopic_model import Subtopic
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 
 
 class CompletedTestService:
@@ -69,7 +69,7 @@ class CompletedTestService:
             filter_dict['state'] = query_params_dict['state']
 
         completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
-        completed_tests_list = TopicService.select_items(items=completed_tests_list, query_params_dict=query_params_dict)
+        completed_tests_list = UtilsService.select_items(items=completed_tests_list, query_params_dict=query_params_dict)
 
         return completed_tests_list
 

@@ -5,7 +5,7 @@ from typing import List, Set
 from profiles_api.answer.answer_model import Answer
 from profiles_api.question.question_model import Question
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 
 
 class AnswerService:
@@ -94,7 +94,7 @@ class AnswerService:
                        if key in query_params_dict}
 
         answer_id_list = list(Answer.objects.filter(**filter_dict).values_list('id', flat=True))
-        answer_id_list = TopicService.select_items(items=answer_id_list, query_params_dict=query_params_dict)
+        answer_id_list = UtilsService.select_items(items=answer_id_list, query_params_dict=query_params_dict)
 
         return answer_id_list
 

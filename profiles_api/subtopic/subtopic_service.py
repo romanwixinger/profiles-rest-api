@@ -1,7 +1,7 @@
 from profiles_api.models import UserProfile
 from profiles_api.subtopic.subtopic_model import Subtopic
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 from profiles_api.answer.answer_service import AnswerService
 from profiles_api.proficiency.proficiency_service import ProficiencyService
 
@@ -44,7 +44,7 @@ class SubtopicService:
         else:
             subtopics = Subtopic.objects.all()
 
-        subtopics = TopicService.select_items(items=list(subtopics), query_params_dict=query_params_dict)
+        subtopics = UtilsService.select_items(items=list(subtopics), query_params_dict=query_params_dict)
         return subtopics
 
     @classmethod

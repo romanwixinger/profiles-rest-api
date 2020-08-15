@@ -6,7 +6,7 @@ import datetime
 
 from profiles_api.topic.topic_model import Topic
 from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 
 
 class Question(models.Model):
@@ -69,7 +69,7 @@ class Question(models.Model):
                        if key in query_params_dict}
 
         questions = list(Question.objects.filter(**filter_dict))
-        questions = TopicService.select_items(questions, query_params_dict)
+        questions = UtilsService.select_items(questions, query_params_dict)
 
         return questions
 

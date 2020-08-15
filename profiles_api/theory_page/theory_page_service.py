@@ -1,6 +1,6 @@
 from profiles_api.models import UserProfile
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 from profiles_api.theory_page.theory_page_model import TheoryPage
 from profiles_api.subtopic.subtopic_service import SubtopicService
 
@@ -30,7 +30,7 @@ class TheoryPageService:
             filter_dict['title'] = query_params_dict['title']
 
         theory_pages = list(TheoryPage.objects.filter(**filter_dict))
-        theory_pages = TopicService.select_items(items=theory_pages, query_params_dict=query_params_dict)
+        theory_pages = UtilsService.select_items(items=theory_pages, query_params_dict=query_params_dict)
 
         return theory_pages
 

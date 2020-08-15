@@ -9,7 +9,7 @@ from profiles_api import permissions
 from profiles_api.theory_page.theory_page_serializer import TheoryPageSerializer, TheoryPageDeserializer
 from profiles_api.theory_page.theory_page_model import TheoryPage
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 from profiles_api.theory_page.theory_page_service import TheoryPageService
 
 
@@ -90,7 +90,7 @@ class RecommendedTheoryPageView(APIView):
         if len(theory_pages_list) == 0:
             Response(status=204)
 
-        TopicService.select_items(items=theory_pages_list, query_params_dict=self.request.query_params.dict())
+        UtilsService.select_items(items=theory_pages_list, query_params_dict=self.request.query_params.dict())
 
         if len(theory_pages_list) == 0:
             return Response(status=204)
