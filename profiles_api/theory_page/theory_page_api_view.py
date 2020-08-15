@@ -34,7 +34,7 @@ class TheoryPageView(APIView):
         """Get certain theory pages"""
 
         query_params_dict = self.request.query_params.dict()
-        theory_pages = TheoryPageService.search_theory_pages(query_params_dict)
+        theory_pages = TheoryPage.search_theory_pages(query_params_dict)
 
         if len(theory_pages) == 0:
             return Response(status=204)
@@ -85,7 +85,7 @@ class RecommendedTheoryPageView(APIView):
         """Get recommended theory pages"""
 
         theory_page_id_list = TheoryPageService.recommended_theory_pages(request.user)
-        theory_pages_list = TheoryPageService.get_theory_pages(theory_page_id_list)
+        theory_pages_list = TheoryPage.get_theory_pages(theory_page_id_list)
 
         if len(theory_pages_list) == 0:
             Response(status=204)
