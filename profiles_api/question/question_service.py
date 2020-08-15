@@ -1,5 +1,6 @@
 from profiles_api.question.question_model import Question
 from profiles_api.models import UserProfile
+from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.answer.answer_model import Answer
 
 from profiles_api.answer.answer_service import AnswerService
@@ -13,7 +14,7 @@ class QuestionService:
     def recommended_questions(cls, user: UserProfile, number: int = 2, length: int = 10) -> [int]:
         """Get a list of recommended question ids"""
 
-        subtopic_id_list = SubtopicService.subtopic_id_list()
+        subtopic_id_list = Subtopic.subtopic_id_list()
         level_dict = ProficiencyService.proficiency_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)

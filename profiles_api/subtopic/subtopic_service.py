@@ -1,7 +1,6 @@
 from profiles_api.models import UserProfile
 from profiles_api.subtopic.subtopic_model import Subtopic
 
-from profiles_api.utils.utils_service import UtilsService
 from profiles_api.answer.answer_service import AnswerService
 from profiles_api.proficiency.proficiency_service import ProficiencyService
 
@@ -13,7 +12,7 @@ class SubtopicService:
         """Evaluates all answers of the user and recommends subtopics accordingly. The subtopics are sorted according
         to the strongness of the recommendation."""
 
-        subtopic_id_list = cls.subtopic_id_list()
+        subtopic_id_list = Subtopic.subtopic_id_list()
 
         level_dict = ProficiencyService.proficiency_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
@@ -33,29 +32,4 @@ class SubtopicService:
 
         return sorted_subtopics
 
-    @classmethod
-    def search_subtopics(cls, query_params_dict: dict) -> [Subtopic]:
-        """Get subtopics according to query parameters stored in a dict"""
 
-        if 'topic' in query_params_dict:
-            subtopics = Subtopic.objects.filter(**{'topic__name': query_params_dict['topic']})
-        elif 'topic_id' in query_params_dict:
-            subtopics = Subtopic.objects.filter(**{'topic__id': query_params_dict['topic_id']})
-        else:
-            subtopics = Subtopic.objects.all()
-
-        subtopics = UtilsService.select_items(items=list(subtopics), query_params_dict=query_params_dict)
-        return subtopics
-
-    @classmethod
-    def get_subtopics(cls, subtopic_id_list: [int]) -> [Subtopic]:
-        """Returns a list with the requested subtopics"""
-
-        subtopics = Subtopic.objects.filter(id__in=subtopic_id_list)
-        return list(subtopics)
-
-    @classmethod
-    def subtopic_id_list(cls) -> [int]:
-        """Get a list with all subtopic ids"""
-
-        return [subtopic.id for subtopic in Subtopic.objects.all()]

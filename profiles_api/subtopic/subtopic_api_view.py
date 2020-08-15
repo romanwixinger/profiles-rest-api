@@ -32,7 +32,7 @@ class CustomSubtopicView(APIView):
         """Retrieve only certain subtopics"""
 
         query_params_dict = self.request.query_params.dict()
-        subtopics = SubtopicService.search_subtopics(query_params_dict)
+        subtopics = Subtopic.search_subtopics(query_params_dict)
 
         if len(subtopics) > 0:
             serializer = SubtopicSerializer(subtopics, many=True)
@@ -67,7 +67,7 @@ class RecommendedSubtopicView(APIView):
         query_params_dict = self.request.query_params.dict()
         args = {'number': int(query_params_dict['number'])} if 'number' in query_params_dict else {}
         subtopic_id_list = SubtopicService.recommended_subtopics(user=self.request.user, **args)
-        subtopics = SubtopicService.get_subtopics(subtopic_id_list)
+        subtopics = Subtopic.get_subtopics(subtopic_id_list)
 
         if len(subtopics) > 0:
             serializer = SubtopicSerializer(subtopics, many=True)
