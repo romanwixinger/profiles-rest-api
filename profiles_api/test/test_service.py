@@ -61,7 +61,11 @@ class TestService:
 
         recommended_questions = QuestionService.recommended_questions(user=user, number=number, length=length)
 
-        test = Test.create_test(user_id=user.id, question_id_list=recommended_questions, title=title, html=html)
+        test = Test.create_test(user_id=user.id,
+                                question_id_list=recommended_questions,
+                                title=title,
+                                html=html,
+                                creation_type="personal")
         return test
 
     @classmethod

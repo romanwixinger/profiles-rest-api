@@ -17,6 +17,7 @@ class Test(models.Model):
     title = models.CharField(max_length=255)
     html = models.CharField(max_length=8191, blank=True)
     created_on = models.DateTimeField(auto_now_add=True)
+    creation_type = models.CharField(max_length=255, default='standard')
 
     def __str__(self):
         """Return the model as a string"""
@@ -40,8 +41,9 @@ class Test(models.Model):
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
         mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
+        type = query_params_dict['type'] if 'type' in query_params_dict else None
 
-        filter_dict = {}
+        filter_dict = {'type': type} if type is not None else {}
 
         if test_id is not None and ((isinstance(test_id, str) and test_id.isdigit())
                                     or isinstance(test_id, int)
@@ -76,7 +78,7 @@ class Test(models.Model):
         return list(unique_solved_tests.keys())
 
     @classmethod
-    def create_test(cls, user_id: int, question_id_list: [int], title: str, html: str = ""):
+    def create_test(cls, user_id: int, question_id_list: [int], title: str, html: str = "", creation_type: str="standard"):
         """Create a test"""
 
         filter_dict = {'id': user_id}
@@ -86,6 +88,7 @@ class Test(models.Model):
             user_profile=user,
             title=title,
             html=html,
+            creation_type=type,
         )
 
         test.save()
