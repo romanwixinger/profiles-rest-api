@@ -6,6 +6,7 @@ import datetime
 
 from profiles_api.topic.topic_model import Topic
 from profiles_api.subtopic.subtopic_model import Subtopic
+from profiles_api.topic.topic_service import TopicService
 
 
 class Question(models.Model):
@@ -57,3 +58,40 @@ class Question(models.Model):
         else:
             return 10**6
 
+    @classmethod
+    def search_questions(cls, query_params_dict: dict) -> list:
+        """Get questions according to query parameters stored in a dict"""
+
+        filter_args = {'question': 'question', 'topic': 'topic_name', 'topic_id': 'topic__id',
+                       'difficulty': 'difficulty', 'subtopic': 'subtopic__name', 'subtopic_id': 'subtopic'}
+
+        filter_dict = {filter_args[key]: query_params_dict[key] for key in filter_args.keys()
+                       if key in query_params_dict}
+
+        questions = list(Question.objects.filter(**filter_dict))
+        questions = TopicService.select_items(questions, query_params_dict)
+
+        return questions
+
+    @classmethod
+    def get_questions(cls, question_id_list: [int]) -> list:
+        """Returns a list with the requested questions"""
+
+        questions = cls.objects.filter(id__in=question_id_list)
+        question_list = list(questions)
+
+        return question_list
+
+    @classmethod
+    def questions_of_level(cls, subtopic_id: int, difficulty: int, number: int = -1) -> [int]:
+        """Get a number of question ids of a subtopic of a certain level of difficulty"""
+
+        filter_dict = {'subtopic__id': subtopic_id, 'difficulty': difficulty}
+        questions = Question.objects.filter(**filter_dict).values_list('id', flat=True)
+
+        question_list = list(questions)
+
+        if number == -1:
+            return question_list
+
+        return question_list[:max(0, min(int(number), questions.count()))]

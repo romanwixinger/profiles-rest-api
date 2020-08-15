@@ -154,7 +154,7 @@ class TestService:
 
         subtopic_frequency_dict = {}
 
-        question_list = QuestionService.get_questions(question_id_list)
+        question_list = Question.get_questions(question_id_list)
         for question in question_list:
             if question.subtopic.id in subtopic_frequency_dict:
                 subtopic_frequency_dict[question.subtopic.id] += 1
