@@ -6,35 +6,35 @@ from scipy.optimize import minimize
 from profiles_api.answer.answer_service import AnswerService
 
 
-class KnowledgeLevelService:
+class ProficiencyService:
     """Class for knowledge level estimation"""
 
     @classmethod
-    def knowledge_level_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
+    def proficiency_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
         """Get the knowledge level of a user for a list of subtopics"""
 
         level_dict = {}
 
         for subtopic_id in subtopic_id_list:
-            level = cls.knowledge_level(user_id=user_id, subtopic_id=subtopic_id)
+            level = cls.proficiency(user_id=user_id, subtopic_id=subtopic_id)
             level_dict[subtopic_id] = level
 
         return level_dict
 
     @classmethod
-    def knowledge_level(cls, user_id: int, subtopic_id: int):
-        """Get the knowledge level of a user in a specific subtopic. The knowledge level takes values between 1 to 5
+    def proficiency(cls, user_id: int, subtopic_id: int):
+        """Get the proficiency of a user in a specific subtopic. The knowledge level takes values between 1 to 5
         where 5 is the best level. If the user did not give any answers in this subtopic, the level is 0."""
 
-        data = cls.__get_knowledge_data(user_id=user_id, subtopic_id=subtopic_id)
+        data = cls.__get_proficiency_data(user_id=user_id, subtopic_id=subtopic_id)
         if data == {}:
             return 0
 
-        level = cls.__knowledge_level_estimation(data)
+        level = cls.__proficiency_estimation(data)
         return level
 
     @classmethod
-    def __get_knowledge_data(cls, user_id: int, subtopic_id: int) -> np.array:
+    def __get_proficiency_data(cls, user_id: int, subtopic_id: int) -> np.array:
         """Get the data necessary for the estimation of the knowledge level"""
 
         query_params_dict = {'user_id': user_id,
@@ -69,7 +69,7 @@ class KnowledgeLevelService:
         return data
 
     @classmethod
-    def __knowledge_level_estimation(cls, data: np.array) -> float:
+    def __proficiency_estimation(cls, data: np.array) -> float:
         """Returns the estimated knowledge level"""
 
         sigma = 1           # Standard deviation that corresponds to the Q-function

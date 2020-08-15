@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/profiles_api/completed_test/completed_test_api_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/completed_test/completed_test_api_view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/proficiency/proficiency_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/proficiency/proficiency_serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/proficiency/proficiency_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/proficiency/proficiency_view.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/question/question_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/question/question_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/subtopic/subtopic_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/subtopic/subtopic_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/user_profile_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/user_profile_service.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,54 +40,9 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_serializer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="570">
-              <caret line="71" column="31" selection-start-line="71" selection-start-column="31" selection-end-line="71" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/theory_page/theory_page_api_view.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-816">
-              <folding>
-                <element signature="e#0#40#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/theory_page/theory_page_service.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <folding>
-                <element signature="e#0#43#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/profiles_api/theory_page/theory_page_serializer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-612">
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
+            <state relative-caret-position="1632">
               <caret line="103" selection-start-line="103" selection-end-line="103" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -92,7 +54,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-95">
+            <state>
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -103,7 +65,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_serializer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
+            <state relative-caret-position="1258">
               <caret line="79" selection-start-line="79" selection-end-line="79" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
@@ -115,7 +77,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
+            <state relative-caret-position="544">
               <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="46" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
@@ -127,17 +89,44 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_service.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
+            <state relative-caret-position="129">
+              <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_model.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_serializer.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_service.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_view.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_api_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="48" column="28" lean-forward="true" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
+            <state relative-caret-position="578">
+              <caret line="45" column="63" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -194,7 +183,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/profiles_api/user_profile_service.py" />
         <option value="$PROJECT_DIR$/profiles_api/completed_test/completed_test_model.py" />
         <option value="$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_service.py" />
         <option value="$PROJECT_DIR$/profiles_api/test/test_serializer.py" />
@@ -226,7 +214,6 @@
         <option value="$PROJECT_DIR$/documentation/UserProfileGET.md" />
         <option value="$PROJECT_DIR$/documentation/UserProfilePOST.md" />
         <option value="$PROJECT_DIR$/documentation/QuestionPOST.md" />
-        <option value="$PROJECT_DIR$/profiles_api/completed_test/completed_test_service.py" />
         <option value="$PROJECT_DIR$/documentation/CompletedTestGET.md" />
         <option value="$PROJECT_DIR$/profiles_api/test/test_service.py" />
         <option value="$PROJECT_DIR$/README.md" />
@@ -245,6 +232,8 @@
         <option value="$PROJECT_DIR$/profiles_api/answer/answer_service.py" />
         <option value="$PROJECT_DIR$/profiles_api/completed_test/completed_test_serializer.py" />
         <option value="$PROJECT_DIR$/profiles_api/completed_test/completed_test_api_view.py" />
+        <option value="$PROJECT_DIR$/profiles_api/completed_test/completed_test_service.py" />
+        <option value="$PROJECT_DIR$/profiles_api/proficiency/proficiency_service.py" />
       </list>
     </option>
   </component>
@@ -264,6 +253,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -280,19 +271,7 @@
               <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
               <item name="profiles-rest-api" type="462c0819:PsiDirectoryNode" />
               <item name="profiles_api" type="462c0819:PsiDirectoryNode" />
-              <item name="answer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="profiles-rest-api" type="462c0819:PsiDirectoryNode" />
-              <item name="profiles_api" type="462c0819:PsiDirectoryNode" />
-              <item name="completed_test" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
-              <item name="profiles-rest-api" type="462c0819:PsiDirectoryNode" />
-              <item name="profiles_api" type="462c0819:PsiDirectoryNode" />
-              <item name="theory_page" type="462c0819:PsiDirectoryNode" />
+              <item name="proficiency" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="profiles-rest-api" type="b2602c69:ProjectViewProjectNode" />
@@ -302,8 +281,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -543,7 +520,8 @@
       <workItem from="1595710360282" duration="16989000" />
       <workItem from="1596286432089" duration="6895000" />
       <workItem from="1597070678212" duration="1243000" />
-      <workItem from="1597089063617" duration="5101000" />
+      <workItem from="1597089063617" duration="5409000" />
+      <workItem from="1597480966502" duration="1167000" />
     </task>
     <task id="LOCAL-00001" summary="fixed intellij setup">
       <created>1594565297024</created>
@@ -563,7 +541,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="363045000" />
+    <option name="totallyTimeSpent" value="364520000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -577,7 +555,7 @@
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25979382" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26323023" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -605,10 +583,10 @@
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="SciView" order="6" />
-      <window_info anchor="right" id="Database" order="7" sideWeight="0.43539822" visible="true" weight="0.13127148" />
+      <window_info anchor="right" id="Database" order="7" sideWeight="0.43362832" visible="true" weight="0.13127148" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
-      <window_info anchor="right" x="0" y="0" width="328" height="773" id="Documentation" order="10" sideWeight="0.5646018" side_tool="true" visible="true" weight="0.13127148" />
+      <window_info anchor="right" x="0" y="0" width="328" height="773" id="Documentation" order="10" sideWeight="0.5663717" side_tool="true" visible="true" weight="0.13127148" />
       <window_info anchor="right" id="make" order="11" />
     </layout>
     <layout-to-restore>
@@ -654,36 +632,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fixed error in HTTP PATCH method of CompletedTestView." />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/documentation/RecommendedTestGET.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="88">
-            <caret line="71" column="71" selection-start-line="71" selection-start-column="71" selection-end-line="71" selection-end-column="71" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/documentation/RecommendedTestPOST.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="71">
-            <caret line="62" column="73" lean-forward="true" selection-start-line="62" selection-start-column="73" selection-end-line="62" selection-end-column="73" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/documentation/RecommendedTheoryPageGET.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="224">
-            <caret line="67" column="86" lean-forward="true" selection-start-line="67" selection-start-column="86" selection-end-line="67" selection-end-column="86" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/documentation/SubtopicGET.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -945,9 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/knowledge_level/knowledge_level_view.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$USER_HOME$/.virtualenvs/profiles-rest-api-GjEIYgrT/Lib/site-packages/rest_framework/permissions.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -997,19 +942,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_serializer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_serializer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
+        <state relative-caret-position="1088">
           <caret line="71" column="31" selection-start-line="71" selection-start-column="31" selection-end-line="71" selection-end-column="31" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
@@ -1019,7 +954,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/theory_page/theory_page_api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-816">
+        <state>
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
@@ -1037,32 +972,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/theory_page/theory_page_serializer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-612">
+        <state>
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-95">
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_service.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="81" column="40" selection-start-line="81" selection-start-column="40" selection-end-line="81" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_service.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
+        <state relative-caret-position="1632">
           <caret line="103" selection-start-line="103" selection-end-line="103" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1070,9 +989,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_serializer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1258">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/answer/answer_api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
+        <state relative-caret-position="544">
           <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="46" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
@@ -1082,10 +1020,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_api_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="48" column="28" lean-forward="true" selection-start-line="48" selection-start-column="28" selection-end-line="48" selection-end-column="28" />
+        <state relative-caret-position="578">
+          <caret line="45" column="63" selection-start-line="45" selection-start-column="63" selection-end-line="45" selection-end-column="63" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/completed_test/completed_test_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="65" column="33" selection-start-line="65" selection-start-column="33" selection-end-line="65" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_view.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_model.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_serializer.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/profiles_api/proficiency/proficiency_service.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

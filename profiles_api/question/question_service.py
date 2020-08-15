@@ -6,7 +6,7 @@ from profiles_api.answer.answer_model import Answer
 
 from profiles_api.topic.topic_service import TopicService
 from profiles_api.answer.answer_service import AnswerService
-from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
+from profiles_api.proficiency.proficiency_service import ProficiencyService
 from profiles_api.subtopic.subtopic_service import SubtopicService
 
 
@@ -42,7 +42,7 @@ class QuestionService:
         """Get a list of recommended question ids"""
 
         subtopic_id_list = SubtopicService.subtopic_id_list()
-        level_dict = KnowledgeLevelService.knowledge_level_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
+        level_dict = ProficiencyService.proficiency_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
         sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
 

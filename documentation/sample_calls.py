@@ -257,7 +257,7 @@ completed_test_patch = completed_test = {
                 }],
     "state": "New questions answered."
 }
-completed_test_patch = requests.patch(url=base_url + "custom-completed-test/125",
+completed_test_patch = requests.patch(url=base_url + "custom-completed-test/167",
                                     headers=headers,
                                     json=completed_test_patch
                                     )

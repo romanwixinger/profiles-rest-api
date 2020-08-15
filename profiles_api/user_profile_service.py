@@ -2,7 +2,7 @@ import numpy as np
 
 from profiles_api.models import UserProfile
 from profiles_api.answer.answer_service import AnswerService
-from profiles_api.knowledge_level.knowledge_level_service import KnowledgeLevelService
+from profiles_api.proficiency.proficiency_service import ProficiencyService
 
 
 class UserProfileService:
