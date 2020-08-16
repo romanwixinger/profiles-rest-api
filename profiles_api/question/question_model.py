@@ -33,6 +33,7 @@ class Question(models.Model):
     # Percentage of correct answers
     facility = models.FloatField(blank=False, default=0.5)
     facility_updated_on = models.DateTimeField(auto_now_add=True)
+    number_of_answers = models.IntegerField(blank=False, default=0)
 
     # Difficulty estimated over facility and set difficulty
     difficulty = models.IntegerField(blank=False, default=3)
@@ -95,3 +96,17 @@ class Question(models.Model):
             return question_list
 
         return question_list[:max(0, min(int(number), questions.count()))]
+
+    @classmethod
+    def update_facility(cls, question, correct: bool):
+        """Update the facility and number of answers of a certain question"""
+
+        correct_answers = question.facility * question.number_of_answers + int(correct)
+        question.number_of_answers += 1
+
+        question.facility = correct_answers / question.number_of_answers
+        question.facility_updated_on.now()
+
+        question.save()
+
+        return

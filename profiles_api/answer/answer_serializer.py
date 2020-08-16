@@ -2,8 +2,9 @@ from rest_framework import serializers
 
 from profiles_api.answer.answer_model import Answer
 from profiles_api.question.question_model import Question
-
 from profiles_api.models import UserProfile
+
+from profiles_api.answer.answer_service import AnswerService
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -13,7 +14,9 @@ class AnswerSerializer(serializers.ModelSerializer):
         model = Answer
         fields = ('id', 'user_profile', 'created_on', 'question',
                   'duration', 'answers', 'correct', 'skipped', 'comment')
-        extra_kwargs = {'user_profile': {'read_only': True}, 'correct': {'required': False}, 'duration': {'required': False}}
+        extra_kwargs = {'user_profile': {'read_only': True},
+                        'correct': {'required': False},
+                        'duration': {'required': False}}
 
 
 class AnswerDeserializer(serializers.Serializer):
@@ -60,6 +63,11 @@ class AnswerDeserializer(serializers.Serializer):
             Answer.objects.filter(**args).update(**opt_args)
 
         answer = Answer.objects.get_or_create(**args, defaults=opt_args)[0]
+
+        AnswerService.perform_correction(answer)
+        Question.update_facility(answer.question, answer.correct)
+        answer.save()
+
         return answer
 
     def update(self, instance, validated_data):
@@ -67,6 +75,7 @@ class AnswerDeserializer(serializers.Serializer):
 
         if 'answers' in validated_data:
             instance.answers = validated_data['answers']
+            AnswerService.perform_correction(instance)
         if 'duration' in validated_data:
             instance.duration = validated_data['duration']
         if 'correct' in validated_data:
@@ -97,6 +106,7 @@ class AnswerPatchDeserializer(serializers.Serializer):
 
         if 'answers' in validated_data:
             instance.answers = validated_data['answers']
+            AnswerService.perform_correction(instance)
         if 'duration' in validated_data:
             instance.duration = validated_data['duration']
         if 'correct' in validated_data:

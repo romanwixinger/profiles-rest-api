@@ -101,6 +101,7 @@ class QuestionSerializer(serializers.ModelSerializer):
                   'set_difficulty',
                   'facility',
                   'facility_updated_on',
+                  'number_of_answers',
                   'difficulty',
                   'difficulty_updated_on', )
         extra_kwargs = {'user_profile': {'read_only': True}, 'appendix': {'required': False}}

@@ -87,7 +87,7 @@ class CompletedTestSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompletedTest
         fields = ('id', 'user_profile', 'answers', 'state', 'created_on',
-                  'updated_on', 'duration', 'comment', 'recommendedSubtopics', 'test')
+                  'updated_on', 'duration', 'comment', 'test')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
@@ -143,7 +143,6 @@ class CompletedTestPatchDeserializer(serializers.Serializer):
                 if answer is None:
                     return None
 
-                AnswerService.perform_correction(answer)
                 answer.save()
 
                 instance.answers.add(answer)

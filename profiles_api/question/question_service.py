@@ -44,28 +44,20 @@ class QuestionService:
         return recommended_questions
 
     @classmethod
-    def update_facilities(cls, question_id_list: [int]):
-        """Update the facility of certain questions"""
+    def update_facilities(cls):
+        """Update the facility and number of answers of all questions manually"""
 
-        for question_id in question_id_list:
-            question = Question.objects.get(pk=question_id)
-            if question.time_diff_facility() > 10*60:
-                cls.update_facility(question)
+        for question in Question.objects.all():
+            correct = Answer.objects.filter(question=question, correct=True).count()
+            incorrect = Answer.objects.filter(question=question, correct=False).count()
 
-    @classmethod
-    def update_facility(cls, question: Question):
-        """Update the facility of a certain question"""
+            question.number_of_answers = correct + incorrect
+            question.facility = correct / question.number_of_answers if question.number_of_answers > 0 else 0.5
 
-        correct = Answer.objects.filter(correct=True, question=question.id).count()
-        false = Answer.objects.filter(correct=False, question=question.id).count()
-
-        question.facility = correct/(correct + false) if correct + false > 0 else 0.5
-        question.difficulty_updated_on.now()
-
-        question.save()
+            question.facility_updated_on.now()
+            question.save()
 
         return
-
 
 
 

@@ -9,7 +9,6 @@ from profiles_api import permissions
 from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer, CompletedTestDeserializer
 from profiles_api.completed_test.completed_test_serializer import CompletedTestPatchDeserializer
 from profiles_api.completed_test.completed_test_model import CompletedTest
-from profiles_api.completed_test.completed_test_service import CompletedTestService
 
 
 class CompletedTestViewSet(viewsets.ModelViewSet):
@@ -88,7 +87,6 @@ class CompletedTestView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
-            CompletedTestService.get_recommended_subtopics(completed_test)
             completed_test.save()
 
             serializer = CompletedTestSerializer(completed_test)

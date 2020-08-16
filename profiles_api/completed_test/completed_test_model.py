@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 
 from profiles_api.answer.answer_model import Answer
-from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.test.test_model import Test
 
 from profiles_api.utils.utils_service import UtilsService
@@ -20,7 +19,6 @@ class CompletedTest(models.Model):
     updated_on = models.DateTimeField(auto_now_add=True)
     duration = models.DecimalField(max_digits=8, decimal_places=2, blank=True)  # in seconds
     comment = models.CharField(max_length=1024, blank=True)
-    recommendedSubtopics = models.ManyToManyField(Subtopic, blank=True)
     test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=True)
 
     def __str__(self):
