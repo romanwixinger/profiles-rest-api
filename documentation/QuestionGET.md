@@ -40,6 +40,9 @@
     
     Set the parameter to 'random' to shuffle the questions randomly. <br> 
     `mode = [string]`
+    
+    Use the parameter 'update' to force an update the facilities of all questions.
+    `update`
 
 * **Data Params**
 
