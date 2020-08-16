@@ -43,7 +43,7 @@ class AnswerView(APIView):
         if not self.request.user.is_superuser:
             query_params_dict['user_id'] = self.request.user.id
 
-        answers = AnswerService.search_answers(query_params_dict)
+        answers = Answer.search_answers(query_params_dict)
 
         if len(answers) > 0:
             if pk is None:

@@ -1,7 +1,7 @@
 from profiles_api.models import UserProfile
 from profiles_api.subtopic.subtopic_model import Subtopic
 
-from profiles_api.answer.answer_service import AnswerService
+from profiles_api.answer.answer_model import Answer
 from profiles_api.proficiency.proficiency_service import ProficiencyService
 
 
@@ -15,7 +15,7 @@ class SubtopicService:
         subtopic_id_list = Subtopic.subtopic_id_list()
 
         level_dict = ProficiencyService.proficiency_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
-        number_dict = AnswerService.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
+        number_dict = Answer.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
 
         sorted_subtopics = cls.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
         return sorted_subtopics[:number]

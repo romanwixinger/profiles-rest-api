@@ -114,7 +114,7 @@ class CompletedTestView(APIView):
         validated_data = deserializer.validated_data
         validated_data['user_id'] = self.request.user.id
 
-        completed_test = CompletedTestService.get_completed_tests([pk])
+        completed_test = CompletedTest.get_completed_tests([pk])
         if len(completed_test) == 0:
             return Response(
                 {'id': 'The completed test with this id does not exist or does not belong to this user.'},

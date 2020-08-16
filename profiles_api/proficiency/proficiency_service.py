@@ -46,7 +46,7 @@ class ProficiencyService:
         for subtopic_id in subtopic_id_list:
             subtopic = Subtopic.objects.get(pk=subtopic_id)
             level = cls.level(user_id, subtopic_id)
-            number_of_answers = len(AnswerService.search_answers_id({'user_id': user_id, 'subtopic_id': subtopic_id}))
+            number_of_answers = len(Answer.search_answers_id({'user_id': user_id, 'subtopic_id': subtopic_id}))
             proficiency = Proficiency.objects.get_or_create(
                 user_profile_id=user_id,
                 subtopic=subtopic,
@@ -61,7 +61,7 @@ class ProficiencyService:
 
         query_params_dict = {'user_id': user_id,
                              'subtopic_id': subtopic_id}
-        answers = AnswerService.search_answers(query_params_dict)
+        answers = Answer.search_answers(query_params_dict)
 
         # Gather necessary information about the answers
         question_id_list = [answer.question.id for answer in answers]
