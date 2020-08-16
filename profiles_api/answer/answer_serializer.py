@@ -66,6 +66,7 @@ class AnswerDeserializer(serializers.Serializer):
 
         AnswerService.perform_correction(answer)
         Question.update_facility(answer.question, answer.correct)
+        Question.update_difficulty(answer.question.subtopic)
         answer.save()
 
         return answer

@@ -15,6 +15,8 @@ class Subtopic(models.Model):
     name = models.CharField(max_length=255, blank=False)
     html = models.CharField(max_length=8191, blank=True)
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE, blank=False)
+    # Number of new answers since the difficulty was last updated
+    answers_since_update = models.IntegerField(blank=False, default=0)
 
     def __str__(self):
         """Return the model as a string"""

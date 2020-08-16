@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils.timezone import utc
 
 import datetime
+import numpy as np
 
 from profiles_api.topic.topic_model import Topic
 from profiles_api.subtopic.subtopic_model import Subtopic
@@ -108,5 +109,36 @@ class Question(models.Model):
         question.facility_updated_on.now()
 
         question.save()
+
+        return
+
+    @classmethod
+    def update_difficulty(cls, subtopic: Subtopic, new_answer: bool=True, force_update: bool=False):
+        """Update the difficulties of all question of a certain subtopic"""
+
+        subtopic.answers_since_update += int(new_answer)
+        subtopic.save()
+        if subtopic.answers_since_update < 20 and not force_update:
+            return
+        else:
+            subtopic.answers_since_update = 0
+            subtopic.save()
+
+        questions = np.array(list(Question.objects.filter(subtopic=subtopic)))
+        facilities = np.array([question.facility for question in questions])
+        set_difficulties = np.array([question.set_difficulty for question in questions])
+
+        # Separate calculation
+        fac_difficulty = 6 - 5*facilities
+        difficulties = 0.7 * set_difficulties + 0.3 * fac_difficulty
+
+        # Normalisation of difficulties so that std = 1 and mean = 3
+        difficulties = (difficulties + 3 - np.mean(difficulties)) / np.std(difficulties) if np.std(difficulties) > 0 else difficulties
+
+        # Norm to integers
+        for i, question in enumerate(questions):
+            question.difficulty = max(1, min(difficulties[i] + 0.5, 5))
+            question.difficulty_updated_on.now()
+            question.save()
 
         return
