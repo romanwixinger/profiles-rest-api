@@ -21,7 +21,7 @@ class ProficiencyView(APIView):
         query_params_dict['user_profile'] = self.request.user.id
 
         if 'update' in query_params_dict:
-            ProficiencyService.update(user_id=self.request.user.id)
+            ProficiencyService.update_proficiencies(user_id=self.request.user.id)
 
         proficiencies = Proficiency.search_proficiencies(query_params_dict)
 

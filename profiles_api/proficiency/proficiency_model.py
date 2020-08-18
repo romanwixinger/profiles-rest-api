@@ -15,7 +15,7 @@ class Proficiency(models.Model):
     )
     subtopic = models.ForeignKey(Subtopic, on_delete=models.CASCADE, blank=False)
     level = models.IntegerField(blank=False, default=1)
-    number_of_answers = models.IntegerField(blank=False, default=0)
+    answers_since_update = models.IntegerField(blank=False, default=0)
     updated_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -49,3 +49,29 @@ class Proficiency(models.Model):
             difficulty_list.append(question.difficulty)
 
         return difficulty_list
+
+    @classmethod
+    def proficiency_level(cls, user_id: int, subtopic_id: int):
+        """Get the level of a user in a specific subtopic. The knowledge level takes values between 1 to 5
+        where 5 is the best level. If the user did not give any answers in this subtopic, the level is 0."""
+
+        proficiencies = Proficiency.search_proficiencies(query_params_dict={'user_profile': user_id,
+                                                                            'subtopic_id': subtopic_id})
+        if len(proficiencies) == 1:
+            return proficiencies[0].level
+        else:
+            return 0
+
+    @classmethod
+    def proficiency_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
+        """Get the knowledge level of a user for a list of subtopics"""
+
+        level_dict = {}
+
+        for subtopic_id in subtopic_id_list:
+            level_dict[subtopic_id] = Proficiency.proficiency_level(user_id=user_id, subtopic_id=subtopic_id)
+
+        return level_dict
+
+
+
