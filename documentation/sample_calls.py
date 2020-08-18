@@ -173,7 +173,7 @@ print("\n" + 10 * "*" + "\n")
 
 # Answer PATCH
 answer = {"duration": 20, "answers": "new answer"}
-answer_patch = requests.patch(url=base_url + "custom-answer/6490",
+answer_patch = requests.patch(url=base_url + "custom-answer/7352",
                             headers=headers,
                             json=answer)
 print("Status code: ", answer_patch.status_code)

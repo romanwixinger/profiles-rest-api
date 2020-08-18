@@ -2,7 +2,6 @@ import re
 from typing import List, Set
 
 from profiles_api.answer.answer_model import Answer
-from profiles_api.question.question_model import Question
 
 
 class AnswerService:

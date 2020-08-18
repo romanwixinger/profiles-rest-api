@@ -19,7 +19,7 @@ class ProficiencyService:
         proficiency = Proficiency.objects.get_or_create(
             user_profile_id=user_id,
             subtopic=subtopic,
-            defaults={'level': 0, 'answers_since_update': 0})
+            defaults={'level': 0, 'answers_since_update': 0})[0]
 
         proficiency.answers_since_update += 1
 
@@ -28,6 +28,8 @@ class ProficiencyService:
             level = cls.__proficiency_estimation(data) if data != {} else 0
             proficiency.level = level
             proficiency.answers_since_update = 0
+
+        proficiency.save()
 
         return
 

@@ -68,7 +68,7 @@ class AnswerDeserializer(serializers.Serializer):
         AnswerService.perform_correction(answer)
         Question.update_facility(answer.question, answer.correct)
         Question.update_difficulty(answer.question.subtopic)
-        # ProficiencyService.update_proficiency(answer.question.subtopic)
+        ProficiencyService.update_proficiency(user_id=user.id, subtopic_id=answer.question.subtopic.id)
         answer.save()
 
         return answer
@@ -79,6 +79,8 @@ class AnswerDeserializer(serializers.Serializer):
         if 'answers' in validated_data:
             instance.answers = validated_data['answers']
             AnswerService.perform_correction(instance)
+            ProficiencyService.update_proficiency(user_id=instance.user_profile.id,
+                                                  subtopic_id=instance.question.subtopic.id)
         if 'duration' in validated_data:
             instance.duration = validated_data['duration']
         if 'correct' in validated_data:
@@ -110,6 +112,8 @@ class AnswerPatchDeserializer(serializers.Serializer):
         if 'answers' in validated_data:
             instance.answers = validated_data['answers']
             AnswerService.perform_correction(instance)
+            ProficiencyService.update_proficiency(user_id=instance.user_profile.id,
+                                                  subtopic_id=instance.question.subtopic.id)
         if 'duration' in validated_data:
             instance.duration = validated_data['duration']
         if 'correct' in validated_data:
