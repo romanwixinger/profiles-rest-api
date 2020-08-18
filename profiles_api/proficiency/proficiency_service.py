@@ -7,8 +7,6 @@ from profiles_api.proficiency.proficiency_model import Proficiency
 from profiles_api.subtopic.subtopic_model import Subtopic
 from profiles_api.answer.answer_model import Answer
 
-from profiles_api.answer.answer_service import AnswerService
-
 
 class ProficiencyService:
     """Class for knowledge level estimation"""
@@ -69,7 +67,7 @@ class ProficiencyService:
             empty_dict = {}
             return empty_dict
 
-        difficulty_list = AnswerService.difficulty_list(question_id_list=question_id_list)
+        difficulty_list = Proficiency.difficulty_list(question_id_list=question_id_list)
         correctness_list = [answer.correct for answer in answers]
 
         # Initialise data dict

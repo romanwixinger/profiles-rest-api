@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 from profiles_api.subtopic.subtopic_model import Subtopic
+from profiles_api.question.question_model import Question
 
 from profiles_api.utils.utils_service import UtilsService
 
@@ -32,7 +33,19 @@ class Proficiency(models.Model):
         if 'subtopic_id' in query_params_dict:
             query_dict['subtopic'] = query_params_dict['subtopic_id']
 
-        subtopics = cls.objects.filter(**query_dict)
-        subtopics = UtilsService.select_items(items=list(subtopics), query_params_dict=query_params_dict)
+        proficiencies = cls.objects.filter(**query_dict)
+        proficiencies = UtilsService.select_items(items=list(proficiencies), query_params_dict=query_params_dict)
 
-        return subtopics
+        return proficiencies
+
+    @classmethod
+    def difficulty_list(cls, question_id_list: [int]) -> [int]:
+        """Takes a list of question ids and return a list of their difficulties"""
+
+        difficulty_list = []
+
+        for question_id in question_id_list:
+            question = Question.objects.get(pk=question_id)
+            difficulty_list.append(question.difficulty)
+
+        return difficulty_list

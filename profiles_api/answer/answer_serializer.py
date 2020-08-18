@@ -5,6 +5,7 @@ from profiles_api.question.question_model import Question
 from profiles_api.models import UserProfile
 
 from profiles_api.answer.answer_service import AnswerService
+from profiles_api.proficiency.proficiency_service import ProficiencyService
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -67,6 +68,7 @@ class AnswerDeserializer(serializers.Serializer):
         AnswerService.perform_correction(answer)
         Question.update_facility(answer.question, answer.correct)
         Question.update_difficulty(answer.question.subtopic)
+        # ProficiencyService.update_proficiency(answer.question.subtopic)
         answer.save()
 
         return answer
