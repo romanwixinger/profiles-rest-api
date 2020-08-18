@@ -15,8 +15,11 @@ class QuestionService:
 
         subtopic_id_list = Subtopic.subtopic_id_list()
         level_dict = Proficiency.proficiency_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
-        number_dict = Answer.number_of_answers_list(user_id=user.id, subtopic_id_list=subtopic_id_list)
-        sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict, number_dict=number_dict)
+        answer_number_dict = Answer.number_of_answers_dict(user_id=user.id, subtopic_id_list=subtopic_id_list)
+        question_number_dict = Question.number_of_questions_dict(subtopic_id_list=subtopic_id_list)
+        sorted_subtopics = SubtopicService.sorted_subtopics(level_dict=level_dict,
+                                                            answer_number_dict=answer_number_dict,
+                                                            question_number_dict=question_number_dict)
 
         subtopics = sorted_subtopics[:number]
         recommended_questions = []

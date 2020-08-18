@@ -77,7 +77,7 @@ class Answer(models.Model):
         return Answer.objects.filter(**filter_dict).count()
 
     @classmethod
-    def number_of_answers_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
+    def number_of_answers_dict(cls, user_id: int, subtopic_id_list: [int]) -> dict:
         """Get the number of answers of a user to questions of a certain subtopic"""
 
         number_dict = {}

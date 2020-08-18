@@ -99,6 +99,18 @@ class Question(models.Model):
         return question_list[:max(0, min(int(number), questions.count()))]
 
     @classmethod
+    def number_of_questions_dict(cls, subtopic_id_list: [int]) -> dict:
+        """Get the number of answers of a user to questions of a certain subtopic"""
+
+        number_dict = {}
+
+        for subtopic_id in subtopic_id_list:
+            number_of_questions = cls.objects.filter(**{'subtopic': subtopic_id}).count()
+            number_dict[subtopic_id] = number_of_questions
+
+        return number_dict
+
+    @classmethod
     def update_facility(cls, question, correct: bool):
         """Update the facility and number of answers of a certain question"""
 
