@@ -20,7 +20,7 @@ class Proficiency(models.Model):
 
     def __str__(self):
         """Return the model as a string"""
-        return "The level of " + self.user_profile.name + " in " + self.subtopic.name + " is " + self.level + "."
+        return "The level of " + self.user_profile.name + " in " + self.subtopic.name + " is " + str(self.level) + "."
 
     @classmethod
     def search_proficiencies(cls, query_params_dict: dict) -> []:

@@ -8,5 +8,5 @@ class ProficiencySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proficiency
-        fields = ('id', 'user_profile', 'subtopic', 'level', 'updated_on')
+        fields = ('id', 'user_profile', 'subtopic', 'level', 'updated_on', 'answers_since_update')
         extra_kwargs = {'user_profile': {'read_only': True}}

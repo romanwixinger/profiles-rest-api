@@ -12,18 +12,19 @@ class ProficiencyService:
     """Class for knowledge level estimation"""
 
     @classmethod
-    def update_proficiency(cls, user_id: int, subtopic_id: int):
+    def update_proficiency(cls, user_id: int, subtopic_id: int, new_answer: bool):
         """Update the proficiency of the user in a subtopic after an answer was given in this subtopic."""
 
         subtopic = Subtopic.objects.get(pk=subtopic_id)
-        proficiency = Proficiency.objects.get_or_create(
+        proficiency, created = Proficiency.objects.get_or_create(
             user_profile_id=user_id,
             subtopic=subtopic,
-            defaults={'level': 0, 'answers_since_update': 0})[0]
+            defaults={'level': 0, 'answers_since_update': 0})
 
-        proficiency.answers_since_update += 1
+        if new_answer:
+            proficiency.answers_since_update += 1
 
-        if proficiency.answers_since_update >= 4:
+        if proficiency.answers_since_update >= 1 or created:
             data = cls.__get_proficiency_data(user_id=user_id, subtopic_id=subtopic_id)
             level = cls.__proficiency_estimation(data) if data != {} else 0
             proficiency.level = level
@@ -39,7 +40,7 @@ class ProficiencyService:
 
         subtopic_id_list = [obj['id'] for obj in list(Subtopic.objects.values('id'))]
         for subtopic_id in subtopic_id_list:
-            cls.update_proficiency(user_id=user_id, subtopic_id=subtopic_id)
+            cls.update_proficiency(user_id=user_id, subtopic_id=subtopic_id, new_answer=False)
 
         return
 
@@ -71,6 +72,8 @@ class ProficiencyService:
                 data[difficulty]['correct'] += 1
             else:
                 data[difficulty]['incorrect'] += 1
+
+        print(data)
 
         return data
 
