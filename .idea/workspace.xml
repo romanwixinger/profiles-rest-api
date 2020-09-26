@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentation/TheoryPageGET.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/TheoryPageGET.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/documentation/TheoryPagePOST.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/TheoryPagePOST.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_api_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_api_view.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_serializer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/theory_page/theory_page_service.py" afterDir="false" />
-    </list>
+    <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -306,7 +298,7 @@
       <workItem from="1600616681391" duration="1782000" />
       <workItem from="1600618603238" duration="1198000" />
       <workItem from="1601112122776" duration="952000" />
-      <workItem from="1601119764256" duration="1530000" />
+      <workItem from="1601119764256" duration="1874000" />
     </task>
     <task id="LOCAL-00001" summary="fixed intellij setup">
       <created>1594565297024</created>
@@ -351,22 +343,22 @@
       <screen x="0" y="0" width="1500" height="960" />
     </state>
     <state x="532" y="248" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1600619506184" />
-    <state width="1458" height="255" key="GridCell.Tab.0.bottom" timestamp="1601121500037">
+    <state width="1458" height="255" key="GridCell.Tab.0.bottom" timestamp="1601121584074">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1601121500037" />
-    <state width="1458" height="255" key="GridCell.Tab.0.center" timestamp="1601121500037">
+    <state width="1458" height="255" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
+    <state width="1458" height="255" key="GridCell.Tab.0.center" timestamp="1601121584074">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1601121500037" />
-    <state width="1458" height="255" key="GridCell.Tab.0.left" timestamp="1601121500037">
+    <state width="1458" height="255" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
+    <state width="1458" height="255" key="GridCell.Tab.0.left" timestamp="1601121584074">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1601121500037" />
-    <state width="1458" height="255" key="GridCell.Tab.0.right" timestamp="1601121500037">
+    <state width="1458" height="255" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
+    <state width="1458" height="255" key="GridCell.Tab.0.right" timestamp="1601121584074">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1601121500037" />
+    <state width="1458" height="255" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
     <state x="252" y="111" key="SettingsEditor" timestamp="1600619599625">
       <screen x="0" y="0" width="1500" height="960" />
     </state>

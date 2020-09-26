@@ -20,6 +20,9 @@
     Specify the title of the theory page: <br>
     `title=[string]`
     
+    Specify the subtopic_id of the theory page: <br>
+    `subtopic_id=[int]`
+    
     Set the parameter to 'random' to shuffle the theory pages randomly. Otherwise, the theory pages are 
     ordered by their id. <br> 
     `mode = [string]`

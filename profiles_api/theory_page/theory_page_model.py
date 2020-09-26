@@ -34,6 +34,9 @@ class TheoryPage(models.Model):
         if 'title' in query_params_dict:
             filter_dict['title'] = query_params_dict['title']
 
+        if 'subtopic_id' in query_params_dict:
+            filter_dict['subtopic'] = query_params_dict['subtopic_id']
+
         theory_pages = list(cls.objects.filter(**filter_dict))
         theory_pages = UtilsService.select_items(items=theory_pages, query_params_dict=query_params_dict)
 
