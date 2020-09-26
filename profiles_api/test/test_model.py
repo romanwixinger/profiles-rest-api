@@ -41,9 +41,9 @@ class Test(models.Model):
         start = query_params_dict['start'] if 'start' in query_params_dict else None
         number = query_params_dict['number'] if 'number' in query_params_dict else None
         mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
-        type = query_params_dict['type'] if 'type' in query_params_dict else None
+        creation_type = query_params_dict['creation_type'] if 'creation_type' in query_params_dict else None
 
-        filter_dict = {'type': type} if type is not None else {}
+        filter_dict = {'creation_type': creation_type} if creation_type is not None else {}
 
         if test_id is not None and ((isinstance(test_id, str) and test_id.isdigit())
                                     or isinstance(test_id, int)
@@ -88,7 +88,7 @@ class Test(models.Model):
             user_profile=user,
             title=title,
             html=html,
-            creation_type=type,
+            creation_type=creation_type,
         )
 
         test.save()

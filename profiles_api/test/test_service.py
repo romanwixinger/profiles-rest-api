@@ -65,7 +65,7 @@ class TestService:
                                 question_id_list=recommended_questions,
                                 title=title,
                                 html=html,
-                                creation_type="personal")
+                                creation_type='personal')
         return test
 
     @classmethod

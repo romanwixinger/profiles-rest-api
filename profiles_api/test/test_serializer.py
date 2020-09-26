@@ -36,7 +36,7 @@ class TestDeserializer(serializers.Serializer):
                                 question_id_list=question_id_list,
                                 title=title,
                                 html=html,
-                                creation_type="standard")
+                                creation_type='standard')
         return test
 
 

@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="" />
+    <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation/TestGET.md" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/TestGET.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/test/test_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/test/test_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/test/test_serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/test/test_serializer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/test/test_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/test/test_service.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,6 +94,17 @@
     </key>
   </component>
   <component name="RunManager" selected="Django Server.profiles-rest-api">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="profiles-rest-api" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -298,7 +315,7 @@
       <workItem from="1600616681391" duration="1782000" />
       <workItem from="1600618603238" duration="1198000" />
       <workItem from="1601112122776" duration="952000" />
-      <workItem from="1601119764256" duration="1874000" />
+      <workItem from="1601119764256" duration="3238000" />
     </task>
     <task id="LOCAL-00001" summary="fixed intellij setup">
       <created>1594565297024</created>
@@ -343,22 +360,22 @@
       <screen x="0" y="0" width="1500" height="960" />
     </state>
     <state x="532" y="248" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1600619506184" />
-    <state width="1458" height="255" key="GridCell.Tab.0.bottom" timestamp="1601121584074">
+    <state width="1458" height="255" key="GridCell.Tab.0.bottom" timestamp="1601123257456">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
-    <state width="1458" height="255" key="GridCell.Tab.0.center" timestamp="1601121584074">
+    <state width="1458" height="255" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1601123257456" />
+    <state width="1458" height="255" key="GridCell.Tab.0.center" timestamp="1601123257455">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
-    <state width="1458" height="255" key="GridCell.Tab.0.left" timestamp="1601121584074">
+    <state width="1458" height="255" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1601123257455" />
+    <state width="1458" height="255" key="GridCell.Tab.0.left" timestamp="1601123257455">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
-    <state width="1458" height="255" key="GridCell.Tab.0.right" timestamp="1601121584074">
+    <state width="1458" height="255" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1601123257455" />
+    <state width="1458" height="255" key="GridCell.Tab.0.right" timestamp="1601123257455">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="255" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1601121584074" />
+    <state width="1458" height="255" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1601123257455" />
     <state x="252" y="111" key="SettingsEditor" timestamp="1600619599625">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
