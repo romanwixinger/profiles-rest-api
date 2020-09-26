@@ -3,7 +3,6 @@ from django.conf import settings
 
 from profiles_api.topic.topic_model import Topic
 from profiles_api.subtopic.subtopic_model import Subtopic
-from profiles_api.test.test_model import Test
 
 from profiles_api.utils.utils_service import UtilsService
 
@@ -20,7 +19,6 @@ class TheoryPage(models.Model):
     subtopic = models.ForeignKey(Subtopic, on_delete=models.CASCADE, blank=True)
     title = models.CharField(max_length=255)
     html = models.CharField(max_length=8191, blank=True)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, blank=True)
 
     def __str__(self):
         """Return the model as a string"""

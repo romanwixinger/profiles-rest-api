@@ -15,7 +15,7 @@ class TheoryPageService:
             return []
 
         recommended_theory_pages = TheoryPage.search_theory_pages_with_subtopic(subtopic_id_list=recommended_subtopics,
-                                                                         number=number)
+                                                                                number=number)
         return recommended_theory_pages
 
 

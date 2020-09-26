@@ -43,8 +43,7 @@
         "topic": 15,
         "subtopic": 24,
         "title": "Folgen",
-        "html": "<h1> Folgen </h1>",
-        "test": 10
+        "html": "<h1> Folgen </h1>"
     }
     ```
     
@@ -79,15 +78,14 @@
           'topic': 14, 
           'subtopic': 24, 
           'title': 'Folgen und ihre Folgen', 
-          'html': '<h1> Folgen </h1>', 'test': 11}, 
+          'html': '<h1> Folgen </h1>'}, 
           {'id': 5, 
           'user_profile': 1, 
           'created_on': '2020-04-17T22:07:48.453170Z', 
           'updated_on': '2020-04-17T22:07:48.453170Z', 
           'topic': 14, 'subtopic': 24, 
           'title': 'Folgen', 
-          'html': '<h1> Folgen </h1>', 
-          'test': 11}
+          'html': '<h1> Folgen </h1>'}
    ]
    ```
     

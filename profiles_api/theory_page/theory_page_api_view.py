@@ -57,7 +57,7 @@ class TheoryPageView(APIView):
                 theory_page = deserializer.create(validated_data)
             except ValueError:
                 return Response(
-                    data={"topic_id": "The given topic, subtopic or test does not exist."},
+                    data={"topic_id": "The given subtopic does not exist."},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 

@@ -26,7 +26,6 @@
         "subtopic_id": 24,
         "title": "Folgen",
         "html": "<h1> Folgen </h1>",
-        "test_id": 11
     }
     ```
     
@@ -42,8 +41,7 @@
     ```
     
     At least one of the fields 'subtopic' or 'subtopic_id' has to be filled. Note that 'subtopic' will set the subtopic 
-    to the first subtopic that has the given name. The same goes for the fields 'test' and 'test_id'. The field 'title' 
-    is required and may not be blank. The field 'html' is not required but may not be left blank too. 
+    to the first subtopic that has the given name. The field 'title' is required and may not be blank. The field 'html' is not required but may not be left blank too. 
    
     
     
@@ -60,8 +58,7 @@
         "topic": 15,
         "subtopic": 24,
         "title": "Folgen",
-        "html": "<h1> Folgen </h1>",
-        "test": 10
+        "html": "<h1> Folgen </h1>"
     }
     ```
  
@@ -92,8 +89,7 @@
     theory_page = {
         "subtopic": "Folgen",
         "title": "Folgen",
-        "html": "<h1> Folgen </h1>",
-        "test": "Brüche subtrahieren"
+        "html": "<h1> Folgen </h1>"
     }
     theory_page_post = requests.post(url=base_url + "custom-theory-page", 
                                  headers=headers,
@@ -110,8 +106,7 @@
        'updated_on': '2020-04-17T22:47:38.025198Z', 
        'topic': 15, 'subtopic': 24, 'title': 
        'Folgen', 
-       'html': '<h1> Folgen </h1>', 
-       'test': 10
+       'html': '<h1> Folgen </h1>'
     }     
     ```
     
