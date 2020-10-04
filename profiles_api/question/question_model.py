@@ -65,7 +65,8 @@ class Question(models.Model):
         """Get questions according to query parameters stored in a dict"""
 
         filter_args = {'question': 'question', 'topic': 'topic_name', 'topic_id': 'topic__id',
-                       'difficulty': 'difficulty', 'subtopic': 'subtopic__name', 'subtopic_id': 'subtopic'}
+                       'difficulty': 'difficulty', 'subtopic': 'subtopic__name', 'subtopic_id': 'subtopic',
+                       'dependency_id': 'dependencies'}
 
         filter_dict = {filter_args[key]: query_params_dict[key] for key in filter_args.keys()
                        if key in query_params_dict}

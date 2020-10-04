@@ -40,7 +40,8 @@ class Answer(models.Model):
         """Get the answers of a user according to query parameters stored in a dict"""
 
         filter_args = {'user_id': 'user_profile', 'question_id': 'question__id', 'topic_id': 'question__topic',
-                       'subtopic_id': 'question__subtopic', 'difficulty': 'question__difficulty', 'id': 'id'}
+                       'subtopic_id': 'question__subtopic', 'difficulty': 'question__difficulty', 'id': 'id',
+                       'dependency_id': 'question__dependencies'}
 
         filter_dict = {filter_args[key]: query_params_dict[key] for key in filter_args.keys()
                        if key in query_params_dict}
