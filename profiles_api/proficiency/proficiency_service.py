@@ -12,7 +12,7 @@ class ProficiencyService:
     """Class for knowledge level estimation"""
 
     @classmethod
-    def update_proficiency(cls, user_id: int, subtopic_id: int, new_answer: bool):
+    def update_proficiency(cls, user_id: int, subtopic_id: int, new_answer: bool, force_update: bool=False):
         """Update the proficiency of the user in a subtopic after an answer was given in this subtopic."""
 
         subtopic = Subtopic.objects.get(pk=subtopic_id)
@@ -23,24 +23,32 @@ class ProficiencyService:
 
         if new_answer:
             proficiency.answers_since_update += 1
+            proficiency.number_of_answers += 1
 
-        if proficiency.answers_since_update >= 1 or created:
+        if proficiency.answers_since_update >= 1 or created or force_update:
             data = cls.__get_proficiency_data(user_id=user_id, subtopic_id=subtopic_id)
             level = cls.__proficiency_estimation(data) if data != {} else 0
             proficiency.level = level
             proficiency.answers_since_update = 0
+
+            proficiency.number_of_answers = 0
+            for difficulty in data.keys():
+                proficiency.number_of_answers += sum(data[difficulty].values())
 
         proficiency.save()
 
         return
 
     @classmethod
-    def update_proficiencies(cls, user_id: int):
+    def update_proficiencies(cls, user_id: int, force_update: bool=False):
         """Update the proficiencies of the user"""
 
         subtopic_id_list = [obj['id'] for obj in list(Subtopic.objects.values('id'))]
         for subtopic_id in subtopic_id_list:
-            cls.update_proficiency(user_id=user_id, subtopic_id=subtopic_id, new_answer=False)
+            cls.update_proficiency(user_id=user_id,
+                                   subtopic_id=subtopic_id,
+                                   new_answer=False,
+                                   force_update=force_update)
 
         return
 

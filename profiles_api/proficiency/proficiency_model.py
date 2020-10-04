@@ -16,6 +16,7 @@ class Proficiency(models.Model):
     subtopic = models.ForeignKey(Subtopic, on_delete=models.CASCADE, blank=False)
     level = models.IntegerField(blank=False, default=1)
     answers_since_update = models.IntegerField(blank=False, default=0)
+    number_of_answers = models.IntegerField(blank=False, default=0)
     updated_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
