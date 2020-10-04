@@ -48,9 +48,11 @@ class ProficiencyService:
     def __get_proficiency_data(cls, user_id: int, subtopic_id: int) -> np.array:
         """Get the data necessary for the estimation of the knowledge level"""
 
-        query_params_dict = {'user_id': user_id,
-                             'subtopic_id': subtopic_id}
-        answers = Answer.search_answers(query_params_dict)
+        answers_subtopic = Answer.search_answers({'user_id': user_id,
+                                                  'subtopic_id': subtopic_id})
+        answers_dependencies = Answer.search_answers({'user_id': user_id,
+                                                      'dependency_id': subtopic_id})
+        answers = list(set(answers_subtopic) | set(answers_dependencies))
 
         # Gather necessary information about the answers
         question_id_list = [answer.question.id for answer in answers]
