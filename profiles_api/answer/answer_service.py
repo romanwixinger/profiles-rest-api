@@ -54,8 +54,8 @@ class AnswerService:
     @classmethod
     def __single_fraction_validation(cls, answer: Answer) -> Answer:
         try:
-            user_answer = cls.__parse_float(answer.answers, "[/:]")
-            correct_answer = cls.__parse_float(answer.question.correctAnswers, "(frac|/)")
+            user_answer = cls.__parse_float(answer.answers, "[:|frac]")
+            correct_answer = cls.__parse_float(answer.question.correctAnswers, r"(frac|\\)")
             answer.correct = abs(user_answer - correct_answer) <= 1e-3
         except Exception:
             answer.comment = "Diese Frage konnte nicht korrigiert werden."
