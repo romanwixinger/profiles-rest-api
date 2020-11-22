@@ -20,35 +20,36 @@ password = 'Schueler 1'
 
 print("\n" + 30 * "*" + " User profile " + 30 * "*" + "\n")
 
-# # User profile POST
-# user_profile = {'email': email, 'name': name, 'password': password}
-# user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
+# User profile POST
+user_profile = {'email': email, 'name': name, 'password': password}
+user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
 
-# if user_profile_post.status_code == 201: 
-#     print(user_profile_post.json())
-#     user_id = user_profile_post.json()['id']
-# else: 
-#     user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
-#     user_id = [user for user in user_profile_get.json()][0]['id']
+if user_profile_post.status_code == 201: 
+    print(user_profile_post.json())
+    user_id = user_profile_post.json()['id']
+else: 
+    user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
+    print(user_profile_get.json())
+    user_id = [user for user in user_profile_get.json()][0]['id']
     
-# print("Status code: ", user_profile_post.status_code)
-# print(user_profile_post.json())
-# print("\n" + 10 * "*" + "\n")
+print("Status code: ", user_profile_post.status_code)
+print(user_profile_post.json())
+print("\n" + 10 * "*" + "\n")
 
 
-# # User profile GET
-# user_profile_get = requests.get(url=base_url + "profile")
+# User profile GET
+user_profile_get = requests.get(url=base_url + "profile")
 
-# print("Status code: ", user_profile_get.status_code)
-# print(user_profile_get.json())
-# print("\n" + 10 * "*" + "\n")
+print("Status code: ", user_profile_get.status_code)
+print(user_profile_get.json())
+print("\n" + 10 * "*" + "\n")
 
 
-# # User profile GET for single user profile
-# user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
+# User profile GET for single user profile
+user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
 
-# print("Status code: ", user_profile_get.status_code)
-# print(user_profile_get.json())
+print("Status code: ", user_profile_get.status_code)
+print(user_profile_get.json())
 
 
 """Login"""
