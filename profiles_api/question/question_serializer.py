@@ -86,7 +86,22 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'created_on', 'topic', 'subtopic', 'dependencies',
-                  'question', 'correctAnswers', 'appendix', 'hint', 'imageSrc',
-                  'user_profile', 'validation_type', 'difficulty', 'set_difficulty')
+        fields = ('id',
+                  'created_on',
+                  'topic',
+                  'subtopic',
+                  'dependencies',
+                  'question',
+                  'correctAnswers',
+                  'appendix',
+                  'hint',
+                  'imageSrc',
+                  'user_profile',
+                  'validation_type',
+                  'set_difficulty',
+                  'facility',
+                  'facility_updated_on',
+                  'number_of_answers',
+                  'difficulty',
+                  'difficulty_updated_on', )
         extra_kwargs = {'user_profile': {'read_only': True}, 'appendix': {'required': False}}

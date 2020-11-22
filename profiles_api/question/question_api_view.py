@@ -32,7 +32,10 @@ class QuestionView(APIView):
         """Retrieve only certain questions"""
 
         query_params_dict = self.request.query_params.dict()
-        questions = QuestionService.search_questions(query_params_dict)
+        questions = Question.search_questions(query_params_dict)
+
+        if 'update' in query_params_dict:
+            QuestionService.update_facilities()
 
         if len(questions) == 0:
             return Response(status=204)

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from profiles_api.test.test_model import Test
-from profiles_api.test.test_service import TestService
 
 
 class TestDeserializer(serializers.Serializer):
@@ -33,8 +32,11 @@ class TestDeserializer(serializers.Serializer):
         title = validated_data['title']
         question_id_list = [int(question_id) for question_id in validated_data['questions'].split(';')]
 
-        test = TestService.create_test(user_id=user_id, question_id_list=question_id_list, title=title, html=html)
-
+        test = Test.create_test(user_id=user_id,
+                                question_id_list=question_id_list,
+                                title=title,
+                                html=html,
+                                creation_type='standard')
         return test
 
 
@@ -43,7 +45,7 @@ class TestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Test
-        fields = ('id', 'user_profile', 'questions', 'title', 'html', 'created_on')
+        fields = ('id', 'user_profile', 'questions', 'title', 'html', 'created_on', 'creation_type')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 

@@ -8,7 +8,6 @@ from profiles_api import permissions
 
 from profiles_api.answer.answer_serializer import AnswerSerializer, AnswerDeserializer, AnswerPatchDeserializer
 from profiles_api.answer.answer_model import Answer
-from profiles_api.answer.answer_service import AnswerService
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -39,9 +38,11 @@ class AnswerView(APIView):
 
         if 'user_id' in query_params_dict:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        query_params_dict['user_id'] = self.request.user.id
 
-        answers = AnswerService.search_answers(query_params_dict)
+        if not self.request.user.is_superuser:
+            query_params_dict['user_id'] = self.request.user.id
+
+        answers = Answer.search_answers(query_params_dict)
 
         if len(answers) > 0:
             if pk is None:
@@ -66,9 +67,6 @@ class AnswerView(APIView):
                 answer = deserializer.create(validated_data)
             except ValueError:
                 return Response(data={"question": "The question for this answer does not exist."}, status=400)
-
-            AnswerService.perform_correction(answer)
-            answer.save()
 
             serializer = AnswerSerializer(answer)
             return Response(data=serializer.data, status=201)

@@ -9,7 +9,6 @@ from profiles_api import permissions
 from profiles_api.completed_test.completed_test_serializer import CompletedTestSerializer, CompletedTestDeserializer
 from profiles_api.completed_test.completed_test_serializer import CompletedTestPatchDeserializer
 from profiles_api.completed_test.completed_test_model import CompletedTest
-from profiles_api.completed_test.completed_test_service import CompletedTestService
 
 
 class CompletedTestViewSet(viewsets.ModelViewSet):
@@ -40,9 +39,12 @@ class CompletedTestView(APIView):
 
         if 'user_id' in query_params_dict:
             return Response(status=status.HTTP_403_FORBIDDEN)
-        query_params_dict['user_id'] = self.request.user.id
+
+        if not self.request.user.is_superuser:
+            print("Here")
+            query_params_dict['user_id'] = self.request.user.id
         try:
-            completed_tests = CompletedTestService.search_completed_tests(query_params_dict)
+            completed_tests = CompletedTest.search_completed_tests(query_params_dict)
         except LookupError:
             return Response(
                 {"id": "The completed test with this id does not exist."},
@@ -85,7 +87,6 @@ class CompletedTestView(APIView):
                     status=status.HTTP_500_INTERNAL_SERVER_ERROR
                 )
 
-            CompletedTestService.get_recommended_subtopics(completed_test)
             completed_test.save()
 
             serializer = CompletedTestSerializer(completed_test)
@@ -111,7 +112,7 @@ class CompletedTestView(APIView):
         validated_data = deserializer.validated_data
         validated_data['user_id'] = self.request.user.id
 
-        completed_test = CompletedTestService.get_completed_tests([pk])
+        completed_test = CompletedTest.get_completed_tests([pk])
         if len(completed_test) == 0:
             return Response(
                 {'id': 'The completed test with this id does not exist or does not belong to this user.'},

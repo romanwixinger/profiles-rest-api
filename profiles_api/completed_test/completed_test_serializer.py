@@ -4,7 +4,7 @@ from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.answer.answer_serializer import AnswerDeserializer
 from profiles_api.models import UserProfile
 
-from profiles_api.test.test_service import TestService
+from profiles_api.test.test_model import Test
 from profiles_api.answer.answer_service import AnswerService
 
 
@@ -35,7 +35,7 @@ class CompletedTestDeserializer(serializers.Serializer):
         user = UserProfile.objects.filter(**{'id': validated_data['user_id']})[0]
 
         test_id = validated_data['test']
-        tests = TestService.search_tests(query_params_dict={'id': test_id})
+        tests = Test.search_tests(query_params_dict={'id': test_id})
 
         test = tests[0] if len(tests) > 0 else None
         if test is None:
@@ -87,7 +87,7 @@ class CompletedTestSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompletedTest
         fields = ('id', 'user_profile', 'answers', 'state', 'created_on',
-                  'updated_on', 'duration', 'comment', 'recommendedSubtopics', 'test')
+                  'updated_on', 'duration', 'comment', 'test')
         extra_kwargs = {'user_profile': {'read_only': True}}
 
 
@@ -143,7 +143,6 @@ class CompletedTestPatchDeserializer(serializers.Serializer):
                 if answer is None:
                     return None
 
-                AnswerService.perform_correction(answer)
                 answer.save()
 
                 instance.answers.add(answer)

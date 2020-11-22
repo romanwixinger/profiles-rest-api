@@ -26,6 +26,9 @@
     Specify the test by its id: <br>
     `title=[string]`
     
+    Specify the creation type of the test. Options are 'standard' and 'personal': <br>
+    `creation_type=[string]`
+    
     Set the parameter to 'random' to shuffle the tests randomly. Otherwise, the tests are 
     ordered by their id. <br> 
     `mode = [string]`

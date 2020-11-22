@@ -32,6 +32,9 @@
     Specify the subtopic of the question by its id: <br>
     `subtopic_id=[integer]`
     
+    Specify one dependency of the question by its id: <br>
+    `dependency_id=[integer]`
+    
     Specify the difficulty of the question. Allowed difficulties are in [1,2,3,4,5]: <br>
     `difficulty=[integer]`
     
@@ -40,6 +43,9 @@
     
     Set the parameter to 'random' to shuffle the questions randomly. <br> 
     `mode = [string]`
+    
+    Use the parameter 'update' to force an update the facilities of all questions.
+    `update`
 
 * **Data Params**
 

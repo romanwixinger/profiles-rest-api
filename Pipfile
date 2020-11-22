@@ -6,13 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-djangorestframework = "==3.9.2"
-Django = "==2.2"
-django-cors-headers = "==3.2.1"
+djangorestframework = "*"
+Django = "*"
+django-cors-headers = "*"
 cloudbiolinux = "*"
-enum = "*"
 scipy = "*"
 numpy = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"

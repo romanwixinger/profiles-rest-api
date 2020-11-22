@@ -3,43 +3,64 @@ import scipy.special
 from scipy.stats import binom, norm
 from scipy.optimize import minimize
 
-from profiles_api.answer.answer_service import AnswerService
+from profiles_api.proficiency.proficiency_model import Proficiency
+from profiles_api.subtopic.subtopic_model import Subtopic
+from profiles_api.answer.answer_model import Answer
 
 
-class KnowledgeLevelService:
+class ProficiencyService:
     """Class for knowledge level estimation"""
 
     @classmethod
-    def knowledge_level_list(cls, user_id: int, subtopic_id_list: [int]) -> dict:
-        """Get the knowledge level of a user for a list of subtopics"""
+    def update_proficiency(cls, user_id: int, subtopic_id: int, new_answer: bool, force_update: bool=False):
+        """Update the proficiency of the user in a subtopic after an answer was given in this subtopic."""
 
-        level_dict = {}
+        subtopic = Subtopic.objects.get(pk=subtopic_id)
+        proficiency, created = Proficiency.objects.get_or_create(
+            user_profile_id=user_id,
+            subtopic=subtopic,
+            defaults={'level': 0, 'answers_since_update': 0})
 
+        if new_answer:
+            proficiency.answers_since_update += 1
+            proficiency.number_of_answers += 1
+
+        if proficiency.answers_since_update >= 1 or created or force_update:
+            data = cls.__get_proficiency_data(user_id=user_id, subtopic_id=subtopic_id)
+            level = cls.__proficiency_estimation(data) if data != {} else 0
+            proficiency.level = level
+            proficiency.answers_since_update = 0
+
+            proficiency.number_of_answers = 0
+            for difficulty in data.keys():
+                proficiency.number_of_answers += sum(data[difficulty].values())
+
+        proficiency.save()
+
+        return
+
+    @classmethod
+    def update_proficiencies(cls, user_id: int, force_update: bool=False):
+        """Update the proficiencies of the user"""
+
+        subtopic_id_list = [obj['id'] for obj in list(Subtopic.objects.values('id'))]
         for subtopic_id in subtopic_id_list:
-            level = cls.knowledge_level(user_id=user_id, subtopic_id=subtopic_id)
-            level_dict[subtopic_id] = level
+            cls.update_proficiency(user_id=user_id,
+                                   subtopic_id=subtopic_id,
+                                   new_answer=False,
+                                   force_update=force_update)
 
-        return level_dict
-
-    @classmethod
-    def knowledge_level(cls, user_id: int, subtopic_id: int):
-        """Get the knowledge level of a user in a specific subtopic. The knowledge level takes values between 1 to 5
-        where 5 is the best level. If the user did not give any answers in this subtopic, the level is 0."""
-
-        data = cls.__get_knowledge_data(user_id=user_id, subtopic_id=subtopic_id)
-        if data == {}:
-            return 0
-
-        level = cls.__knowledge_level_estimation(data)
-        return level
+        return
 
     @classmethod
-    def __get_knowledge_data(cls, user_id: int, subtopic_id: int) -> np.array:
+    def __get_proficiency_data(cls, user_id: int, subtopic_id: int) -> np.array:
         """Get the data necessary for the estimation of the knowledge level"""
 
-        query_params_dict = {'user_id': user_id,
-                             'subtopic_id': subtopic_id}
-        answers = AnswerService.search_answers(query_params_dict)
+        answers_subtopic = Answer.search_answers({'user_id': user_id,
+                                                  'subtopic_id': subtopic_id})
+        answers_dependencies = Answer.search_answers({'user_id': user_id,
+                                                      'dependency_id': subtopic_id})
+        answers = list(set(answers_subtopic) | set(answers_dependencies))
 
         # Gather necessary information about the answers
         question_id_list = [answer.question.id for answer in answers]
@@ -47,29 +68,27 @@ class KnowledgeLevelService:
             empty_dict = {}
             return empty_dict
 
-        difficulty_list = AnswerService.difficulty_list(question_id_list=question_id_list)
+        difficulty_list = Proficiency.difficulty_list(question_id_list=question_id_list)
         correctness_list = [answer.correct for answer in answers]
 
         # Initialise data dict
         data = {}
         for difficulty in np.unique(np.array(difficulty_list)):
-            data[difficulty] = {'correct': 0, 'incorrect': 0, 'total': 0, 'ratio': 0.0}
+            data[difficulty] = {'correct': 0, 'incorrect': 0}
 
         # Fill information in the dict
         for difficulty, correct in zip(difficulty_list, correctness_list):
-            data[difficulty]['total'] += 1
             if correct:
                 data[difficulty]['correct'] += 1
             else:
                 data[difficulty]['incorrect'] += 1
 
-        for difficulty in difficulty_list:
-            data[difficulty]['ratio'] = data[difficulty]['correct'] / (data[difficulty]['correct'] + data[difficulty]['incorrect'])
+        print(data)
 
         return data
 
     @classmethod
-    def __knowledge_level_estimation(cls, data: np.array) -> float:
+    def __proficiency_estimation(cls, data: np.array) -> float:
         """Returns the estimated knowledge level"""
 
         sigma = 1           # Standard deviation that corresponds to the Q-function
@@ -102,7 +121,7 @@ class KnowledgeLevelService:
         for level in data.keys():
 
             k = data[level]['correct']
-            n = data[level]['total']
+            n = data[level]['correct'] + data[level]['incorrect']
             if n == 0:
                 continue
 

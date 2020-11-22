@@ -1,7 +1,7 @@
 from profiles_api.completed_test.completed_test_model import CompletedTest
 from profiles_api.subtopic.subtopic_model import Subtopic
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 
 
 class CompletedTestService:
@@ -54,32 +54,3 @@ class CompletedTestService:
 
         return
 
-    @classmethod
-    def search_completed_tests(cls, query_params_dict: dict) -> [CompletedTest]:
-        """Get the completed tests of a user according to query parameters stored in a dict"""
-
-        user_id = query_params_dict['user_id'] if 'user_id' in query_params_dict else None
-        if user_id is None or user_id == '':
-            raise PermissionError
-
-        filter_dict = {'user_profile': user_id}
-
-        if 'id' in query_params_dict:
-            filter_dict['id'] = query_params_dict['id']
-            if CompletedTest.objects.filter(**filter_dict).count() == 0:
-                raise LookupError
-
-        if 'state' in query_params_dict:
-            filter_dict['state'] = query_params_dict['state']
-
-        completed_tests_list = list(CompletedTest.objects.filter(**filter_dict))
-        completed_tests_list = TopicService.select_items(items=completed_tests_list, query_params_dict=query_params_dict)
-
-        return completed_tests_list
-
-    @classmethod
-    def get_completed_tests(cls, completed_test_id_list: [int]) -> [CompletedTest]:
-        """Returns a list with the requested completed tests"""
-
-        completed_tests = CompletedTest.objects.filter(id__in=completed_test_id_list)
-        return list(completed_tests)

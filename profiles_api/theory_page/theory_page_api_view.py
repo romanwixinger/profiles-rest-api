@@ -9,7 +9,7 @@ from profiles_api import permissions
 from profiles_api.theory_page.theory_page_serializer import TheoryPageSerializer, TheoryPageDeserializer
 from profiles_api.theory_page.theory_page_model import TheoryPage
 
-from profiles_api.topic.topic_service import TopicService
+from profiles_api.utils.utils_service import UtilsService
 from profiles_api.theory_page.theory_page_service import TheoryPageService
 
 
@@ -34,7 +34,7 @@ class TheoryPageView(APIView):
         """Get certain theory pages"""
 
         query_params_dict = self.request.query_params.dict()
-        theory_pages = TheoryPageService.search_theory_pages(query_params_dict)
+        theory_pages = TheoryPage.search_theory_pages(query_params_dict)
 
         if len(theory_pages) == 0:
             return Response(status=204)
@@ -57,7 +57,7 @@ class TheoryPageView(APIView):
                 theory_page = deserializer.create(validated_data)
             except ValueError:
                 return Response(
-                    data={"topic_id": "The given topic, subtopic or test does not exist."},
+                    data={"topic_id": "The given subtopic does not exist."},
                     status=status.HTTP_400_BAD_REQUEST
                 )
 
@@ -85,12 +85,12 @@ class RecommendedTheoryPageView(APIView):
         """Get recommended theory pages"""
 
         theory_page_id_list = TheoryPageService.recommended_theory_pages(request.user)
-        theory_pages_list = TheoryPageService.get_theory_pages(theory_page_id_list)
+        theory_pages_list = TheoryPage.get_theory_pages(theory_page_id_list)
 
         if len(theory_pages_list) == 0:
             Response(status=204)
 
-        TopicService.select_items(items=theory_pages_list, query_params_dict=self.request.query_params.dict())
+        UtilsService.select_items(items=theory_pages_list, query_params_dict=self.request.query_params.dict())
 
         if len(theory_pages_list) == 0:
             return Response(status=204)

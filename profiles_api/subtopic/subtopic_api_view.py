@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from profiles_api import permissions
 
 from profiles_api.subtopic.subtopic_model import Subtopic
+from profiles_api.question.question_model import Question
 
 from profiles_api.subtopic.subtopic_serializer import SubtopicSerializer, SubtopicDeserializer
 from profiles_api.subtopic.subtopic_service import SubtopicService
@@ -32,7 +33,11 @@ class CustomSubtopicView(APIView):
         """Retrieve only certain subtopics"""
 
         query_params_dict = self.request.query_params.dict()
-        subtopics = SubtopicService.search_subtopics(query_params_dict)
+        subtopics = Subtopic.search_subtopics(query_params_dict)
+
+        if 'update' in query_params_dict:
+            for subtopic in subtopics:
+                Question.update_difficulty(subtopic=subtopic, new_answer=False, force_update=True)
 
         if len(subtopics) > 0:
             serializer = SubtopicSerializer(subtopics, many=True)
@@ -67,7 +72,7 @@ class RecommendedSubtopicView(APIView):
         query_params_dict = self.request.query_params.dict()
         args = {'number': int(query_params_dict['number'])} if 'number' in query_params_dict else {}
         subtopic_id_list = SubtopicService.recommended_subtopics(user=self.request.user, **args)
-        subtopics = SubtopicService.get_subtopics(subtopic_id_list)
+        subtopics = Subtopic.get_subtopics(subtopic_id_list)
 
         if len(subtopics) > 0:
             serializer = SubtopicSerializer(subtopics, many=True)

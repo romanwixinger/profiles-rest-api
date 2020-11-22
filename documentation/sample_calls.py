@@ -20,35 +20,35 @@ password = 'Schueler 1'
 
 print("\n" + 30 * "*" + " User profile " + 30 * "*" + "\n")
 
-# User profile POST
-user_profile = {'email': email, 'name': name, 'password': password}
-user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
+# # User profile POST
+# user_profile = {'email': email, 'name': name, 'password': password}
+# user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
 
-if user_profile_post.status_code == 201: 
-    print(user_profile_post.json())
-    user_id = user_profile_post.json()['id']
-else: 
-    user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
-    user_id = [user for user in user_profile_get.json()][0]['id']
+# if user_profile_post.status_code == 201: 
+#     print(user_profile_post.json())
+#     user_id = user_profile_post.json()['id']
+# else: 
+#     user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
+#     user_id = [user for user in user_profile_get.json()][0]['id']
     
-print("Status code: ", user_profile_post.status_code)
-print(user_profile_post.json())
-print("\n" + 10 * "*" + "\n")
+# print("Status code: ", user_profile_post.status_code)
+# print(user_profile_post.json())
+# print("\n" + 10 * "*" + "\n")
 
 
-# User profile GET
-user_profile_get = requests.get(url=base_url + "profile")
+# # User profile GET
+# user_profile_get = requests.get(url=base_url + "profile")
 
-print("Status code: ", user_profile_get.status_code)
-print(user_profile_get.json())
-print("\n" + 10 * "*" + "\n")
+# print("Status code: ", user_profile_get.status_code)
+# print(user_profile_get.json())
+# print("\n" + 10 * "*" + "\n")
 
 
-# User profile GET for single user profile
-user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
+# # User profile GET for single user profile
+# user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
 
-print("Status code: ", user_profile_get.status_code)
-print(user_profile_get.json())
+# print("Status code: ", user_profile_get.status_code)
+# print(user_profile_get.json())
 
 
 """Login"""
@@ -56,7 +56,7 @@ print(user_profile_get.json())
 print("\n" + 30 * "*" + " Login " + 30 * "*" + "\n")
 
 # Create token with POST
-credentials =  {'username': 'email@email.com', 'password': 'PW'}
+credentials =  {'username': 'Schueler2@email.com', 'password': 'Schueler 2'}
 login_post = requests.post(url=base_url + "login", json=credentials)
 token = login_post.json()['token']
 print("Status code: ", login_post.status_code)
@@ -173,7 +173,7 @@ print("\n" + 10 * "*" + "\n")
 
 # Answer PATCH
 answer = {"duration": 20, "answers": "new answer"}
-answer_patch = requests.patch(url=base_url + "custom-answer/6002",
+answer_patch = requests.patch(url=base_url + "custom-answer/7352",
                             headers=headers,
                             json=answer)
 print("Status code: ", answer_patch.status_code)
@@ -213,20 +213,20 @@ print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 completed_test = {
     "answers": 
                 [{
-                        "question": 687,
-                        "duration": "21.00",
+                        "question": 852,
+                        "duration": 21.00,
                         "answers": "1/3",
                         "skipped": False
                 },
                 {
-                        "question": 687,
-                        "duration": "24.00",
+                        "question": 853,
+                        "duration": 24.00,
                         "answers": "1/2",
                         "skipped": False
                 }],
     "state": "First question answered",
     "duration": "12.00",
-    "test": 8
+    "test": 470
 }
 completed_test_post = requests.post(url=base_url + "custom-completed-test",
                                     headers=headers,
@@ -257,7 +257,7 @@ completed_test_patch = completed_test = {
                 }],
     "state": "New questions answered."
 }
-completed_test_patch = requests.patch(url=base_url + "custom-completed-test/125",
+completed_test_patch = requests.patch(url=base_url + "custom-completed-test/167",
                                     headers=headers,
                                     json=completed_test_patch
                                     )
@@ -269,10 +269,10 @@ print("\n" + 30 * "*" + " TheoryPage " + 30 * "*" + "\n")
 
 # TheoryPage POST
 theory_page = {
-        "subtopic": "Folgen",
+        "subtopic": "Anteile",
         "title": "Folgen",
         "html": "<h1> Folgen </h1>",
-        "test": "Brüche subtrahieren"
+        "test_id": 470
 }
 theory_page_post = requests.post(url=base_url + "custom-theory-page", 
                                  headers=headers,
