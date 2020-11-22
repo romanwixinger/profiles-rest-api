@@ -40,8 +40,8 @@ class Subtopic(models.Model):
     def get_subtopics(cls, subtopic_id_list: [int]) -> []:
         """Returns a list with the requested subtopics"""
 
-        subtopics = cls.objects.filter(id__in=subtopic_id_list)
-        return list(subtopics)
+        subtopic_list = UtilsService.get_items(subtopic_id_list, Subtopic)
+        return subtopic_list
 
     @classmethod
     def subtopic_id_list(cls) -> [int]:

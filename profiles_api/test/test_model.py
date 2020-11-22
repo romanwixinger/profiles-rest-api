@@ -6,6 +6,7 @@ import random
 from profiles_api.models import UserProfile
 from profiles_api.question.question_model import Question
 
+from profiles_api.utils.utils_service import UtilsService
 
 class Test(models.Model):
     """Generic test"""
@@ -27,8 +28,7 @@ class Test(models.Model):
     def get_tests(cls, test_id_list: [int]) -> []:
         """Gets specific tests"""
 
-        tests = Test.objects.filter(id__in=test_id_list)
-        test_list = list(tests)
+        test_list = UtilsService.get_items(test_id_list, Test)
 
         return test_list
 

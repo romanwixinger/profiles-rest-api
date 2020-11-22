@@ -20,36 +20,35 @@ password = 'Schueler 1'
 
 print("\n" + 30 * "*" + " User profile " + 30 * "*" + "\n")
 
-# User profile POST
-user_profile = {'email': email, 'name': name, 'password': password}
-user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
+# # User profile POST
+# user_profile = {'email': email, 'name': name, 'password': password}
+# user_profile_post = requests.post(url=base_url + "profile", json=user_profile)
 
-if user_profile_post.status_code == 201: 
-    print(user_profile_post.json())
-    user_id = user_profile_post.json()['id']
-else: 
-    user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
-    print(user_profile_get.json())
-    user_id = [user for user in user_profile_get.json()][0]['id']
+# if user_profile_post.status_code == 201: 
+#     print(user_profile_post.json())
+#     user_id = user_profile_post.json()['id']
+# else: 
+#     user_profile_get = requests.get(url=base_url + "profile", params={'search': email})
+#     user_id = [user for user in user_profile_get.json()][0]['id']
     
-print("Status code: ", user_profile_post.status_code)
-print(user_profile_post.json())
-print("\n" + 10 * "*" + "\n")
+# print("Status code: ", user_profile_post.status_code)
+# print(user_profile_post.json())
+# print("\n" + 10 * "*" + "\n")
 
 
-# User profile GET
-user_profile_get = requests.get(url=base_url + "profile")
+# # User profile GET
+# user_profile_get = requests.get(url=base_url + "profile")
 
-print("Status code: ", user_profile_get.status_code)
-print(user_profile_get.json())
-print("\n" + 10 * "*" + "\n")
+# print("Status code: ", user_profile_get.status_code)
+# print(user_profile_get.json())
+# print("\n" + 10 * "*" + "\n")
 
 
-# User profile GET for single user profile
-user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
+# # User profile GET for single user profile
+# user_profile_get = requests.get(url=base_url + "profile/" + str(user_id))
 
-print("Status code: ", user_profile_get.status_code)
-print(user_profile_get.json())
+# print("Status code: ", user_profile_get.status_code)
+# print(user_profile_get.json())
 
 
 """Login"""
@@ -174,7 +173,7 @@ print("\n" + 10 * "*" + "\n")
 
 # Answer PATCH
 answer = {"duration": 20, "answers": "new answer"}
-answer_patch = requests.patch(url=base_url + "custom-answer/7352",
+answer_patch = requests.patch(url=base_url + "custom-answer/" + str(answer_get.json()[0]['id']),
                             headers=headers,
                             json=answer)
 print("Status code: ", answer_patch.status_code)
@@ -214,20 +213,20 @@ print("\n" + 30 * "*" + " CompletedTest " + 30 * "*" + "\n")
 completed_test = {
     "answers": 
                 [{
-                        "question": 852,
+                        "question": 1,
                         "duration": 21.00,
                         "answers": "1/3",
                         "skipped": False
                 },
                 {
-                        "question": 853,
+                        "question": 2,
                         "duration": 24.00,
                         "answers": "1/2",
                         "skipped": False
                 }],
     "state": "First question answered",
     "duration": "12.00",
-    "test": 470
+    "test": 100
 }
 completed_test_post = requests.post(url=base_url + "custom-completed-test",
                                     headers=headers,
@@ -251,7 +250,7 @@ print(completed_test_get.json())
 completed_test_patch = completed_test = {
     "answers": 
                 [{
-                        "question": 687,
+                        "question": 10,
                         "duration": "21.00",
                         "answers": "1/3",
                         "skipped": False

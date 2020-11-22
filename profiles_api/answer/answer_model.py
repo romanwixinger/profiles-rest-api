@@ -55,13 +55,7 @@ class Answer(models.Model):
     def get_answers(cls, answer_id_list: [int]):
         """Returns a list with the requested answers"""
 
-        chunk_size = 200
-        answer_list = []
-
-        for i in range(0, len(answer_id_list), chunk_size):
-            answer_id_chunk = answer_id_list[i:i + chunk_size]
-            answer_chunk = Answer.objects.filter(id__in=answer_id_chunk)
-            answer_list = answer_list + list(answer_chunk)
+        answer_list = UtilsService.get_items(answer_id_list, cls)
 
         return answer_list
 

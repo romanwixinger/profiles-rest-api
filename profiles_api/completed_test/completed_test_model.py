@@ -48,5 +48,7 @@ class CompletedTest(models.Model):
     def get_completed_tests(cls, completed_test_id_list: [int]) -> []:
         """Returns a list with the requested completed tests"""
 
-        completed_tests = cls.objects.filter(id__in=completed_test_id_list)
-        return list(completed_tests)
+        completed_test_list = UtilsService.get_items(completed_test_id_list, CompletedTest)
+
+        return completed_test_list
+

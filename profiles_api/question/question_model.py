@@ -80,8 +80,7 @@ class Question(models.Model):
     def get_questions(cls, question_id_list: [int]) -> list:
         """Returns a list with the requested questions"""
 
-        questions = cls.objects.filter(id__in=question_id_list)
-        question_list = list(questions)
+        question_list = UtilsService.get_items(question_id_list, Question)
 
         return question_list
 

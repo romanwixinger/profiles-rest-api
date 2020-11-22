@@ -46,10 +46,9 @@ class TheoryPage(models.Model):
     def get_theory_pages(cls, theory_page_id_list: [int]) -> []:
         """Returns a list with the requested theory_pages"""
 
-        theory_pages = cls.objects.filter(id__in=theory_page_id_list)
-        theory_pages_list = list(theory_pages)
+        theory_page_list = UtilsService.get_items(theory_page_id_list, TheoryPage)
 
-        return theory_pages_list
+        return theory_page_list
 
     @classmethod
     def search_theory_pages_with_subtopic(cls, subtopic_id_list: [int], number: int) -> [int]:
