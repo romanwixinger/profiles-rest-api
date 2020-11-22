@@ -169,8 +169,14 @@ answer_get = requests.get(url=base_url + "custom-answer",
                           params={'number': 1})
 print("Status code: ", answer_get.status_code)
 print(answer_get.json())
+print("\n" + 10 * "*" + "\n")
 
-
+# Answer PATCH
+answer = {"duration": 20, "answers": "new answer"}
+answer_patch = requests.patch(url=base_url + "custom-answer/6002",
+                            headers=headers,
+                            json=answer)
+print("Status code: ", answer_patch.status_code)
 
 """Test"""
 

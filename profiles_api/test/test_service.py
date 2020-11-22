@@ -63,7 +63,10 @@ class TestService:
         mode = query_params_dict['mode'] if 'mode' in query_params_dict else None
 
         filter_dict = {}
-        if test_id is not None and ((test_id is str and test_id.isdigit()) or test_id is int):
+
+        if test_id is not None and ((isinstance(test_id, str) and test_id.isdigit())
+                                    or isinstance(test_id, int)
+                                    or isinstance(test_id, float)):
             filter_dict['id'] = int(test_id)
         if title is not None:
             filter_dict['title'] = title

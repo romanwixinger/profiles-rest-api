@@ -57,14 +57,53 @@ class AnswerDeserializer(serializers.Serializer):
         if number > 1:
             raise LookupError
         if number == 1:
-            Answer.objects.filter(**args).update(**args)
             Answer.objects.filter(**args).update(**opt_args)
 
         answer = Answer.objects.get_or_create(**args, defaults=opt_args)[0]
-        
         return answer
 
+    def update(self, instance, validated_data):
+        """Update an answer"""
+
+        if 'answers' in validated_data:
+            instance.answers = validated_data['answers']
+        if 'duration' in validated_data:
+            instance.duration = validated_data['duration']
+        if 'correct' in validated_data:
+            instance.correct = validated_data['correct']
+        if 'skipped' in validated_data:
+            instance.skipped = validated_data['skipped']
+        if 'comment' in validated_data:
+            instance.comment = validated_data['comment']
+
+        return instance
 
 
+class AnswerPatchDeserializer(serializers.Serializer):
+    """Deserializes answer patches"""
 
+    duration = serializers.FloatField(required=False, default=0)
+    answers = serializers.CharField(max_length=1024, required=False, allow_blank=False)
+    correct = serializers.BooleanField(required=False, allow_null=False)
+    skipped = serializers.BooleanField(required=False, default=False)
+    comment = serializers.CharField(max_length=1024, required=False, allow_blank=False)
 
+    def validate(self, data):
+        """Validates the data"""
+        return data
+
+    def update(self, instance, validated_data):
+        """Update an answer"""
+
+        if 'answers' in validated_data:
+            instance.answers = validated_data['answers']
+        if 'duration' in validated_data:
+            instance.duration = validated_data['duration']
+        if 'correct' in validated_data:
+            instance.correct = validated_data['correct']
+        if 'skipped' in validated_data:
+            instance.skipped = validated_data['skipped']
+        if 'comment' in validated_data:
+            instance.comment = validated_data['comment']
+
+        return instance

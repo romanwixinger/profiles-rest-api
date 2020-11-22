@@ -54,7 +54,10 @@ class CompletedTestView(APIView):
         if len(completed_tests) == 0:
             return Response(status=204)
 
-        serializer = CompletedTestSerializer(completed_tests, many=True)
+        if pk is None:
+            serializer = CompletedTestSerializer(completed_tests, many=True)
+        else:
+            serializer = CompletedTestSerializer(completed_tests[0], many=False)
         return Response(data=serializer.data, status=200)
 
     def post(self, request):
@@ -67,6 +70,7 @@ class CompletedTestView(APIView):
             user = self.request.user
             validated_data = deserializer.validated_data
             validated_data['user_id'] = user.id
+
             try:
                 completed_test = deserializer.create(validated_data)
             except ValueError:
