@@ -53,20 +53,27 @@ class AnswerService:
 
     @classmethod
     def __single_fraction_validation(cls, answer: Answer) -> Answer:
-        try:
-            user_answer = cls.__parse_float(answer.answers, "[:|frac]")
-            correct_answer = cls.__parse_float(answer.question.correctAnswers, r"(frac|\\)")
-            answer.correct = abs(user_answer - correct_answer) <= 1e-3
-        except Exception:
-            answer.comment = "Diese Frage konnte nicht korrigiert werden."
-            answer.correct = False
-        finally:
-            return answer
+        user_answer_float = cls.__parse_float(answer.answers)
+        correct_answer_float = cls.__parse_float(answer.question.correctAnswers)
+
+        answer.correct = abs(user_answer_float - correct_answer_float) <= 1e-3
+
+        return answer
 
     @classmethod
-    def __parse_float(cls, float_str: str, regex: str) -> float:
-        if not bool(re.search(regex, float_str)):
-            return float(float_str)
+    def __parse_float(cls, float_str: str) -> float:
         p = re.compile(r'\d+').findall(float_str)
-        return float(int(p[0]) / int(p[1]))
+        if len(p) == 1:
+            # Expression if the form "356"
+            return float(p[0])
+        elif len(p) == 2:
+            # Expression of the form "3.56"
+            if len(re.compile(r'\.').findall(float_str)) == 1:
+                return float(float_str)
+            # Expression of the form "3/5", "\\frac{3}{5}" or "3:5"
+            else:
+                return float(p[0]) / float(p[1])
+        else:
+            raise ValueError
+
 

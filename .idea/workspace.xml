@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="" />
+    <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/answer/answer_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/answer/answer_service.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -315,6 +318,8 @@
       <workItem from="1602446581405" duration="1544000" />
       <workItem from="1602935282634" duration="612000" />
       <workItem from="1603390870507" duration="2140000" />
+      <workItem from="1608746514057" duration="92000" />
+      <workItem from="1610781266097" duration="3597000" />
     </task>
     <task id="LOCAL-00001" summary="fixed intellij setup">
       <created>1594565297024</created>
@@ -342,34 +347,22 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fixed error in HTTP PATCH method of CompletedTestView." />
   </component>
   <component name="WindowStateProjectService">
-    <state x="206" y="8" width="1086" height="952" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1600619615054">
+    <state width="1458" height="288" key="GridCell.Tab.0.bottom" timestamp="1610784793313">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state x="206" y="8" width="1086" height="952" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1500.960@0.0.1500.960" timestamp="1600619615054" />
-    <state x="532" y="248" key="FileChooserDialogImpl" timestamp="1600619506184">
+    <state width="1458" height="288" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
+    <state width="1458" height="288" key="GridCell.Tab.0.center" timestamp="1610784793313">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state x="532" y="248" key="FileChooserDialogImpl/0.0.1500.960@0.0.1500.960" timestamp="1600619506184" />
-    <state width="1458" height="288" key="GridCell.Tab.0.bottom" timestamp="1606035816200">
+    <state width="1458" height="288" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
+    <state width="1458" height="288" key="GridCell.Tab.0.left" timestamp="1610784793313">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1606035816200" />
-    <state width="1458" height="288" key="GridCell.Tab.0.center" timestamp="1606035816200">
+    <state width="1458" height="288" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
+    <state width="1458" height="288" key="GridCell.Tab.0.right" timestamp="1610784793313">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1606035816200" />
-    <state width="1458" height="288" key="GridCell.Tab.0.left" timestamp="1606035816200">
-      <screen x="0" y="0" width="1500" height="960" />
-    </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1606035816200" />
-    <state width="1458" height="288" key="GridCell.Tab.0.right" timestamp="1606035816200">
-      <screen x="0" y="0" width="1500" height="960" />
-    </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1606035816200" />
-    <state x="252" y="111" key="SettingsEditor" timestamp="1600619599625">
-      <screen x="0" y="0" width="1500" height="960" />
-    </state>
-    <state x="252" y="111" key="SettingsEditor/0.0.1500.960@0.0.1500.960" timestamp="1600619599625" />
+    <state width="1458" height="288" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
     <state x="413" y="206" width="672" height="678" key="search.everywhere.popup" timestamp="1606035499186">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
