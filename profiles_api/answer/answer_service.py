@@ -56,7 +56,7 @@ class AnswerService:
         user_answer_float = cls.__parse_float(answer.answers)
         correct_answer_float = cls.__parse_float(answer.question.correctAnswers)
 
-        answer.correct = abs(user_answer_float - correct_answer_float) <= 1e-3
+        answer.correct = abs(user_answer_float - correct_answer_float) <= 1e-3 and user_answer_float != 404
 
         return answer
 
@@ -74,6 +74,6 @@ class AnswerService:
             else:
                 return float(p[0]) / float(p[1])
         else:
-            raise ValueError
+            return 404
 
 

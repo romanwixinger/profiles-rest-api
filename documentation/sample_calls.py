@@ -172,7 +172,7 @@ print(answer_get.json())
 print("\n" + 10 * "*" + "\n")
 
 # Answer PATCH
-answer = {"duration": 20, "answers": "new answer"}
+answer = {"duration": 20, "answers": "1/5"}
 answer_patch = requests.patch(url=base_url + "custom-answer/" + str(answer_get.json()[0]['id']),
                             headers=headers,
                             json=answer)
@@ -252,16 +252,18 @@ completed_test_patch = completed_test = {
                 [{
                         "question": 10,
                         "duration": "21.00",
-                        "answers": "1/3",
+                        "answers": "abc",
                         "skipped": False
-                }],
-    "state": "New questions answered."
+                }]
 }
-completed_test_patch = requests.patch(url=base_url + "custom-completed-test/167",
+completed_test_patch = requests.patch(url=base_url + "custom-completed-test/1",
                                     headers=headers,
                                     json=completed_test_patch
                                     )
 print("Status code: ", completed_test_patch.status_code)
+if completed_test_patch.content: 
+    print(completed_test_patch.content)
+
 
 """TheoryPage"""
 

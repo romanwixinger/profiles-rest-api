@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="93ccf7b9-4c84-489c-932a-1ff39d5f1d2c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/documentation/sample_calls.py" beforeDir="false" afterPath="$PROJECT_DIR$/documentation/sample_calls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/answer/answer_api_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/answer/answer_api_view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/profiles_api/answer/answer_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/answer/answer_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/profiles_api/completed_test/completed_test_serializer.py" beforeDir="false" afterPath="$PROJECT_DIR$/profiles_api/completed_test/completed_test_serializer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,7 +322,9 @@
       <workItem from="1602935282634" duration="612000" />
       <workItem from="1603390870507" duration="2140000" />
       <workItem from="1608746514057" duration="92000" />
-      <workItem from="1610781266097" duration="3597000" />
+      <workItem from="1610781266097" duration="4304000" />
+      <workItem from="1610807061442" duration="66000" />
+      <workItem from="1611524147099" duration="2833000" />
     </task>
     <task id="LOCAL-00001" summary="fixed intellij setup">
       <created>1594565297024</created>
@@ -347,22 +352,22 @@
     <option name="LAST_COMMIT_MESSAGE" value="Fixed error in HTTP PATCH method of CompletedTestView." />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1458" height="288" key="GridCell.Tab.0.bottom" timestamp="1610784793313">
+    <state width="1458" height="288" key="GridCell.Tab.0.bottom" timestamp="1611527090672">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
-    <state width="1458" height="288" key="GridCell.Tab.0.center" timestamp="1610784793313">
+    <state width="1458" height="288" key="GridCell.Tab.0.bottom/0.0.1500.960@0.0.1500.960" timestamp="1611527090672" />
+    <state width="1458" height="288" key="GridCell.Tab.0.center" timestamp="1611527090672">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
-    <state width="1458" height="288" key="GridCell.Tab.0.left" timestamp="1610784793313">
+    <state width="1458" height="288" key="GridCell.Tab.0.center/0.0.1500.960@0.0.1500.960" timestamp="1611527090672" />
+    <state width="1458" height="288" key="GridCell.Tab.0.left" timestamp="1611527090672">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
-    <state width="1458" height="288" key="GridCell.Tab.0.right" timestamp="1610784793313">
+    <state width="1458" height="288" key="GridCell.Tab.0.left/0.0.1500.960@0.0.1500.960" timestamp="1611527090672" />
+    <state width="1458" height="288" key="GridCell.Tab.0.right" timestamp="1611527090672">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
-    <state width="1458" height="288" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1610784793313" />
+    <state width="1458" height="288" key="GridCell.Tab.0.right/0.0.1500.960@0.0.1500.960" timestamp="1611527090672" />
     <state x="413" y="206" width="672" height="678" key="search.everywhere.popup" timestamp="1606035499186">
       <screen x="0" y="0" width="1500" height="960" />
     </state>
