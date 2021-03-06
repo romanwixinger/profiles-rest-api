@@ -11,7 +11,7 @@ from profiles_api.topic.topic_model import Topic
 class TestAnswerService(TestCase):
 
     def setUp(self):
-        user = UserProfile.objects.create(email="unittest", name="unittest")
+        user = UserProfile.objects.create(username="unittest", name="unittest")
         topic = Topic.objects.create(user_profile=user, name="unittest")
         subtopic = Subtopic.objects.create(user_profile=user, topic=topic, name="unittest", html="unittest")
         question = Question.objects.create(user_profile=user, topic=topic, subtopic=subtopic, question="unittest",

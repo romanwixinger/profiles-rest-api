@@ -8,22 +8,22 @@ from django.conf import settings
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
 
-    def create_user(self, email: str, name: str, password=None):
+    def create_user(self, username: str, name: str, password=None):
         """Create a new user profile"""
-        if not email:
-            raise ValueError('User must have an email address')
+        if not username:
+            raise ValueError('User must have a username')
 
-        email = self.normalize_email(email)
-        user = self.model(email=email, name=name)
+        username = self.normalize_username(username)
+        user = self.model(username=username, name=name)
 
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email, name, password):
+    def create_superuser(self, username, name, password):
         """Create and save a new superuser with given details"""
-        user = self.create_user(email, name, password)
+        user = self.create_user(username, name, password)
 
         user.is_superuser = True
         user.is_staff = True
@@ -32,16 +32,26 @@ class UserProfileManager(BaseUserManager):
         return user
 
 
+def get_default_entitled_features():
+    return ['joker_feature',
+            'Einschätzungstest',
+            'Dashboard',
+            'Theorie',
+            'Aufgaben']
+
+
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Database model for users in the system"""
-    email = models.EmailField(max_length=255, unique=True)
+    username = models.CharField(max_length=255, unique=True)
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    entitled_features = models.TextField(default='joker_feature,Einschätzungstest,Dashboard,Theorie,Aufgaben',
+                                         blank=True)
 
     objects = UserProfileManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['name']
 
     def get_full_name(self):
@@ -54,7 +64,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         """Return string representation of our user"""
-        return self.email
+        return self.username
 
 
 class ProfileFeedItem(models.Model):
@@ -69,6 +79,3 @@ class ProfileFeedItem(models.Model):
     def __str__(self):
         """Return the model as a string"""
         return self.status_text
-
-
-
