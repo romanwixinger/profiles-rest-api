@@ -8,13 +8,20 @@ from django.conf import settings
 class UserProfileManager(BaseUserManager):
     """Manager for user profiles"""
 
-    def create_user(self, username: str, name: str, password=None):
+    def create_user(self, username: str, name: str, password=None, entitled_features=None):
         """Create a new user profile"""
+        if entitled_features is None:
+            entitled_features = ["joker_feature",
+                                 "Einschätzungstest",
+                                 "Dashboard",
+                                 "Theorie",
+                                 "Aufgaben"]
         if not username:
             raise ValueError('User must have a username')
 
-        username = self.normalize_username(username)
-        user = self.model(username=username, name=name)
+        username = username.lower()
+        username = "".join(username.split())
+        user = self.model(username=username, name=name, entitled_features=entitled_features)
 
         user.set_password(password)
         user.save(using=self._db)

@@ -43,7 +43,7 @@
     
 * **Success Response:**
 
-  * **Code:** 200 Created <br />
+  * **Code:** 200 OK <br />
     
 * **Error Response:**
 
